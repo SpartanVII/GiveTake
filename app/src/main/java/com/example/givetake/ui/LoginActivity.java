@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent homeIntent = new Intent(this, MainActivity.class);
         invalidateOptionsMenu();
         homeIntent.putExtra("email", email);
-        homeIntent.putExtra("isRegistered",true);
+        homeIntent.putExtra("isRegistered","true");
         startActivity(homeIntent);
     }
 

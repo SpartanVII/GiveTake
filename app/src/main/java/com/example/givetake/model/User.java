@@ -1,18 +1,48 @@
 package com.example.givetake.model;
 
+import android.location.Address;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class User {
     private String name;
-    private String address;
-    private int globalScore;
+    private Address address;
+    private double globalScore;
     private String mail;        //Private info
     private String genre;       //Private info
     private LocalDate birth;    //Private info
-    List<Swap> swaps;
-    List<Product> tradeProducts;
-    List<Product> swapedproducts;
+    private List<Swap> swaps;
+    private List<Product> tradeProducts;
+    private List<Product> swapedproducts;
+
+    public void setGlobalScore(double globalScore) {
+        this.globalScore = globalScore;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
+    }
 
     public String getName() {
         return name;
@@ -22,15 +52,15 @@ public class User {
         this.name = name;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
-    public int getGlobalScore() {
+    public double getGlobalScore() {
         return globalScore;
     }
 

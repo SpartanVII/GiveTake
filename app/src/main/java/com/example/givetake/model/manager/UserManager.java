@@ -15,12 +15,12 @@ public class UserManager {
     public UserManager(){userMap = new HashMap<>();}
 
     public User getUser(String mail){
+        System.out.println(userMap.get(mail));
         return userMap.get(mail);
     }
 
     public void addProduct(Product product){
         getUser(product.getOwner()).getTradeProducts().add(product);
-
     }
 
 

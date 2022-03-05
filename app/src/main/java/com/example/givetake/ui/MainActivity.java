@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private boolean isRegistered = false;
-    private String email;
     private Presenter presenter = new Presenter();
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        presenter.initiality();
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -66,22 +67,28 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_settings)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+
         try {
             session();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        if (isRegistered){
+            DrawerLayout drawer = binding.drawerLayout;
+            NavigationView navigationView = binding.navView;
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.nav_home, R.id.nav_profile, R.id.nav_settings)
+                    .setOpenableLayout(drawer)
+                    .build();
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+            NavigationUI.setupWithNavController(navigationView, navController);
+        }
+
+
     }
 
     @SuppressLint("ResourceType")
@@ -91,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
         String email = prefs.getString("email", null);
 
         if(email!=null){
-            System.out.println(email);
+            isRegistered=true;
+            invalidateOptionsMenu();
         }
     }
 
@@ -126,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
             prefs.clear();
             prefs.apply();
-            Intent intent = new Intent(this, HomeFragment.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
