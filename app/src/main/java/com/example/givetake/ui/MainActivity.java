@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.givetake.R;
+import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private boolean isRegistered = false;
     private String email;
+    private Presenter presenter = new Presenter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

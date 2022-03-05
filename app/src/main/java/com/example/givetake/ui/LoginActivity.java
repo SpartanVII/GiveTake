@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText email;
     EditText pass;
     Context appContext;
-
     private FirebaseAuth mAuth;
 
 
@@ -41,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         email = findViewById(R.id.fieldEmail);
         pass = findViewById(R.id.fieldPassword);
-      //  mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         appContext=getApplicationContext();
         setup();
@@ -67,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(email.getText().toString(),pass.getText().toString());
+                signUp(email.getText().toString(),pass.getText().toString());
             }
         });
     }
@@ -123,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+
     public void showAlert(String msg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle("Error").setMessage(msg)
@@ -132,8 +132,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
     public void showHome(String email) throws InterruptedException {
         Intent homeIntent = new Intent(this, MainActivity.class);
         invalidateOptionsMenu();
@@ -141,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         homeIntent.putExtra("isRegistered",true);
         startActivity(homeIntent);
     }
+
 
     public void showRegister(String email) throws InterruptedException {
         //Ir a otro layout y que te pida fechade nacimiento, direccion, genero...
@@ -152,13 +151,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     private boolean validateForm() {
         boolean valid = true;
 
         String mail = email.getText().toString();
-
-
         if (TextUtils.isEmpty(mail)) {
             email.setError("Obligatorio");
             valid = false;
