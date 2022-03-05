@@ -12,7 +12,6 @@ public class User {
     private String mail;        //Private info
     private String gender;       //Private info
     private LocalDate birth;    //Private info
-    List<Review> reviews = new LinkedList<>();
     List<Swap> swaps = new LinkedList<>();
     List<Product> tradeProducts = new LinkedList<>();
     List<Product> swapedProducts = new LinkedList<>();
@@ -64,14 +63,6 @@ public class User {
 
     public void setBirth(LocalDate birth) {
         this.birth = birth;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
     }
 
     public String getName() {
