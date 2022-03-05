@@ -3,18 +3,27 @@ package com.example.givetake.model;
 import java.util.List;
 
 public class Product {
-    private String name;
+    private String title;
     private String description;
     private String img;
     private String owner;
     private List<Tags> tags;
 
-    public String getName() {
-        return name;
+    public Product(String title, String description, String img, String owner, List<Tags> tags) {
+        this.title = title;
+        this.description = description;
+        this.img = img;
+        this.owner = owner;
+        this.tags = tags;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
