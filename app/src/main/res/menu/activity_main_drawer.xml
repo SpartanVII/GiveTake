@@ -9,11 +9,15 @@
             android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_profile"
             android:title="@string/menu_profile" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_chats"
+            android:icon="@drawable/ic_menu_chat"
+            android:title="@string/menu_chat" />
+        <item
+            android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_settings"
             android:title="@string/menu_settings" />
     </group>

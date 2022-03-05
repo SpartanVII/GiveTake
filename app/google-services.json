@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "472763182443",
+    "project_id": "givetake-9f7af",
+    "storage_bucket": "givetake-9f7af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472763182443:android:588f9ca3bceba93685702e",
+        "android_client_info": {
+          "package_name": "com.example.givetake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472763182443-mkomk10b1l6m9v0olbbfga8a5g30detb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.givetake",
+            "certificate_hash": "163735b7be4755073635216065da14da80c3c4e0"
+          }
+        },
+        {
+          "client_id": "472763182443-qknn009gnm70fuj2onblvvbuqt85pq4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNXrEoyn7ryEAXvonFQM3GUZaVUnyKrgQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472763182443-qknn009gnm70fuj2onblvvbuqt85pq4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

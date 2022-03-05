@@ -13,8 +13,8 @@ public class ProductManager {
         this.productMap = productMap;
     }
 
-    public List<Product> getProducts(String nickName){
-        return productMap.get(nickName);
+    public List<Product> getProducts(String mail){
+        return productMap.get(mail);
     }
 
 }

@@ -1,16 +1,28 @@
 package com.example.givetake.model.dataBase;
 
-public class DataBaseClass {/*
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
+public class DataBaseClass {
     private final FirebaseFirestore db;
+    private final DatabaseReference databaseReference;
     Gson gson;
 
 
-    public DataBaseManager() {
-        this.db = FirebaseFirestore.getInstance();;
+    public DataBaseClass() {
+        this.db = FirebaseFirestore.getInstance();
+        this.databaseReference = FirebaseDatabase.getInstance().getReference();
         this.gson = new Gson();
     }
 
     public void recover(String email){
+        /*
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Type type = new TypeToken<Map<String, Location>>(){}.getType();
         try {
@@ -29,12 +41,15 @@ public class DataBaseClass {/*
         }catch (NullPointerException  e){
 
         }
-
+*/
     }
 
     public void save(String email){
+        /*
         Map<String, String> map = new HashMap<>();
         map.put("LManager", gson.toJson(Singleton.getLocationManager().getLocations()));
         db.collection("users").document(email).set(map);
-    }*/
+
+         */
+    }
 }
