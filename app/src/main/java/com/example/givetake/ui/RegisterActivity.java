@@ -3,6 +3,7 @@ package com.example.givetake.ui;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.givetake.R;
 import com.example.givetake.model.User;
+import com.example.givetake.presenter.Presenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText nombre;
     private EditText fechaNac;
     private AutoCompleteTextView autoCompleteGenero;
+    private Presenter presenter;
     private Button confirmButton;
     private String email;
     private String password;
@@ -47,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         email = bundle.getString("email");
         password = bundle.getString("password");
+        presenter = new Presenter();
 
         mAuth = FirebaseAuth.getInstance();
         appContext = getApplicationContext();
@@ -102,9 +106,51 @@ public class RegisterActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //signUp(email,password);
+                //signUp(nombre, ,ge);
             }
         });
+    }
+
+
+
+    private void signUp(String nombre, Address direccion, String genero, LocalDate fechNacimiento) {
+        if (!validateForm()) {
+            return;
+        }
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            assert user != null;
+                            try {
+                                presenter.addUser(new User(nombre, direccion, email, genero, fechNacimiento));
+                                showHome();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            Toast.makeText(appContext, "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
+                            showAlert( "No te has podido registrar");
+                        }
+                    }
+                });
+    }
+
+    public void showAlert(String msg){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Error").setMessage(msg)
+                .setPositiveButton("Aceptar",null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void showHome() throws InterruptedException {
+        Intent homeIntent = new Intent(this, MainActivity.class);
+        homeIntent.putExtra("email", email);
+        homeIntent.putExtra("isRegistered","true");
+        startActivity(homeIntent);
     }
 
     private boolean validateForm() {
@@ -126,6 +172,7 @@ public class RegisterActivity extends AppCompatActivity {
             autoCompleteGenero.setError(null);
         }
         /*
+        TODO Validar la edad
         TODO Aqui validar la ubicación
         if (password.length()<6){
             pass.setError("La contraseña debe tener mínimo 6 caracteres");
@@ -135,47 +182,4 @@ public class RegisterActivity extends AppCompatActivity {
 
         return valid;
     }
-
-    private void signUp(String email, String password, String nombre, String direccion, String genero, LocalDate fechNacimiento) {
-        if (!validateForm()) {
-            return;
-        }
-        mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            assert user != null;
-                            try {
-                                User usuario = new User(nombre, direccion, email, genero, fechNacimiento);
-                                showHome(usuario);
-                                //showRegister(user.getEmail());
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }else {
-                            Toast.makeText(appContext, "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
-                            showAlert( "No te has podido registrar");
-                        }
-                    }
-                });
-    }
-
-    public void showAlert(String msg){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("Error").setMessage(msg)
-                .setPositiveButton("Aceptar",null);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    public void showHome(User user) throws InterruptedException {
-        Intent homeIntent = new Intent(this, MainActivity.class);
-        invalidateOptionsMenu();
-        //homeIntent.putExtra("user", user);
-        homeIntent.putExtra("isRegistered","true");
-        startActivity(homeIntent);
-    }
-
 }

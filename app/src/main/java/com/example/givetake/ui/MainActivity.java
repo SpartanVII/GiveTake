@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        presenter.initiality();
+
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         else{
             email = prefs.getString("email", null);
         }
+
+        if (isRegistered) presenter.initiality();
 
         /*
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {

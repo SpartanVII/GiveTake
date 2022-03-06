@@ -11,24 +11,24 @@
         android:layout_height="match_parent" />
 
     <EditText
-        android:text="Nombre"
         android:id="@+id/usuNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="70dp"
-        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="@string/register_name"
+        />
 
     <EditText
+        android:id="@+id/usuFechaNac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/usuFechaNac"
-        android:hint="Fecha de nacimiento"
         android:layout_below="@id/usuNombre"
-        android:layout_marginLeft="15dp"
-        />
+        android:layout_marginStart="15dp"
+        android:hint="@string/register_date" />
 
     <LinearLayout
         android:id="@+id/usuGenero"
@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Género"
+            android:text="@string/register_genre"
             android:textSize="12sp" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -54,37 +54,39 @@
                 android:id="@+id/generoSelect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="-"
+                android:hint="@string/register_genre_selection"
                 android:inputType="none" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>
     <!--search view to search our location-->
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/usuGenero"
-        android:id="@+id/ubi">
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/idSearchView"
+        android:id="@+id/ubi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="#BFBFBF"
-        android:elevation="5dp"
-        app:iconifiedByDefault="false"
-        app:queryHint="Buscar aquí" />
+        android:layout_below="@id/usuGenero">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/idSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="#BFBFBF"
+            android:elevation="5dp"
+
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/query_map" />
 
         <!--fragment to display our maps-->
-    <fragment xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@id/idSearchView"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        tools:context=".MapsActivity" />
+        <fragment xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_below="@id/idSearchView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            tools:context=".MapsActivity" />
     </RelativeLayout>
 
     <Button
@@ -93,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ubi"
         android:layout_margin="15dp"
-        android:text="Confirmar" />
+        android:text="@string/register_confirm" />
 
 
 </RelativeLayout>

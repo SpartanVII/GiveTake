@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     Button signInButton;
     Button signUpButton;
+    String mail;
+    String password;
     EditText email;
     EditText pass;
     Context appContext;
@@ -72,12 +74,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void signIn(String email, String password) {
+    private void signIn(String email, String pass) {
         if (!validateForm()) {
             return;
         }
-
-        mAuth.signInWithEmailAndPassword(email,password)
+        mail=email;
+        password=pass;
+        mAuth.signInWithEmailAndPassword(email,pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -85,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             assert user != null;
                             try {
-                                showHome(user.getEmail());
+                                showHome();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -97,11 +100,13 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void signUp(String email, String password) {
+    private void signUp(String email, String pass) {
         if (!validateForm()) {
             return;
         }
-        mAuth.createUserWithEmailAndPassword(email,password)
+        mail=email;
+        password= pass;
+        mAuth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -109,8 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             assert user != null;
                             try {
-                                showHome(user.getEmail());
-                                //showRegister(user.getEmail());
+                                showRegister();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -132,21 +136,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void showHome(String email) throws InterruptedException {
+    public void showHome() throws InterruptedException {
         Intent homeIntent = new Intent(this, MainActivity.class);
         invalidateOptionsMenu();
-        homeIntent.putExtra("email", email);
+        homeIntent.putExtra("email", mail);
         homeIntent.putExtra("isRegistered","true");
         startActivity(homeIntent);
     }
 
 
-    public void showRegister(String email) throws InterruptedException {
+    public void showRegister() throws InterruptedException {
         //Ir a otro layout y que te pida fechade nacimiento, direccion, genero...
-        Intent homeIntent = new Intent(this, MainActivity.class);
-        invalidateOptionsMenu();
-        homeIntent.putExtra("email", email);
-        homeIntent.putExtra("isRegistered",true);
+        Intent homeIntent = new Intent(this, RegisterActivity.class);
+        homeIntent.putExtra("email", mail);
+        homeIntent.putExtra("password", password);
         startActivity(homeIntent);
     }
 

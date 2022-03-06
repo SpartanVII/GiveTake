@@ -7,14 +7,14 @@ public class Product {
     private String description;
     private String img;
     private String owner;
-    private List<Tags> tags;
+    private String tag;
 
-    public Product(String title, String description, String img, String owner, List<Tags> tags) {
+    public Product(String title, String description, String img, String owner, String tag) {
         this.title = title;
         this.description = description;
         this.img = img;
         this.owner = owner;
-        this.tags = tags;
+        this.tag = tag;
     }
 
 
@@ -50,11 +50,11 @@ public class Product {
         this.owner = owner;
     }
 
-    public List<Tags> getTags() {
-        return tags;
+    public String getTag() {
+        return tag;
     }
 
-    public void setTags(List<Tags> tags) {
-        this.tags = tags;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

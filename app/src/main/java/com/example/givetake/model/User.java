@@ -2,10 +2,11 @@ package com.example.givetake.model;
 
 import android.location.Address;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private String name;
     private Address address;
     private double globalScore;
@@ -14,7 +15,7 @@ public class User {
     private LocalDate birth;    //Private info
     private List<Swap> swaps;
     private List<Product> tradeProducts;
-    private List<Product> swapedproducts;
+    private List<Product> swapedProducts;
 
     public void setGlobalScore(double globalScore) {
         this.globalScore = globalScore;
@@ -28,12 +29,12 @@ public class User {
         this.mail = mail;
     }
 
-    public String getGenre() {
-        return genre;
+    public Gender getGenre() {
+        return gender;
     }
 
     public void setGenre(String genre) {
-        this.genre = genre;
+        this.gender = gender;
     }
 
     public LocalDate getBirth() {
@@ -43,11 +44,8 @@ public class User {
     public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
-    List<Swap> swaps = new LinkedList<>();
-    List<Product> tradeProducts = new LinkedList<>();
-    List<Product> swapedProducts = new LinkedList<>();
 
-    public User(String name, String address, String mail, String gender, LocalDate birth) {
+    public User(String name, Address address, String mail, String gender, LocalDate birth) {
         this.name = name;
         this.address = address;
         this.globalScore = 0;
@@ -62,13 +60,6 @@ public class User {
         OTHER
     }
 
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
 
     public String getGender() {
         return gender.toString();
@@ -76,14 +67,6 @@ public class User {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public LocalDate getBirth() {
-        return birth;
-    }
-
-    public void setBirth(LocalDate birth) {
-        this.birth = birth;
     }
 
     public String getName() {
@@ -143,5 +126,9 @@ public class User {
             default:
                 return Gender.OTHER;
         }
+    }
+
+    public String addressToString(){
+        return address.getLocality()+address.getSubAdminArea()+address.getAdminArea();
     }
 }

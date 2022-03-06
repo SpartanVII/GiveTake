@@ -4,7 +4,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.givetake.model.Singleton;
+import com.example.givetake.model.Product;
+import com.example.givetake.model.singleton.ProductManagerSingleton;
+import com.example.givetake.model.singleton.UserManagerSingleton;
 import com.example.givetake.model.User;
 import com.example.givetake.model.manager.ProductManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 
 public class DataBaseClass {
@@ -54,19 +57,18 @@ public class DataBaseClass {
 */
     }
 
-    public void save(String email){
-        /*
-        Map<String, String> map = new HashMap<>();
-        map.put("LManager", gson.toJson(Singleton.getLocationManager().getLocations()));
-        db.collection("users").document(email).set(map);
+    public void save(User user){
+        DatabaseReference userReference = db.getReference("Users").child(user.getMail());
+        userReference.setValue(gson.toJson(user));
 
-         */
+        DatabaseReference productReference = db.getReference("Products");
+        productReference.setValue(gson.toJson(ProductManagerSingleton.getProductManager()));
     }
 
     public void initialy(){
-        Type type = new TypeToken<Map<String, User>>(){}.getType();
-        DatabaseReference databaseReference = db.getReference("Users");
-        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        Type userType = new TypeToken<Map<String, User>>(){}.getType();
+        DatabaseReference userReference = db.getReference("Users");
+        userReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -75,18 +77,19 @@ public class DataBaseClass {
                 else {
                     Log.d("firebase", String.valueOf(task.getResult().getValue()));
                     String json = String.valueOf(task.getResult().getValue());
-                    Singleton.setUserManager( gson.fromJson(json, type));
+                    UserManagerSingleton.setUserManager( gson.fromJson(json, userType));
                 }
             }
         });
-        /*
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 //String value = dataSnapshot.getValue(String.class);
-
+                String json = String.valueOf(dataSnapshot.getValue());
+                UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
             }
 
             @Override
@@ -95,12 +98,41 @@ public class DataBaseClass {
                 Log.w("realtime", "Failed to read value.", error.toException());
             }
         });
-        */
+
+        Type productType = new TypeToken<Map<String, List<Product>>>(){}.getType();
+        DatabaseReference prductReference = db.getReference("Products");
+        prductReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    String json = String.valueOf(task.getResult().getValue());
+                    UserManagerSingleton.setUserManager( gson.fromJson(json, productType));
+                }
+            }
+        });
+
+        prductReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                //String value = dataSnapshot.getValue(String.class);
+                String json = String.valueOf(dataSnapshot.getValue());
+                UserManagerSingleton.setUserManager(gson.fromJson(json, productType));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("realtime", "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
-    public void save(User user, ProductManager productManager){
-        String key = user.getMail().split("@")[0];
-        DatabaseReference databaseReference = db.getReference("Users").child(key);
-        databaseReference.setValue(gson.toJson(user));
-    }
+
 }

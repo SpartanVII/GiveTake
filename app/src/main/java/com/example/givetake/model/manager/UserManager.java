@@ -23,5 +23,9 @@ public class UserManager {
         getUser(product.getOwner()).getTradeProducts().add(product);
     }
 
+    public void addUser(User user){
+        userMap.put(user.getMail(), user);
+    }
+
 
 }
