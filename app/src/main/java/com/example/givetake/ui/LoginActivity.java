@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }else {
                             Toast.makeText(appContext, "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
-                            showAlert( "No  te has podido registrar");
+                            showAlert( "No te has podido registrar");
                         }
                     }
                 });

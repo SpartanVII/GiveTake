@@ -10,7 +10,7 @@ public class User {
     private Address address;
     private double globalScore;
     private String mail;        //Private info
-    private String genre;       //Private info
+    private Gender gender;       //Private info
     private LocalDate birth;    //Private info
     private List<Swap> swaps;
     private List<Product> tradeProducts;
@@ -34,6 +34,48 @@ public class User {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
+    }
+    List<Swap> swaps = new LinkedList<>();
+    List<Product> tradeProducts = new LinkedList<>();
+    List<Product> swapedProducts = new LinkedList<>();
+
+    public User(String name, String address, String mail, String gender, LocalDate birth) {
+        this.name = name;
+        this.address = address;
+        this.globalScore = 0;
+        this.mail = mail;
+        this.gender = fromStrToGender(gender);
+        this.birth = birth;
+    }
+
+    public enum Gender {
+        MALE,
+        FEMALE,
+        OTHER
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getGender() {
+        return gender.toString();
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public LocalDate getBirth() {
@@ -84,11 +126,22 @@ public class User {
         this.tradeProducts = tradeProducts;
     }
 
-    public List<Product> getSwapedproducts() {
-        return swapedproducts;
+    public List<Product> getSwapedProducts() {
+        return swapedProducts;
     }
 
-    public void setSwapedproducts(List<Product> swapedproducts) {
-        this.swapedproducts = swapedproducts;
+    public void setSwapedProducts(List<Product> swapedProducts) {
+        this.swapedProducts = swapedProducts;
+    }
+
+    public Gender fromStrToGender(String gender){
+        switch(gender){
+            case("Hombre"):
+                return Gender.MALE;
+            case("Mujer"):
+                return Gender.FEMALE;
+            default:
+                return Gender.OTHER;
+        }
     }
 }
