@@ -7,22 +7,20 @@ import java.util.List;
 public class User {
     private String name;
     private String address;     //Private info
-    private String phoneNumber;
     private int globalScore;
     private String mail;        //Private info
-    private String gender;       //Private info
+    private Gender gender;       //Private info
     private LocalDate birth;    //Private info
     List<Swap> swaps = new LinkedList<>();
     List<Product> tradeProducts = new LinkedList<>();
     List<Product> swapedProducts = new LinkedList<>();
 
-    public User(String name, String address, String phoneNumber, int globalScore, String mail, String gender, LocalDate birth) {
+    public User(String name, String address, String mail, String gender, LocalDate birth) {
         this.name = name;
         this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.globalScore = globalScore;
+        this.globalScore = 0;
         this.mail = mail;
-        this.gender = gender;
+        this.gender = fromStrToGender(gender);
         this.birth = birth;
     }
 
@@ -30,15 +28,6 @@ public class User {
         MALE,
         FEMALE,
         OTHER
-    }
-
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getMail() {
@@ -50,10 +39,10 @@ public class User {
     }
 
     public String getGender() {
-        return gender;
+        return gender.toString();
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -111,5 +100,16 @@ public class User {
 
     public void setSwapedProducts(List<Product> swapedProducts) {
         this.swapedProducts = swapedProducts;
+    }
+
+    public Gender fromStrToGender(String gender){
+        switch(gender){
+            case("Hombre"):
+                return Gender.MALE;
+            case("Mujer"):
+                return Gender.FEMALE;
+            default:
+                return Gender.OTHER;
+        }
     }
 }

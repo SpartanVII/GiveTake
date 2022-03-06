@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }else {
                             Toast.makeText(appContext, "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
-                            showAlert( "No  te has podido registrar");
+                            showAlert( "No te has podido registrar");
                         }
                     }
                 });
@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent homeIntent = new Intent(this, MainActivity.class);
         invalidateOptionsMenu();
         homeIntent.putExtra("email", email);
-        homeIntent.putExtra("isRegistered",true);
+        homeIntent.putExtra("isRegistered","true");
         startActivity(homeIntent);
     }
 
