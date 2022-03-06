@@ -14,7 +14,10 @@ public class UserManagerSingleton {
     }
 
     public static void setUserManager(Map<String, User> userMap) {
+        if (userMap == null) System.out.println("vacio");
+        else System.out.println("No vacia");
         if (userMap == null) userManager = new UserManager();
         else userManager = new UserManager(userMap);
+
     }
 }

@@ -17,6 +17,15 @@ public class User implements Serializable {
     private List<Product> tradeProducts;
     private List<Product> swapedProducts;
 
+    public User(String name, Address address, String mail, String gender, LocalDate birth) {
+        this.name = name;
+        this.address = address;
+        this.globalScore = 0;
+        this.mail = mail;
+        this.gender = fromStrToGender(gender);
+        this.birth = birth;
+    }
+
     public void setGlobalScore(double globalScore) {
         this.globalScore = globalScore;
     }
@@ -44,22 +53,6 @@ public class User implements Serializable {
     public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
-
-    public User(String name, Address address, String mail, String gender, LocalDate birth) {
-        this.name = name;
-        this.address = address;
-        this.globalScore = 0;
-        this.mail = mail;
-        this.gender = fromStrToGender(gender);
-        this.birth = birth;
-    }
-
-    public enum Gender {
-        MALE,
-        FEMALE,
-        OTHER
-    }
-
 
     public String getGender() {
         return gender.toString();
@@ -117,6 +110,12 @@ public class User implements Serializable {
         this.swapedProducts = swapedProducts;
     }
 
+    public enum Gender {
+        MALE,
+        FEMALE,
+        OTHER
+    }
+
     public Gender fromStrToGender(String gender){
         switch(gender){
             case("Hombre"):
@@ -128,7 +127,7 @@ public class User implements Serializable {
         }
     }
 
-    public String addressToString(){
+    public String getAddressToString(){
         return address.getLocality()+address.getSubAdminArea()+address.getAdminArea();
     }
 }

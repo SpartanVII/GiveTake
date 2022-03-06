@@ -28,12 +28,14 @@
     <string name="sign_up">Registrarse</string>
 
     <string name="edit_profile">Editar perfil</string>
-    <string name="query_map">Buscar aquí</string>
-    <string name="register_name">Nombre</string>
-    <string name="register_date">Fecha de nacimiento</string>
-    <string name="register_genre">Género</string>
+    <string name="query_map">Escriba o busque su dirección</string>
+    <string name="register_name">Nombre:</string>
+    <string name="register_date">Fecha de nacimiento:</string>
+    <string name="register_genre">Género:</string>
     <string name="register_confirm">Confirmar</string>
     <string name="register_genre_selection">Seleccionar</string>
+    <string name="register_date_hint">dd/mm/aaaa</string>
+    <string name="edit_cancel">Cancelar</string>
 
 
 </resources>

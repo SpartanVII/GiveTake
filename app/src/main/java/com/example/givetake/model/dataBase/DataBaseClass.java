@@ -57,8 +57,19 @@ public class DataBaseClass {
 */
     }
 
-    public void save(User user){
+    public void saveNewUser(User user){
         DatabaseReference userReference = db.getReference("Users").child(user.getMail());
+        userReference.setValue(gson.toJson(user));
+       /*
+        DatabaseReference userReference = db.getReference("Users");
+        userReference.setValue(user.getMail());
+
+        userReference = db.getReference("Users").child(user.getMail());
+        userReference.setValue(gson.toJson(user));*/
+    }
+
+    public void save(User user){
+        DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
         userReference.setValue(gson.toJson(user));
 
         DatabaseReference productReference = db.getReference("Products");
@@ -68,28 +79,14 @@ public class DataBaseClass {
     public void initialy(){
         Type userType = new TypeToken<Map<String, User>>(){}.getType();
         DatabaseReference userReference = db.getReference("Users");
-        userReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    String json = String.valueOf(task.getResult().getValue());
-                    UserManagerSingleton.setUserManager( gson.fromJson(json, userType));
-                }
-            }
-        });
-
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //String value = dataSnapshot.getValue(String.class);
                 String json = String.valueOf(dataSnapshot.getValue());
+                System.out.println("data");
+                System.out.println(json);
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
+
             }
 
             @Override
@@ -99,22 +96,9 @@ public class DataBaseClass {
             }
         });
 
+
         Type productType = new TypeToken<Map<String, List<Product>>>(){}.getType();
         DatabaseReference prductReference = db.getReference("Products");
-        prductReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    String json = String.valueOf(task.getResult().getValue());
-                    UserManagerSingleton.setUserManager( gson.fromJson(json, productType));
-                }
-            }
-        });
-
         prductReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,7 +106,7 @@ public class DataBaseClass {
                 // whenever data at this location is updated.
                 //String value = dataSnapshot.getValue(String.class);
                 String json = String.valueOf(dataSnapshot.getValue());
-                UserManagerSingleton.setUserManager(gson.fromJson(json, productType));
+                ProductManagerSingleton.setProductManager(gson.fromJson(json, productType));
             }
 
             @Override

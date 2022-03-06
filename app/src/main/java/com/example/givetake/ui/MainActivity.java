@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        presenter.initiality();
         setSupportActionBar(binding.appBarMain.toolbar);
 
         @SuppressLint("CommitPrefEdits")
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             email = prefs.getString("email", null);
         }
 
-        if (isRegistered) presenter.initiality();
+
 
         /*
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2703125" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/side_nav_bar.xml" value="0.2703125" />
+        <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_edit_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_register.xml" value="0.264" />
@@ -18,6 +19,7 @@
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/menu/main.xml" value="0.1" />
+        <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/menu/selector.xml" value="0.16" />
       </map>
     </option>
   </component>

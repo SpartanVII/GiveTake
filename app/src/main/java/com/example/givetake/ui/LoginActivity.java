@@ -100,12 +100,18 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void signUp(String email, String pass) {
+    private void signUp(String email, String pass){
         if (!validateForm()) {
             return;
         }
         mail=email;
         password= pass;
+        try {
+            showRegister();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        /*
         mAuth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -124,6 +130,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+         */
     }
 
 
