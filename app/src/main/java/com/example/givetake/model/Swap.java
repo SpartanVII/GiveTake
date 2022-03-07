@@ -1,8 +1,9 @@
 package com.example.givetake.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Swap {
+public class Swap implements Serializable {
     private String userName;
     private LocalDate date;
     private Product product;

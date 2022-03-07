@@ -28,7 +28,7 @@ public class Presenter {
 
     public void addUser(User user){
         userManager.addUser(user);
-        dataBaseClass.save(user);
+        dataBaseClass.saveNewUser(user);
     }
 
 

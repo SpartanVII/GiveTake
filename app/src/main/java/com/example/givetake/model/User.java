@@ -2,6 +2,8 @@ package com.example.givetake.model;
 
 import android.location.Address;
 
+import com.google.android.material.timepicker.TimeFormat;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +22,7 @@ public class User implements Serializable {
     public User(String name, Address address, String mail, String gender, LocalDate birth) {
         this.name = name;
         this.address = address;
-        this.globalScore = 0;
+        this.globalScore = 0.0;
         this.mail = mail;
         this.gender = fromStrToGender(gender);
         this.birth = birth;
@@ -80,10 +82,6 @@ public class User implements Serializable {
 
     public double getGlobalScore() {
         return globalScore;
-    }
-
-    public void setGlobalScore(int globalScore) {
-        this.globalScore = globalScore;
     }
 
     public List<Swap> getSwaps() {

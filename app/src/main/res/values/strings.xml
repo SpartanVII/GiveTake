@@ -36,6 +36,7 @@
     <string name="register_genre_selection">Seleccionar</string>
     <string name="register_date_hint">dd/mm/aaaa</string>
     <string name="edit_cancel">Cancelar</string>
+    <string name="register_name_hint">Escriba su nombre completo</string>
 
 
 </resources>

@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
@@ -58,8 +59,11 @@ public class DataBaseClass {
     }
 
     public void saveNewUser(User user){
-        DatabaseReference userReference = db.getReference("Users").child(user.getMail());
-        userReference.setValue(gson.toJson(user));
+        try {
+            DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
+            userReference.setValue(gson.toJson(user));
+        }catch (Exception e){e.printStackTrace();}
+
        /*
         DatabaseReference userReference = db.getReference("Users");
         userReference.setValue(user.getMail());

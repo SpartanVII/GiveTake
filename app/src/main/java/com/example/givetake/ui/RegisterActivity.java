@@ -68,14 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
-
-        try {
-            setContentView(R.layout.activity_register);
-            // ... rest of body of onCreateView() ...
-        } catch (Exception e) {
-            Log.e("mapa", "onCreateView", e);
-            throw e;
-        }
+        setContentView(R.layout.activity_register);
 
         Bundle bundle = getIntent().getExtras();
         email = bundle.getString("email");
@@ -102,20 +95,23 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                 // below line is to create a list of address
                 // where we will store the list of all address.
                 // checking if  the entered location is null or not.
-                if (location != null || location.equals("")) {
+                if (location == null || location.equals("")) {
+                    return false;
+                }
+                if (Geocoder.isPresent()) {
                     mMap.clear();
                     List<Address> addresses = new ArrayList<>();
                     try {
-                        addresses = geocoder.getFromLocationName(location,1);
+                        addresses = geocoder.getFromLocationName(location, 1);
                     } catch (IOException e) {
                         Toast.makeText(RegisterActivity.this, "No se pudo conectar a internet", Toast.LENGTH_SHORT).show();
                     }
 
-                    if (addresses== null || addresses.isEmpty()){
+                    if (addresses == null || addresses.isEmpty()) {
                         return false;
                     }
 
-                    lastAddress =addresses.get(0);
+                    lastAddress = addresses.get(0);
                     // on below line we are creating a variable for our location
                     // where we will add our locations latitude and longitude.
                     LatLng latLng = new LatLng(lastAddress.getLatitude(), lastAddress.getLongitude());
@@ -124,9 +120,9 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                     mMap.addMarker(marker);
                     // below line is to animate camera to that position.
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                    }
-                return  true;
                 }
+                return  true;
+            }
 
 
             @Override
@@ -215,7 +211,8 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                             try {
                                 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
-                                presenter.addUser(new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate));
+                                presenter.addUser(
+                                        new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate));
                                 showHome();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -304,19 +301,20 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) {
-                mMap.clear();
-
-                List<Address> addresses = new ArrayList<>();
-                try {
-                    addresses = geocoder.getFromLocation(point.latitude, point.longitude, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (Geocoder.isPresent()){
+                    mMap.clear();
+                    List<Address> addresses = new ArrayList<>();
+                    try {
+                        addresses = geocoder.getFromLocation(point.latitude, point.longitude, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (addresses== null || addresses.isEmpty()){
+                        return ;
+                    }
+                    lastAddress =addresses.get(0);
+                    mMap.addMarker(new MarkerOptions().position(point));
                 }
-                if (addresses== null || addresses.isEmpty()){
-                    return ;
-                }
-                lastAddress =addresses.get(0);
-                mMap.addMarker(new MarkerOptions().position(point));
             }
         });
 

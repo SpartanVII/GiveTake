@@ -1,6 +1,8 @@
 package com.example.givetake.model;
 
-public class Review {
+import java.io.Serializable;
+
+public class Review implements Serializable {
     private String reviwerName;
     private int score;
     private String comentary;
