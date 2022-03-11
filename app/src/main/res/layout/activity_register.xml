@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
 
     <include
@@ -13,25 +12,24 @@
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/textNombre"
+        android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="70dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
+        android:labelFor="@id/registerName"
         android:text="@string/register_name"
-        android:labelFor="@id/usuNombre"
-        />
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/usuNombre"
+        android:id="@+id/registerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
-        android:layout_toEndOf="@id/textNombre"
+        android:layout_toEndOf="@id/textName"
         android:hint="@string/register_name_hint"
         android:textSize="20sp" />
 
@@ -40,7 +38,7 @@
         android:id="@+id/textFechaNac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/usuNombre"
+        android:layout_below="@id/registerName"
         android:layout_marginStart="15dp"
 
         android:layout_marginTop="10dp"
@@ -50,22 +48,22 @@
 
 
     <EditText
-        android:id="@+id/usuFechaNac"
+        android:id="@+id/registerFechaNac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/usuNombre"
+        android:layout_below="@id/registerName"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/textFechaNac"
-        android:textLocale="es"
         android:hint="@string/register_date_hint"
+        android:textLocale="es"
 
         />
 
     <TextView
-        android:id="@+id/textGenero"
+        android:id="@+id/textGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/usuFechaNac"
+        android:layout_below="@id/registerFechaNac"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:text="@string/register_genre"
@@ -73,13 +71,13 @@
         android:textSize="20sp" />
 
     <LinearLayout
-        android:id="@+id/usuGenero"
+        android:id="@+id/registerGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/usuFechaNac"
+        android:layout_below="@id/registerFechaNac"
         android:layout_marginStart="15dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@id/textGenero"
+        android:layout_toEndOf="@id/textGender"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +86,7 @@
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
-                android:id="@+id/genderSelect"
+                android:id="@+id/registerGenderSelect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="none" />
@@ -100,10 +98,10 @@
         android:id="@+id/ubi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/usuGenero">
+        android:layout_below="@id/registerGender">
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/idSearchView"
+            android:id="@+id/registerSearchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
@@ -115,23 +113,36 @@
 
         <!--fragment to display our maps-->
         <fragment xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
+            android:id="@+id/registerMap"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:layout_below="@id/idSearchView"
+            android:layout_below="@id/registerSearchView"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             tools:context=".ui.RegisterActivity" />
     </RelativeLayout>
 
     <Button
-        android:id="@+id/confirmEdit"
-        android:layout_width="wrap_content"
+        android:id="@+id/confirmRegister"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ubi"
-        android:layout_margin="15dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toEndOf="@id/cancelRegister"
         android:text="@string/register_confirm" />
 
+    <Button
+        android:id="@+id/cancelRegister"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ubi"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/edit_cancel" />
 
 </RelativeLayout>

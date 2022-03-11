@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class ProfileViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
-
+    private final MutableLiveData<String> mText;
     public ProfileViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");

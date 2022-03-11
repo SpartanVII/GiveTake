@@ -35,6 +35,12 @@
             android:exported="true"
             android:theme="@style/Theme.GiveTake.NoActionBar" >
         </activity>
+
+        <activity
+            android:name=".ui.EditProfileActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GiveTake.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

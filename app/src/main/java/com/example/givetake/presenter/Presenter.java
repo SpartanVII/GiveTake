@@ -31,6 +31,11 @@ public class Presenter {
         dataBaseClass.saveNewUser(user);
     }
 
+    public void modifyUser(User user){
+        userManager.modifyUser(user);
+        dataBaseClass.saveNewUser(user);
+    }
+
 
     public User getUser(String mail){
         return userManager.getUser(mail);

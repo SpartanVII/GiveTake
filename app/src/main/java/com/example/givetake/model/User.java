@@ -125,6 +125,18 @@ public class User implements Serializable {
         }
     }
 
+    public String fromGenderToString(Gender gender){
+        if (gender.name().equals("MALE")) return "Hombre";
+        else if (gender.name().equals("FEMALE")) return "Mujer";
+        else return "Otro";
+    }
+
+    public String getGenderToString(){
+        if (gender.name().equals("MALE")) return "Hombre";
+        else if (gender.name().equals("FEMALE")) return "Mujer";
+        else return "Otro";
+    }
+
     public String getAddressToString(){
         return address.getLocality()+address.getSubAdminArea()+address.getAdminArea();
     }

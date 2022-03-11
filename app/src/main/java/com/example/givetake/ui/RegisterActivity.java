@@ -8,7 +8,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -51,13 +50,11 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     private EditText birthDate;
     private AutoCompleteTextView autoCompleteGender;
     private Presenter presenter;
-    private Button confirmButton;
     private String email;
     private String password;
     private FirebaseAuth mAuth;
     private GoogleMap mMap;
     private MarkerOptions marker;
-    private UiSettings mSettings;
     private Address lastAddress;
 
     Geocoder geocoder;
@@ -74,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         email = bundle.getString("email");
         password = bundle.getString("password");
         presenter = new Presenter();
-        searchView = findViewById(R.id.idSearchView);
+        searchView = findViewById(R.id.registerSearchView);
 
         mAuth = FirebaseAuth.getInstance();
         appContext = getApplicationContext();
@@ -82,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
         // Obtain the SupportMapFragment and get notified
         // when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.registerMap);
 
         // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
@@ -137,14 +134,14 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void setup(){
-        name = findViewById(R.id.usuNombre);
+        name = findViewById(R.id.registerName);
         dateSetup();
         genderSetup();
         buttonsSetup();
     }
 
     private void dateSetup(){
-        birthDate = findViewById(R.id.usuFechaNac);
+        birthDate = findViewById(R.id.registerFechaNac);
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -177,19 +174,31 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         String[] selectGender = {"Hombre", "Mujer", "Otro"};
         ArrayAdapter<String> adapterGender;
 
-        autoCompleteGender = findViewById(R.id.genderSelect);
-        adapterGender = new ArrayAdapter<>(this, R.layout.select_item,selectGender);
+        autoCompleteGender = findViewById(R.id.registerGenderSelect);
+        adapterGender = new ArrayAdapter<>(this, R.layout.select_item, selectGender);
         autoCompleteGender.setAdapter(adapterGender);
         autoCompleteGender.setText("Otro",false);
 
     }
 
     private void buttonsSetup(){
-        confirmButton = findViewById(R.id.confirmEdit);
+        Button confirmButton = findViewById(R.id.confirmRegister);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signUp();
+            }
+        });
+
+        Button cancelButton = findViewById(R.id.cancelRegister);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    showHomeCancel();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -237,6 +246,13 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         Intent homeIntent = new Intent(this, MainActivity.class);
         homeIntent.putExtra("email", email);
         homeIntent.putExtra("isRegistered","true");
+        startActivity(homeIntent);
+    }
+
+    public void showHomeCancel() throws InterruptedException {
+        Intent homeIntent = new Intent(this, MainActivity.class);
+        homeIntent.putExtra("email", email);
+        homeIntent.putExtra("isRegistered","false");
         startActivity(homeIntent);
     }
 
@@ -318,7 +334,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        mSettings = mMap.getUiSettings();
+        UiSettings mSettings = mMap.getUiSettings();
         mSettings.setZoomControlsEnabled(true);
         mSettings.setRotateGesturesEnabled(true);
 

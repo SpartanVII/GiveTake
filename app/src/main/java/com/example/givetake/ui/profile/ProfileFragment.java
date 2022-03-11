@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

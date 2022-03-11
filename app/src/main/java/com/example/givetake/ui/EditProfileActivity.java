@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,46 +44,47 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
     private EditText name;
     private EditText birthDate;
     private AutoCompleteTextView autoCompleteGender;
+    private String gender;
     private Presenter presenter;
-    private Button confirmButton;
-    private Button cancelButton;
     private String email;
-    private String password;
-    private FirebaseAuth mAuth;
     private GoogleMap mMap;
     private MarkerOptions marker;
-    private UiSettings mSettings;
     private Address lastAddress;
 
-    Geocoder geocoder;
-    Context appContext;
-    androidx.appcompat.widget.SearchView searchView;
+    private Geocoder geocoder;
+    private androidx.appcompat.widget.SearchView searchView;
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_edit_profile);
 
         Bundle bundle = getIntent().getExtras();
-        email = bundle.getString("email");
-        password = bundle.getString("password");
+        if(bundle != null) {
+            email = bundle.getString("email");
+        }else {
+            @SuppressLint("CommitPrefEdits")
+            SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+            email = prefs.getString("email", null);
+        }
+
         presenter = new Presenter();
-        searchView = findViewById(R.id.idSearchView);
+        searchView = findViewById(R.id.editSearchView);
+        name = findViewById(R.id.editName);
 
         User user = presenter.getUser(email.split("@")[0]);
         name.setText(user.getName());
+        gender = user.getGenderToString();
         birthDate.setText(new SimpleDateFormat("dd/MM/yyyy", new Locale("es")).format(user.getBirth()));
-        autoCompleteGender.setText("Hombre");
+        searchView.setQuery(user.getAddressToString(), false);
+        lastAddress = user.getAddress();
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lastAddress.getLatitude(), lastAddress.getLatitude())));
 
-
-
-        mAuth = FirebaseAuth.getInstance();
-        appContext = getApplicationContext();
 
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
         // Obtain the SupportMapFragment and get notified
         // when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.editMap);
 
         // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
@@ -136,14 +137,14 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
     }
 
     private void setup(){
-        name = findViewById(R.id.usuNombre);
+        name = findViewById(R.id.editName);
         dateSetup();
         genderSetup();
         buttonsSetup();
     }
 
     private void dateSetup(){
-        birthDate = findViewById(R.id.usuFechaNac);
+        birthDate = findViewById(R.id.editFechaNac);
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -175,24 +176,24 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         String[] selectGender = {"Hombre", "Mujer", "Otro"};
         ArrayAdapter<String> adapterGender;
 
-        autoCompleteGender = findViewById(R.id.genderSelect);
-        adapterGender = new ArrayAdapter<>(this, R.layout.select_item,selectGender);
+        autoCompleteGender = findViewById(R.id.editGenderSelect);
+        adapterGender = new ArrayAdapter<>(this, R.layout.select_item, selectGender);
         autoCompleteGender.setAdapter(adapterGender);
-        autoCompleteGender.setText("Otro",false);
+        autoCompleteGender.setText(gender,false);
 
     }
 
     private void buttonsSetup(){
-        confirmButton = findViewById(R.id.confirmEdit);
+        Button confirmButton = findViewById(R.id.confirmEdit);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //modificar el user en el service manager
-                //modifyUser();
+                modifyUser();
             }
         });
 
-        cancelButton = findViewById(R.id.cancelEdit);
+        Button cancelButton = findViewById(R.id.cancelEdit);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,10 +207,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         if (!validateForm()) {
             return;
         }
-
-
-
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
+        presenter.addUser(
+                new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate));
         showHome();
+
     }
 
 
@@ -292,12 +295,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
                 if (addresses== null || addresses.isEmpty()){
                     return ;
                 }
-                lastAddress =addresses.get(0);
+                lastAddress = addresses.get(0);
                 mMap.addMarker(new MarkerOptions().position(point));
             }
         });
 
-        mSettings = mMap.getUiSettings();
+        UiSettings mSettings = mMap.getUiSettings();
         mSettings.setZoomControlsEnabled(true);
         mSettings.setRotateGesturesEnabled(true);
 
