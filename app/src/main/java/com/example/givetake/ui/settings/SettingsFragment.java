@@ -74,6 +74,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
         final TextView textView = binding.textSettings;
         settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

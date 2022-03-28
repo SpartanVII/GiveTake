@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -38,6 +40,7 @@ public class ProfileFragment extends Fragment {
         final TextView name = binding.name;
         final TextView address = binding.address;
         final Button editProfile = binding.profile;
+        final ImageView profileImg = binding.prfileImg;
 
         SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String key = prefs.getString("email", null).split("@")[0];
@@ -45,7 +48,7 @@ public class ProfileFragment extends Fragment {
         User user = presenter.getUser(key);
         name.setText(user.getName());
         address.setText(user.getAddressToString());
-        //address.setText(user.getAddress().toString());
+        //profileImg.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_logged));
 
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

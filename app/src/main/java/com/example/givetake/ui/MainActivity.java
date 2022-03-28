@@ -15,6 +15,7 @@ import com.example.givetake.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -71,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-
-
         try {
             session();
         } catch (InterruptedException e) {
@@ -91,8 +90,9 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
-        }
 
+
+        }
 
     }
 
@@ -112,11 +112,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.getItem(2).setEnabled(false);
+
         if (!isRegistered){
             menu.getItem(1).setVisible(false);
+            menu.getItem(2).setIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_logout));
         }
         else {
             menu.getItem(0).setVisible(false);
+            menu.getItem(2).setIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_logged));
         }
 
         return true;
