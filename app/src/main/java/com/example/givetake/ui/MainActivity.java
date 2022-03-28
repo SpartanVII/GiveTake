@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             prefsEditor.apply();
         }
         else{
+            invalidateOptionsMenu();
             email = prefs.getString("email", null);
         }
 
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
+
+
 
         try {
             session();

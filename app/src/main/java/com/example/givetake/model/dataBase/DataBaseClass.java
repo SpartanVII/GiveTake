@@ -35,55 +35,40 @@ public class DataBaseClass {
         db.goOnline();
     }
 
-    public void recover(String email){
-        /*
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Type type = new TypeToken<Map<String, Location>>(){}.getType();
-        try {
-            db.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    String json = (String) task.getResult().get("LManager");
-                    if (json!= null){
-                        Map<String, Location> locs = gson.fromJson( json, type);
-                        Singleton.setLocationManager(locs,new GeoCodingClass());
-                    }else {
-                        Singleton.getLocationManager();
-                    }
-                }
-            });
-        }catch (NullPointerException  e){
-
-        }
-*/
-    }
-
-    public void saveNewUser(User user){
-        try {
+    public void save(User user){
             DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
             userReference.setValue(gson.toJson(user));
-        }catch (Exception e){e.printStackTrace();}
     }
 
-    public void save(User user){
-        DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
-        userReference.setValue(gson.toJson(user));
-
-        DatabaseReference productReference = db.getReference("Products");
-        productReference.setValue(gson.toJson(ProductManagerSingleton.getProductManager()));
+    public void deleteUser(String userKey){
+        db.getReference("Users").child(userKey).removeValue();
     }
 
     public void initialy(){
         Type userType = new TypeToken<Map<String, User>>(){}.getType();
         DatabaseReference userReference = db.getReference("Users");
+
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String json = String.valueOf(dataSnapshot.getValue());
+                System.out.println("lala");
+                System.out.println(json);
+                UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("realtime", "Failed to read value.", error.toException());
+            }
+        });
+            /*
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String json = String.valueOf(dataSnapshot.getValue());
-                System.out.println("data");
-                System.out.println(json);
-                UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
-
+                //Cogeremos el pibe actualizado
+                //Cogeremos sus  productos actualizados y los cambiaremos por los viejos en el Product Manager
             }
 
             @Override
@@ -93,26 +78,7 @@ public class DataBaseClass {
             }
         });
 
-
-        Type productType = new TypeToken<Map<String, List<Product>>>(){}.getType();
-        DatabaseReference prductReference = db.getReference("Products");
-        prductReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //String value = dataSnapshot.getValue(String.class);
-                String json = String.valueOf(dataSnapshot.getValue());
-                ProductManagerSingleton.setProductManager(gson.fromJson(json, productType));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("realtime", "Failed to read value.", error.toException());
-            }
-        });
-
+        */
     }
 
 

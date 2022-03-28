@@ -138,6 +138,7 @@ public class User implements Serializable {
     }
 
     public String getAddressToString(){
-        return address.getLocality()+address.getSubAdminArea()+address.getAdminArea();
+
+        return address.getAddressLine(0);
     }
 }

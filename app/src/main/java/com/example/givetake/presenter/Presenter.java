@@ -26,15 +26,16 @@ public class Presenter {
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
-    public void addUser(User user){
-        userManager.addUser(user);
-        dataBaseClass.saveNewUser(user);
+    public void save(User user){
+        userManager.putUser(user);
+        dataBaseClass.save(user);
     }
 
-    public void modifyUser(User user){
-        userManager.modifyUser(user);
-        dataBaseClass.saveNewUser(user);
+    public void deleteUser(String userKey){
+        userManager.deleteUser(userKey);
+        dataBaseClass.deleteUser(userKey);
     }
+
 
 
     public User getUser(String mail){

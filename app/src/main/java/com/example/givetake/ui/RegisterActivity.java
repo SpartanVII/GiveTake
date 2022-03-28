@@ -220,8 +220,8 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                             try {
                                 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
-                                presenter.addUser(
-                                        new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate));
+                                User user1 = new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate);
+                                presenter.save(user1);
                                 showHome();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -298,15 +298,11 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
             birthDate.setError("Hay que tener 18 años mínimo");
             valid= false;
         }
-        /*
-        TODO Validar la edad
-        TODO Aqui validar la ubicación
 
-        if (password.length()<6){
-            pass.setError("La contraseña debe tener mínimo 6 caracteres");
-            showAlert("La contraseña debe tener mínimo 6 caracteres");
-            valid = false;
-        }*/
+        if(lastAddress==null){
+            searchView.setQuery("Debe poner su dirección", false);
+            valid=false;
+        }
 
         return valid;
     }

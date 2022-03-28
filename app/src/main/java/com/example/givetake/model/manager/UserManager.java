@@ -32,8 +32,12 @@ public class UserManager {
         getUser(product.getOwner()).getTradeProducts().add(product);
     }
 
-    public void addUser(User user){
+    public void putUser(User user){
         userMap.put(user.getMail().split("@")[0], user);
+    }
+
+    public void deleteUser(String userKey){
+        userMap.remove(userKey);
     }
 
     public void modifyUser(User user){

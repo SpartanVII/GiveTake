@@ -50,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
     private GoogleMap mMap;
     private MarkerOptions marker;
     private Address lastAddress;
+    private User user;
 
     private Geocoder geocoder;
     private androidx.appcompat.widget.SearchView searchView;
@@ -72,13 +73,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         searchView = findViewById(R.id.editSearchView);
         name = findViewById(R.id.editName);
 
-        User user = presenter.getUser(email.split("@")[0]);
+        user = presenter.getUser(email.split("@")[0]);
         name.setText(user.getName());
         gender = user.getGenderToString();
-        birthDate.setText(new SimpleDateFormat("dd/MM/yyyy", new Locale("es")).format(user.getBirth()));
         searchView.setQuery(user.getAddressToString(), false);
         lastAddress = user.getAddress();
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lastAddress.getLatitude(), lastAddress.getLatitude())));
+
 
 
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
@@ -90,13 +90,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // on below line we are getting the
-                // location name from search view.
                 String location = searchView.getQuery().toString();
-
-                // below line is to create a list of address
-                // where we will store the list of all address.
-                // checking if  the entered location is null or not.
                 if (location != null || location.equals("")) {
                     mMap.clear();
                     List<Address> addresses = new ArrayList<>();
@@ -133,7 +127,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         // at last we calling our map fragment to update.
         mapFragment.getMapAsync(this);
         setup();
-        searchView.setQuery(user.getAddressToString(), true);
     }
 
     private void setup(){
@@ -168,6 +161,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
                 datePickerDialog.show();
             }
         });
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        birthDate.setText(user.getBirth().format(format));
     }
 
     @SuppressLint("SetTextI18n")
@@ -209,7 +204,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         }
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
-        presenter.addUser(
+        presenter.save(
                 new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate));
         showHome();
 
@@ -265,15 +260,11 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
             birthDate.setError("Hay que tener 18 años mínimo");
             valid= false;
         }
-        /*
-        TODO Validar la edad
-        TODO Aqui validar la ubicación
 
-        if (password.length()<6){
-            pass.setError("La contraseña debe tener mínimo 6 caracteres");
-            showAlert("La contraseña debe tener mínimo 6 caracteres");
-            valid = false;
-        }*/
+        if(lastAddress==null){
+            searchView.setQuery("Debe poner su dirección", false);
+            valid=false;
+        }
 
         return valid;
     }
@@ -299,6 +290,9 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
                 mMap.addMarker(new MarkerOptions().position(point));
             }
         });
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lastAddress.getLatitude(), lastAddress.getLatitude())));
+        searchView.setQuery(user.getAddressToString(), true);
+
 
         UiSettings mSettings = mMap.getUiSettings();
         mSettings.setZoomControlsEnabled(true);

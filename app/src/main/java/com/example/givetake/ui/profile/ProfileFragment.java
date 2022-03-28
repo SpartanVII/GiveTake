@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
 
         User user = presenter.getUser(key);
         name.setText(user.getName());
+        address.setText(user.getAddressToString());
         //address.setText(user.getAddress().toString());
 
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
