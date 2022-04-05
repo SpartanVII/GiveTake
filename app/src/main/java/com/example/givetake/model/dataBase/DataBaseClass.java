@@ -40,6 +40,8 @@ public class DataBaseClass {
             userReference.setValue(gson.toJson(user));
     }
 
+
+
     public void deleteUser(String userKey){
         db.getReference("Users").child(userKey).removeValue();
     }
@@ -52,7 +54,6 @@ public class DataBaseClass {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String json = String.valueOf(dataSnapshot.getValue());
-                System.out.println("lala");
                 System.out.println(json);
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
             }

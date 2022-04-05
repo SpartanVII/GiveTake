@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -24,7 +25,8 @@ import com.example.givetake.databinding.FragmentProfileBinding;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.EditProfileActivity;
-import com.example.givetake.ui.profile.listProduct.ViewPagerAdapter;
+import com.example.givetake.ui.profile.listProduct.TabAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class ProfileFragment extends Fragment {
@@ -46,6 +48,7 @@ public class ProfileFragment extends Fragment {
         final TextView address = binding.address;
         final Button editProfile = binding.profile;
         final ImageView profileImg = binding.prfileImg;
+
 
         SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String key = prefs.getString("email", null).split("@")[0];
@@ -78,8 +81,8 @@ public class ProfileFragment extends Fragment {
         viewPager = binding.viewPager;
         tabLayout.setupWithViewPager(viewPager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
+        TabAdapter tabAdapter = new TabAdapter(getFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPager.setAdapter(tabAdapter);
 
         /*
         try {

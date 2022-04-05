@@ -4,10 +4,11 @@ import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserManager {
-    Map<String, User> userMap;
+    private Map<String, User> userMap;
 
     public UserManager(Map<String, User> userMap) {
         this.userMap = userMap;
@@ -28,8 +29,8 @@ public class UserManager {
         this.userMap = userMap;
     }
 
-    public void addProduct(Product product){
-        getUser(product.getOwner()).getTradeProducts().add(product);
+    public Product addProduct(Product product){
+        return getUser(product.getOwner()).addTradableProduct(product);
     }
 
     public void putUser(User user){

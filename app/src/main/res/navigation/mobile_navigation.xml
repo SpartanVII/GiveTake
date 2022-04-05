@@ -22,4 +22,5 @@
         android:name="com.example.givetake.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
+
 </navigation>

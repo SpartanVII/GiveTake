@@ -21,8 +21,8 @@ public class Presenter {
     }
 
     public void addProduct(Product product){
-        userManager.addProduct(product);
-        productManager.addProduct(product);
+        Product productWithKey = userManager.addProduct(product);
+        productManager.addProduct(productWithKey);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 

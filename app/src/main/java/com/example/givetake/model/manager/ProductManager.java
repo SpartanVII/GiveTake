@@ -8,23 +8,27 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductManager {
-    Map<String, List<Product>> productMap;
+    Map<String, Map<String, Product>> productMap;
 
-    public ProductManager(Map<String, List<Product>> productMap) {
+    public ProductManager(Map<String, Map<String, Product>> productMap) {
         this.productMap = productMap;
     }
 
-    public ProductManager() { productMap = new HashMap<>();
+    public ProductManager() {
+        productMap = new HashMap<>();
     }
 
-    public List<Product> getProducts(String mail){
-        return productMap.get(mail);
-    }
 
     public void addProduct(Product product){
-        List<Product> products = productMap.get(product.getTag());
-        if(products == null) products = new ArrayList<>();
-        products.add(product);
+        if (productMap.get(product.getTag())==null){
+            productMap.put(product.getTag(), new HashMap<>());
+            productMap.get(product.getTag()).put(product.getId(), product);
+        }
+        else {
+            productMap.get(product.getTag()).put(product.getId(), product);
+        }
     }
+
+
 
 }

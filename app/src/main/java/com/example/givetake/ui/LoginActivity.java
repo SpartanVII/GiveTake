@@ -111,27 +111,6 @@ public class LoginActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        /*
-        mAuth.createUserWithEmailAndPassword(email,pass)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            assert user != null;
-                            try {
-                                showRegister();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }else {
-                            Toast.makeText(appContext, "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
-                            showAlert( "No te has podido registrar");
-                        }
-                    }
-                });
-
-         */
     }
 
 

@@ -6,6 +6,7 @@ import com.google.android.material.timepicker.TimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
@@ -13,11 +14,13 @@ public class User implements Serializable {
     private Address address;
     private double globalScore;
     private String mail;        //Private info
-    private Gender gender;       //Private info
+    private Gender gender;      //Private info
     private LocalDate birth;    //Private info
     private List<Swap> swaps;
     private List<Product> tradeProducts;
     private List<Product> swapedProducts;
+    private List<String> favProducts;
+    private int nProduct;       //Private info
 
     public User(String name, Address address, String mail, String gender, LocalDate birth) {
         this.name = name;
@@ -26,6 +29,11 @@ public class User implements Serializable {
         this.mail = mail;
         this.gender = fromStrToGender(gender);
         this.birth = birth;
+        swaps = new ArrayList<>();
+        tradeProducts = new ArrayList<>();
+        swapedProducts = new ArrayList<>();
+        favProducts = new ArrayList<>();
+        this.nProduct = 0;
     }
 
     public void setGlobalScore(double globalScore) {
@@ -108,6 +116,14 @@ public class User implements Serializable {
         this.swapedProducts = swapedProducts;
     }
 
+    public int getnProduct() {
+        return nProduct;
+    }
+
+    public void setnProduct(int nProduct) {
+        this.nProduct = nProduct;
+    }
+
     public enum Gender {
         MALE,
         FEMALE,
@@ -140,5 +156,14 @@ public class User implements Serializable {
     public String getAddressToString(){
 
         return address.getAddressLine(0);
+    }
+
+    public Product addTradableProduct(Product product){
+        String id = getMail().split("@")[0]+"#"+nProduct;
+        product.setId(id);
+        product.setOwner(getMail());
+        tradeProducts.add(product);
+        nProduct += 1;
+        return product;
     }
 }

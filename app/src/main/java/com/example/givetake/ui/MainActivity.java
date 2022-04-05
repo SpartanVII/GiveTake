@@ -54,23 +54,14 @@ public class MainActivity extends AppCompatActivity {
             //Guardado de datos de inicio
             SharedPreferences.Editor prefsEditor = prefs.edit();
             prefsEditor.putString("email", email);
+            prefsEditor.putString("isRegistered", isRegistered+"");
             prefsEditor.apply();
         }
         else{
             invalidateOptionsMenu();
             email = prefs.getString("email", null);
+            isRegistered =  Boolean.parseBoolean(prefs.getString("isRegistered", null));
         }
-
-
-
-        /*
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         try {
             session();
@@ -90,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
-
-
         }
 
     }

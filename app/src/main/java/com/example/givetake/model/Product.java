@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Product implements Serializable {
+    private String id;
     private String title;
     private String description;
     private String img;
@@ -18,6 +19,8 @@ public class Product implements Serializable {
         this.tag = tag;
     }
 
+    public Product() {
+    }
 
     public String getTitle() {
         return title;
@@ -57,5 +60,13 @@ public class Product implements Serializable {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

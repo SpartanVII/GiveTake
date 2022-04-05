@@ -46,7 +46,14 @@
     <!-- settings -->
     <string name="delete_account">Si deseas eliminar la cuenta actual de forma permanente pulsa el botón</string>
     <string name="delete_account_button">Borrar</string>
+
+    <!-- adapter -->
     <string name="list_item_name_product">Nombre prodcuto</string>
 
+    <!-- add product -->
+    <string name="add_product_name_hint">Nombre del producto</string>
+    <string name="add_product_txt_desc">Descripción:</string>
+    <string name="add_product_desc_hint">Describa aquí su producto</string>
+    <string name="add_prtoduct_txt_cat">Categoría:</string>
 
 </resources>

@@ -1,0 +1,36 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <!-- add product category-->
+    <string-array name="category">
+        <item>Coches</item>
+        <item>Motos</item>
+        <item>Motor y Accesorios</item>
+        <item>Moda y Accesorios</item>
+        <item>Immobiliaría</item>
+        <item>TV, Audio y Foto</item>
+        <item>Móviles y Telefonía</item>
+        <item>Informatica y Electrónica</item>
+        <item>Deporte y Ocio"</item>
+        <item>Bicicletas</item>
+        <item>Consolas y Videojuegos</item>
+        <item>Hogar y Jardín</item>
+        <item>Electrodomésticos</item>
+        <item>Cine, Libros y Música</item>
+        <item>Niños y Bebés</item>
+        <item>Coleccionismo</item>
+        <item>Materiales de Construcción</item>
+        <item>Servicios</item>
+        <item>Otros</item>
+    </string-array>
+
+</resources>
