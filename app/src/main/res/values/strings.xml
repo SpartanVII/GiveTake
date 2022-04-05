@@ -46,6 +46,7 @@
     <!-- settings -->
     <string name="delete_account">Si deseas eliminar la cuenta actual de forma permanente pulsa el botón</string>
     <string name="delete_account_button">Borrar</string>
+    <string name="list_item_name_product">Nombre prodcuto</string>
 
 
 </resources>
