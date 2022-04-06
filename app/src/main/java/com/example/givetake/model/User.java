@@ -159,9 +159,8 @@ public class User implements Serializable {
     }
 
     public Product addTradableProduct(Product product){
-        String id = getMail().split("@")[0]+"#"+nProduct;
+        String id = product.getOwner().split("@")[0]+"#"+nProduct;
         product.setId(id);
-        product.setOwner(getMail());
         tradeProducts.add(product);
         nProduct += 1;
         return product;

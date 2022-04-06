@@ -8,6 +8,8 @@ import com.example.givetake.model.dataBase.DataBaseClass;
 import com.example.givetake.model.manager.ProductManager;
 import com.example.givetake.model.manager.UserManager;
 
+import java.util.List;
+
 public class Presenter {
     DataBaseClass dataBaseClass;
     UserManager userManager;
@@ -42,7 +44,12 @@ public class Presenter {
         return userManager.getUser(mail);
     }
 
+    public List<Product> getProductsByTag(String tag){
+        return productManager.getProductsByTag(tag);
+    }
+
     public void initiality(){
         dataBaseClass.initialy();
+        ProductManagerSingleton.createProductManager(userManager);
     }
 }

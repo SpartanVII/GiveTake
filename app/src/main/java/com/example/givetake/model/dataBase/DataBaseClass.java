@@ -56,6 +56,7 @@ public class DataBaseClass {
                 String json = String.valueOf(dataSnapshot.getValue());
                 System.out.println(json);
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
+                ProductManagerSingleton.createProductManagerWithMap(gson.fromJson(json, userType));
             }
 
             @Override

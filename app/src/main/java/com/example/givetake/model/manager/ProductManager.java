@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 public class ProductManager {
     Map<String, Map<String, Product>> productMap;
 
@@ -27,6 +29,20 @@ public class ProductManager {
         else {
             productMap.get(product.getTag()).put(product.getId(), product);
         }
+    }
+
+    public List<Product> getProductsByTag(@Nullable String tag){
+        List<Product> productList = new ArrayList<>();
+        if (tag==null) tag="Todos";
+        if (tag.equals("Todos")){
+            for (Map<String, Product> map : productMap.values()){
+                productList.addAll(map.values());
+            }
+        }
+        else{
+            productList.addAll(productMap.get(tag).values());
+        }
+        return productList;
     }
 
 

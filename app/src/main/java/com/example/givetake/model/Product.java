@@ -69,4 +69,14 @@ public class Product implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String toString(){
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append("Id: ").append(id).append(", ");
+        strBuilder.append("Nombre: ").append(title).append(", ");
+        strBuilder.append("Descripción: ").append(description).append(", ");
+        strBuilder.append("Propietario: ").append(owner).append(", ");
+        strBuilder.append("Categoría: ").append(tag);
+        return strBuilder.toString();
+    }
 }

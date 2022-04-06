@@ -36,4 +36,14 @@ public class ProductManagerSingleton {
         }
         setProductManager(productManager);
     }
+
+    public static synchronized void createProductManagerWithMap(Map<String, User> userMap){
+        ProductManager productManager = new ProductManager();
+        for (User user :userMap.values()){
+            for (Product product : user.getTradeProducts()){
+                productManager.addProduct(product);
+            }
+        }
+        setProductManager(productManager);
+    }
 }

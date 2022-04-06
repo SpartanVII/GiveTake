@@ -4,25 +4,19 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
-import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
-import com.example.givetake.ui.MainActivity;
 
 
 public class AddProductActivity extends AppCompatActivity {
@@ -31,15 +25,14 @@ public class AddProductActivity extends AppCompatActivity {
     private EditText desc;
     private Spinner spinner;
     private Presenter presenter;
-    Context appContext;
-    androidx.appcompat.widget.SearchView searchView;
 
 
     @SuppressLint("ResourceType")
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
-        setContentView(R.layout.activity_add_producr);
+        setContentView(R.layout.activity_new_product);
         //setSupportActionBar(findViewById(R.layout.app_bar_main));
+        //setTitle("Añadir Producto");
 
         Button confirmButton = findViewById(R.id.confirmProduct);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -65,11 +58,9 @@ public class AddProductActivity extends AppCompatActivity {
         desc = findViewById(R.id.addProductDesc);
         presenter = new Presenter();
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category, R.layout.support_simple_spinner_dropdown_item );
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category_add_product, R.layout.support_simple_spinner_dropdown_item );
         spinner.setAdapter(adapter);
     }
-
-
 
     private void addProduct() {
         if (!validateForm()) {
@@ -79,6 +70,7 @@ public class AddProductActivity extends AppCompatActivity {
         product.setTitle(name.getText().toString());
         product.setDescription(desc.getText().toString());
         product.setOwner(email.split("@")[0]);
+        product.setTag(spinner.getSelectedItem().toString());
         presenter.addProduct(product);
         showHome();
     }
@@ -101,23 +93,14 @@ public class AddProductActivity extends AppCompatActivity {
             this.name.setError(null);
         }
 
-
+        String desc = this.desc.getText().toString();
+        if (TextUtils.isEmpty(desc)) {
+            this.name.setError("Obligatorio");
+            valid = false;
+        } else {
+            this.name.setError(null);
+        }
 
         return valid;
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        menu.getItem(2).setEnabled(false);
-        menu.getItem(0).setVisible(false);
-        menu.getItem(2).setIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_logged));
-
-        return true;
-    }
-
-     */
-
 }

@@ -84,16 +84,6 @@ public class ProfileFragment extends Fragment {
         TabAdapter tabAdapter = new TabAdapter(getFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(tabAdapter);
 
-        /*
-        try {
-            addNewsTab(location, tabAdapter);
-            addCurrentTimeTab(location, tabAdapter);
-        } catch (ConnectionException e) {
-            e.printStackTrace();
-        }
-
-         */
-
         return root;
     }
 
