@@ -22,6 +22,7 @@ import com.example.givetake.databinding.FragmentHomeBinding;
 import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.AddProductActivity;
+import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.profile.listProduct.ListAdapterProducts;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -81,11 +82,9 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*Intent intent = new Intent(this, InfoubiActivity.class);;
+                Intent intent = new Intent(getContext(), InfoProductActivity.class);
                 intent.putExtra("productKey", productList.get(position).getId());
                 startActivity(intent);
-
-                 */
             }
         });
 

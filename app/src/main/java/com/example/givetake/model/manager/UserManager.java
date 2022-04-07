@@ -18,7 +18,7 @@ public class UserManager {
     }
 
     public User getUser(String mail){
-        return userMap.get(mail);
+        return userMap.get(mail.split("@")[0]);
     }
 
     public Map<String, User> getUserMap() {

@@ -9,9 +9,7 @@
         android:roundIcon="@drawable/our_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.GiveTake">
-        <activity
-            android:name=".ui.activities.InfoProductActivity"
-            android:exported="false" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -30,7 +28,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.GiveTake.NoActionBar"></activity>
+            android:theme="@style/Theme.GiveTake.NoActionBar" />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
@@ -47,6 +45,10 @@
             android:name=".ui.activities.AddProductActivity"
             android:exported="true"
             android:theme="@style/Theme.GiveTake.NoActionBar" />
+        <activity
+            android:name=".ui.activities.InfoProductActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GiveTake.NoActionBar"/>
     </application>
 
 </manifest>
