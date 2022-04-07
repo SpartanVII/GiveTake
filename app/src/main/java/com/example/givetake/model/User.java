@@ -25,7 +25,7 @@ public class User implements Serializable {
     public User(String name, Address address, String mail, String gender, LocalDate birth) {
         this.name = name;
         this.address = address;
-        this.globalScore = 0.0;
+        this.globalScore = 5.0;
         this.mail = mail;
         this.gender = fromStrToGender(gender);
         this.birth = birth;

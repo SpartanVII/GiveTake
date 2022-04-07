@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
+import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 
 public class InfoProductActivity extends AppCompatActivity {
@@ -30,6 +31,8 @@ public class InfoProductActivity extends AppCompatActivity {
             productKey = savedInstanceState.get("productKey").toString();
         }
         Product product = presenter.getProduct(productKey);
+        User vendor = presenter.getUser(product.getOwner());
+
 
 
     }
