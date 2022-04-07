@@ -1,9 +1,10 @@
-package com.example.givetake.ui;
+package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -16,9 +17,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.givetake.R;
 import com.example.givetake.model.User;
@@ -30,11 +30,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -45,70 +40,77 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class RegisterActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class EditProfileActivity extends AppCompatActivity implements OnMapReadyCallback {
     private EditText name;
     private EditText birthDate;
     private AutoCompleteTextView autoCompleteGender;
+    private String gender;
     private Presenter presenter;
     private String email;
-    private String password;
-    private FirebaseAuth mAuth;
     private GoogleMap mMap;
     private MarkerOptions marker;
     private Address lastAddress;
+    private Toolbar toolbar;
+    private User user;
 
-    Geocoder geocoder;
-    Context appContext;
-    androidx.appcompat.widget.SearchView searchView;
-
+    private Geocoder geocoder;
+    private androidx.appcompat.widget.SearchView searchView;
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_edit_profile);
 
         Bundle bundle = getIntent().getExtras();
-        email = bundle.getString("email");
-        password = bundle.getString("password");
-        presenter = new Presenter();
-        searchView = findViewById(R.id.registerSearchView);
+        if(bundle != null) {
+            email = bundle.getString("email");
+        }else {
+            @SuppressLint("CommitPrefEdits")
+            SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+            email = prefs.getString("email", null);
+        }
 
-        mAuth = FirebaseAuth.getInstance();
-        appContext = getApplicationContext();
+        presenter = new Presenter();
+        searchView = findViewById(R.id.editSearchView);
+        name = findViewById(R.id.editName);
+        toolbar = findViewById(R.id.toolbarEditProfile);
+
+        setSupportActionBar(toolbar);
+        setTitle("Editar perfil");
+
+
+        user = presenter.getUser(email.split("@")[0]);
+        name.setText(user.getName());
+        gender = user.getGenderToString();
+        searchView.setQuery(user.getAddressToString(), false);
+        lastAddress = user.getAddress();
+
+
 
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
         // Obtain the SupportMapFragment and get notified
         // when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.registerMap);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.editMap);
 
         // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // on below line we are getting the
-                // location name from search view.
                 String location = searchView.getQuery().toString();
-
-                // below line is to create a list of address
-                // where we will store the list of all address.
-                // checking if  the entered location is null or not.
-                if (location == null || location.equals("")) {
-                    return false;
-                }
-                if (Geocoder.isPresent()) {
+                if (location != null || location.equals("")) {
                     mMap.clear();
                     List<Address> addresses = new ArrayList<>();
                     try {
-                        addresses = geocoder.getFromLocationName(location, 1);
+                        addresses = geocoder.getFromLocationName(location,1);
                     } catch (IOException e) {
-                        Toast.makeText(RegisterActivity.this, "No se pudo conectar a internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "No se pudo conectar a internet", Toast.LENGTH_SHORT).show();
                     }
 
-                    if (addresses == null || addresses.isEmpty()) {
+                    if (addresses== null || addresses.isEmpty()){
                         return false;
                     }
 
-                    lastAddress = addresses.get(0);
+                    lastAddress =addresses.get(0);
                     // on below line we are creating a variable for our location
                     // where we will add our locations latitude and longitude.
                     LatLng latLng = new LatLng(lastAddress.getLatitude(), lastAddress.getLongitude());
@@ -117,9 +119,9 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                     mMap.addMarker(marker);
                     // below line is to animate camera to that position.
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                }
+                    }
                 return  true;
-            }
+                }
 
 
             @Override
@@ -134,25 +136,24 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void setup(){
-        name = findViewById(R.id.registerName);
+        name = findViewById(R.id.editName);
         dateSetup();
         genderSetup();
         buttonsSetup();
     }
 
     private void dateSetup(){
-        birthDate = findViewById(R.id.registerFechaNac);
+        birthDate = findViewById(R.id.editFechaNac);
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-
         birthDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog =
-                        new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        new DatePickerDialog(EditProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 month = month + 1;
@@ -166,6 +167,8 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                 datePickerDialog.show();
             }
         });
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        birthDate.setText(user.getBirth().format(format));
     }
 
     @SuppressLint("SetTextI18n")
@@ -174,85 +177,50 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         String[] selectGender = {"Hombre", "Mujer", "Otro"};
         ArrayAdapter<String> adapterGender;
 
-        autoCompleteGender = findViewById(R.id.registerGenderSelect);
+        autoCompleteGender = findViewById(R.id.editGenderSelect);
         adapterGender = new ArrayAdapter<>(this, R.layout.select_item, selectGender);
         autoCompleteGender.setAdapter(adapterGender);
-        autoCompleteGender.setText("Otro",false);
+        autoCompleteGender.setText(gender,false);
 
     }
 
     private void buttonsSetup(){
-        Button confirmButton = findViewById(R.id.confirmRegister);
+        Button confirmButton = findViewById(R.id.confirmEdit);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUp();
+                //modificar el user en el service manager
+                modifyUser();
             }
         });
 
-        Button cancelButton = findViewById(R.id.cancelRegister);
+        Button cancelButton = findViewById(R.id.cancelEdit);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    showHomeCancel();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                showHome();
             }
         });
     }
 
 
-
-    private void signUp() {
+    private void modifyUser() {
         if (!validateForm()) {
             return;
         }
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
+        presenter.save(
+                new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate));
+        showHome();
 
-        mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            assert user != null;
-                            try {
-                                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                                LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
-                                User user1 = new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate);
-                                presenter.save(user1);
-                                showHome();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }else {
-                            Toast.makeText(appContext, "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
-                            showAlert( "No te has podido registrar");
-                        }
-                    }
-                });
     }
 
-    public void showAlert(String msg){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("Error").setMessage(msg)
-                .setPositiveButton("Aceptar",null);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
-    public void showHome() throws InterruptedException {
+    public void showHome() {
         Intent homeIntent = new Intent(this, MainActivity.class);
         homeIntent.putExtra("email", email);
         homeIntent.putExtra("isRegistered","true");
-        startActivity(homeIntent);
-    }
-
-    public void showHomeCancel() throws InterruptedException {
-        Intent homeIntent = new Intent(this, MainActivity.class);
-        homeIntent.putExtra("email", email);
-        homeIntent.putExtra("isRegistered","false");
         startActivity(homeIntent);
     }
 
@@ -313,22 +281,24 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) {
-                if (Geocoder.isPresent()){
-                    mMap.clear();
-                    List<Address> addresses = new ArrayList<>();
-                    try {
-                        addresses = geocoder.getFromLocation(point.latitude, point.longitude, 1);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (addresses== null || addresses.isEmpty()){
-                        return ;
-                    }
-                    lastAddress =addresses.get(0);
-                    mMap.addMarker(new MarkerOptions().position(point));
+                mMap.clear();
+
+                List<Address> addresses = new ArrayList<>();
+                try {
+                    addresses = geocoder.getFromLocation(point.latitude, point.longitude, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                if (addresses== null || addresses.isEmpty()){
+                    return ;
+                }
+                lastAddress = addresses.get(0);
+                mMap.addMarker(new MarkerOptions().position(point));
             }
         });
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lastAddress.getLatitude(), lastAddress.getLatitude())));
+        searchView.setQuery(user.getAddressToString(), true);
+
 
         UiSettings mSettings = mMap.getUiSettings();
         mSettings.setZoomControlsEnabled(true);

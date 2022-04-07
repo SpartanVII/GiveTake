@@ -61,26 +61,10 @@ public class DataBaseClass {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("realtime", "Failed to read value.", error.toException());
-            }
-        });
-            /*
-        userReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Cogeremos el pibe actualizado
-                //Cogeremos sus  productos actualizados y los cambiaremos por los viejos en el Product Manager
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
                 Log.w("realtime", "Failed to read value.", error.toException());
             }
         });
 
-        */
     }
 
 

@@ -8,6 +8,7 @@ import com.example.givetake.model.dataBase.DataBaseClass;
 import com.example.givetake.model.manager.ProductManager;
 import com.example.givetake.model.manager.UserManager;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Presenter {
@@ -38,14 +39,16 @@ public class Presenter {
         dataBaseClass.deleteUser(userKey);
     }
 
-
-
     public User getUser(String mail){
         return userManager.getUser(mail);
     }
 
     public List<Product> getProductsByTag(String tag){
         return productManager.getProductsByTag(tag);
+    }
+
+    public Product getProduct(String key){
+        return productManager.getProduct(key);
     }
 
     public void initiality(){

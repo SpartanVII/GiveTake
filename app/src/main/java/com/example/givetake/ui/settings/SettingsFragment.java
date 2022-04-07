@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.PluralsRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -21,8 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentSettingsBinding;
 import com.example.givetake.presenter.Presenter;
-import com.example.givetake.ui.LoginActivity;
-import com.example.givetake.ui.MainActivity;
+import com.example.givetake.ui.activities.LoginActivity;
+import com.example.givetake.ui.activities.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

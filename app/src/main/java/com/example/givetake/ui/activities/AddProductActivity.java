@@ -1,4 +1,4 @@
-package com.example.givetake.ui;
+package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
@@ -20,19 +21,17 @@ import com.example.givetake.presenter.Presenter;
 
 
 public class AddProductActivity extends AppCompatActivity {
+    private Presenter presenter = new Presenter();
     private String email;
     private EditText name;
     private EditText desc;
     private Spinner spinner;
-    private Presenter presenter;
-
+    private Toolbar toolbar;
 
     @SuppressLint("ResourceType")
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
         setContentView(R.layout.activity_new_product);
-        //setSupportActionBar(findViewById(R.layout.app_bar_main));
-        //setTitle("Añadir Producto");
 
         Button confirmButton = findViewById(R.id.confirmProduct);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -53,10 +52,13 @@ public class AddProductActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         email = prefs.getString("email", null);
 
-        spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinnerProduct);
         name = findViewById(R.id.addProductName);
         desc = findViewById(R.id.addProductDesc);
-        presenter = new Presenter();
+        toolbar = findViewById(R.id.toolbarAddProduct);
+
+        setSupportActionBar(toolbar);
+        setTitle("Añadir producto");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category_add_product, R.layout.support_simple_spinner_dropdown_item );
         spinner.setAdapter(adapter);

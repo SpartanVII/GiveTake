@@ -29,22 +29,28 @@ public class ProductManager {
         else {
             productMap.get(product.getTag()).put(product.getId(), product);
         }
+        System.out.println(productMap);
     }
 
     public List<Product> getProductsByTag(@Nullable String tag){
         List<Product> productList = new ArrayList<>();
-        if (tag==null) tag="Todos";
+        if (tag==null) tag = "Todos";
         if (tag.equals("Todos")){
             for (Map<String, Product> map : productMap.values()){
                 productList.addAll(map.values());
             }
         }
         else{
+            if (productMap.get(tag)==null) return productList;
             productList.addAll(productMap.get(tag).values());
         }
         return productList;
     }
 
-
-
+    public  Product getProduct(String key){
+        for (Map<String, Product> categoryMap: productMap.values()){
+            if (categoryMap.get(key)!=null) return categoryMap.get(key);
+        }
+        return null;
+    }
 }

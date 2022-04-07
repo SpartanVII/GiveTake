@@ -1,7 +1,6 @@
-package com.example.givetake.ui;
+package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,25 +12,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.givetake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
+    private Toolbar toolbar;
     Button signInButton;
     Button signUpButton;
-    String mail;
     String password;
     EditText email;
     EditText pass;
-    Context appContext;
-    private FirebaseAuth mAuth;
-
+    String mail;
 
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
@@ -39,12 +37,14 @@ public class LoginActivity extends AppCompatActivity {
 
         signInButton = findViewById(R.id.emailSignInButton);
         signUpButton = findViewById(R.id.emailSignUpButton);
-
         email = findViewById(R.id.fieldEmail);
         pass = findViewById(R.id.fieldPassword);
-        mAuth = FirebaseAuth.getInstance();
+        toolbar = findViewById(R.id.toolbarLogin);
 
-        appContext=getApplicationContext();
+        setSupportActionBar(toolbar);
+        setTitle("Iniciar sesión");
+
+        mAuth = FirebaseAuth.getInstance();
         setup();
     }
 
@@ -53,9 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         findViewById(R.id.login_layout).setVisibility(View.VISIBLE);
     }
-
-
-
 
     public void setup(){
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -93,12 +90,13 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }else {
-                            Toast.makeText(appContext, "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Fallo de autentificación.", Toast.LENGTH_SHORT).show();
                             showAlert("Se ha producido un error en la autentificación de usuario");
                         }
                     }
                 });
     }
+
 
     private void signUp(String email, String pass){
         if (!validateForm()) {

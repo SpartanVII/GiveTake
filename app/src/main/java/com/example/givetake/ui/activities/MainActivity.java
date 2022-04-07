@@ -1,4 +1,4 @@
-package com.example.givetake.ui;
+package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
 
 import com.example.givetake.R;
 import com.example.givetake.presenter.Presenter;
-import com.example.givetake.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        presenter.initiality();
         setSupportActionBar(binding.appBarMain.toolbar);
 
         @SuppressLint("CommitPrefEdits")

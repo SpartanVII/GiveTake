@@ -15,9 +15,6 @@ import com.example.givetake.presenter.Presenter;
 
 public class ProfileProductFragment extends Fragment {
     private Presenter presenter = new Presenter();
-
-    ListView list;
-
     public ProfileProductFragment() {
     }
 
