@@ -97,10 +97,23 @@ public class AddProductActivity extends AppCompatActivity {
 
         String desc = this.desc.getText().toString();
         if (TextUtils.isEmpty(desc)) {
-            this.name.setError("Obligatorio");
+            this.desc.setError("Obligatorio");
             valid = false;
-        } else {
-            this.name.setError(null);
+        }
+        else if (desc.length()<120) {
+            this.desc.setError("Mínimo 120 carácteres");
+            valid = false;
+        }
+        else if (desc.length()>300) {
+            this.desc.setError("Máximo 300 carácteres");
+            valid = false;
+        }
+        else if (desc.split(" ").length>7) {
+        this.desc.setError("Usa palabras por favor");
+        valid = false;
+        }
+        else {
+            this.desc.setError(null);
         }
 
         return valid;

@@ -47,6 +47,12 @@ public class Presenter {
         return productManager.getProductsByTag(tag);
     }
 
+    /*public List<Product> getProductsByTagAndExludeMyPorducts(String tag, String userMail){
+        return productManager.getProductsByTag(tag);
+    }
+
+     */
+
     public Product getProduct(String key){
         return productManager.getProduct(key);
     }

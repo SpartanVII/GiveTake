@@ -57,11 +57,13 @@ public class DataBaseClass {
                 System.out.println(json);
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
                 ProductManagerSingleton.createProductManagerWithMap(gson.fromJson(json, userType));
+                Log.w("Firebase", "Datos cargados");
+
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Log.w("realtime", "Failed to read value.", error.toException());
+                Log.w("Firebase", "Failed to read value.", error.toException());
             }
         });
 

@@ -47,6 +47,12 @@ public class ProductManager {
         return productList;
     }
 
+    /*public List<Product> getProductsByTagAndExludeMyPorducts(@Nullable String tag, String userMail){
+        return productManager.getProductsByTag(tag);
+    }
+    
+     */
+
     public  Product getProduct(String key){
         for (Map<String, Product> categoryMap: productMap.values()){
             if (categoryMap.get(key)!=null) return categoryMap.get(key);

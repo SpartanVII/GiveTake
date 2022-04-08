@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                productList.clear();
                 productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
                 ListAdapterProducts listAdapterInfo = new ListAdapterProducts(productList, getContext());
                 listView.setAdapter(listAdapterInfo);
