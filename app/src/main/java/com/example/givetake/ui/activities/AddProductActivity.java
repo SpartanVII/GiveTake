@@ -19,6 +19,8 @@ import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
 
+import java.util.Objects;
+
 
 public class AddProductActivity extends AppCompatActivity {
     private Presenter presenter = new Presenter();
@@ -32,6 +34,11 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
         setContentView(R.layout.activity_new_product);
+
+        toolbar = findViewById(R.id.toolbarAddProduct);
+        setSupportActionBar(toolbar);
+        setTitle("Añadir producto");
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Button confirmButton = findViewById(R.id.confirmProduct);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -55,10 +62,6 @@ public class AddProductActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spinnerProduct);
         name = findViewById(R.id.addProductName);
         desc = findViewById(R.id.addProductDesc);
-        toolbar = findViewById(R.id.toolbarAddProduct);
-
-        setSupportActionBar(toolbar);
-        setTitle("Añadir producto");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category_add_product, R.layout.support_simple_spinner_dropdown_item );
         spinner.setAdapter(adapter);

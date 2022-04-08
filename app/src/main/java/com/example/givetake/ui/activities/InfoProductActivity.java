@@ -1,8 +1,12 @@
 package com.example.givetake.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -10,8 +14,21 @@ import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class InfoProductActivity extends AppCompatActivity {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class InfoProductActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Presenter presenter;
     private String productKey;
     private Toolbar toolbar;
@@ -20,6 +37,9 @@ public class InfoProductActivity extends AppCompatActivity {
     private TextView vendorName;
     private TextView vendorNote;
     private TextView vendorAddress;
+    private Address vendorAddres;
+    private GoogleMap mMap;
+
 
 
     @Override
@@ -36,6 +56,7 @@ public class InfoProductActivity extends AppCompatActivity {
         presenter = new Presenter();
         setSupportActionBar(toolbar);
         setTitle("Información del producto");
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
@@ -47,9 +68,33 @@ public class InfoProductActivity extends AppCompatActivity {
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
         vendorName.setText(vendor.getName());
-        vendorNote.setText(""+vendor.getGlobalScore());
+        vendorNote.setText(Double.toString(vendor.getGlobalScore()));
         vendorAddress.setText(vendor.getAddressToString());
+        vendorAddres = vendor.getAddress();
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productInforMap);
+        mapFragment.getMapAsync(this);
+
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng latLng = new LatLng(vendorAddres.getLatitude(),vendorAddres.getLongitude());
+        mMap.addCircle(new CircleOptions()
+                .center(latLng)
+                .radius(200)
+                .strokeWidth(1)
+                .strokeColor(Color.argb(200, 30, 178, 255))
+                .fillColor(Color.argb(120, 102, 178, 255))
+                .clickable(true));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+        UiSettings mSettings = mMap.getUiSettings();
+        mSettings.setZoomControlsEnabled(false);
+        mSettings.setRotateGesturesEnabled(false);
+        mSettings.setScrollGesturesEnabled(false);
 
     }
 }

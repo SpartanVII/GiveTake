@@ -21,7 +21,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="20dp"
-                android:src="@drawable/ic_logged" />
+                android:src="@drawable/wii" />
 
 
             <LinearLayout
@@ -44,6 +44,7 @@
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:maxLines="2"
                     android:text="Descripción, Descripción,Descripción,Descripción,Descripción" />
 
             </LinearLayout>

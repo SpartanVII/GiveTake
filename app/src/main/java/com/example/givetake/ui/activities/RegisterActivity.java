@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         setSupportActionBar(toolbar);
         setTitle("Registro");
 
-        geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
+        geocoder  = new Geocoder(getApplicationContext(), new Locale("es_Es"));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.registerMap);
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                     LatLng latLng = new LatLng(lastAddress.getLatitude(), lastAddress.getLongitude());
                     marker = new MarkerOptions().position(latLng).title(location);
                     mMap.addMarker(marker);
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 }
                 return  true;
             }
@@ -119,7 +119,6 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        // at last we calling our map fragment to update.
         mapFragment.getMapAsync(this);
         setup();
     }

@@ -70,6 +70,7 @@ public class ProfileFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         TabAdapter tabAdapter = new TabAdapter(getActivity().getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         tabAdapter.addFragment(new ProductsFragment(),"Productos");
+        //tabAdapter.addFragment(null,"Opiniones");
         viewPager.setAdapter(tabAdapter);
 
 

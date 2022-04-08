@@ -54,7 +54,7 @@
         android:id="@+id/relativeLayoutInfoProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="3dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerInfoProduct">
 
@@ -62,22 +62,19 @@
             android:id="@+id/linearLayoutVendor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_marginVertical="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/chatButtonProductInfo"
             android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/myCardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="50dp">
 
-                <ImageView
-                    android:id="@+id/imgVendorInfoProduct"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_logged" />
-            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/imgVendorInfoProduct"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_logged" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -103,14 +100,14 @@
                         android:id="@+id/txtNoteInfoProduct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="8dp"
                         android:text="@string/text_note_product_info" />
 
                     <TextView
                         android:id="@+id/replaceWithTheVendorNote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
+                        android:layout_marginStart="3dp"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/txtNoteInfoProduct"
                         android:text="5.6"
@@ -121,14 +118,19 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/chatButtonProductInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/chat_button_product_info" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/chatButtonProductInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/chat_button_product_info" />
+
     </RelativeLayout>
 
     <View
@@ -186,19 +188,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutDescInfoProduct" />
 
-    <TextView
-        android:id="@+id/addressVendorInfoProduct"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayoutMap"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/addres_product_info"
-        android:textColor="@color/black"
-        android:justificationMode="inter_word"
-        android:textSize="14sp"
+
         android:layout_marginTop="4dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider3InfoProduct" />
+        app:layout_constraintTop_toBottomOf="@+id/divider3InfoProduct">
+        <TextView
+            android:id="@+id/addressVendorInfoProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addres_product_info"
+            android:textColor="@color/black"
+            android:justificationMode="inter_word"
+            android:textSize="14sp"
+             />
+
+    </LinearLayout>
 
     <fragment
         android:id="@+id/productInforMap"
@@ -209,7 +219,7 @@
         android:layout_marginStart="7dp"
         android:layout_marginEnd="7dp"
         android:background="@drawable/rounded_layout"
-        app:layout_constraintTop_toBottomOf="@+id/addressVendorInfoProduct"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutMap"
         tools:context=".ui.activities.RegisterActivity" />
 
 

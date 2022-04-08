@@ -40,15 +40,27 @@
         <activity
             android:name=".ui.activities.EditProfileActivity"
             android:exported="true"
-            android:theme="@style/Theme.GiveTake.NoActionBar" />
+            android:theme="@style/Theme.GiveTake.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
         <activity
             android:name=".ui.activities.AddProductActivity"
             android:exported="true"
-            android:theme="@style/Theme.GiveTake.NoActionBar" />
+            android:theme="@style/Theme.GiveTake.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
         <activity
             android:name=".ui.activities.InfoProductActivity"
             android:exported="false"
-            android:theme="@style/Theme.GiveTake.NoActionBar"/>
+            android:theme="@style/Theme.GiveTake.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

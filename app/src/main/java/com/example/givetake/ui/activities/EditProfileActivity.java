@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class EditProfileActivity extends AppCompatActivity implements OnMapReadyCallback {
     private EditText name;
@@ -77,7 +78,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
 
         setSupportActionBar(toolbar);
         setTitle("Editar perfil");
-
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         user = presenter.getUser(email.split("@")[0]);
         name.setText(user.getName());
