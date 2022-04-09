@@ -40,9 +40,13 @@ public class ProductManagerSingleton {
 
     public static synchronized void createProductManagerWithMap(Map<String, User> userMap){
         ProductManager productManager = new ProductManager();
-        for (User user :userMap.values()){
-            for (Product product : user.getTradeProducts()){
-                productManager.addProduct(product);
+        if (userMap!=null) {
+            for (User user : userMap.values()) {
+                if (user!=null && user.getTradeProducts()!=null){
+                    for (Product product : user.getTradeProducts()) {
+                        productManager.addProduct(product);
+                    }
+                }
             }
         }
         setProductManager(productManager);

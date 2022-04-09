@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 1500); ////wait 1.5s before doing the action
+        }, 2*1000); ////wait 2s before doing the action
 
     }
 }

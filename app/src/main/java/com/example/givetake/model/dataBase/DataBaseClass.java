@@ -36,6 +36,7 @@ public class DataBaseClass {
     }
 
     public void save(User user){
+
             DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
             userReference.setValue(gson.toJson(user));
     }

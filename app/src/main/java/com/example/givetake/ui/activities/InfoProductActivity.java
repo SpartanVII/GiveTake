@@ -62,8 +62,10 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         if(bundle!=null){
             productKey = bundle.getString("productKey");
         }
+        System.out.println("lala");
         Product product = presenter.getProduct(productKey);
         User vendor = presenter.getUser(product.getOwner());
+        System.out.println(vendor.getAddressToString());
 
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
@@ -73,14 +75,14 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         vendorAddres = vendor.getAddress();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productInforMap);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
 
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         LatLng latLng = new LatLng(vendorAddres.getLatitude(),vendorAddres.getLongitude());
         mMap.addCircle(new CircleOptions()
                 .center(latLng)
