@@ -70,6 +70,7 @@ public class  AddProductActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         if(bundle != null) {
+            setTitle("Modificar producto");
             String productKey = bundle.getString("productKey");
             modifyProduct = presenter.getProduct(productKey);
             name.setText(modifyProduct.getTitle());
