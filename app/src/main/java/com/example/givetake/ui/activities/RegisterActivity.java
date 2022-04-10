@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.givetake.R;
+import com.example.givetake.model.MyAddress;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -78,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         setSupportActionBar(toolbar);
         setTitle("Registro");
 
-        geocoder  = new Geocoder(getApplicationContext(), new Locale("es_Es"));
+        geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.registerMap);
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
@@ -86,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
             public boolean onQueryTextSubmit(String query) {
                 String location = searchView.getQuery().toString();
 
-                if (location == null || location.equals("")) {
+                if (location.equals("")) {
                     return false;
                 }
                 if (Geocoder.isPresent()) {
@@ -149,6 +150,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                                 String monthStrin = month<10?"0"+month:month+"";
                                 String dayStrin = dayOfMonth<10?"0"+dayOfMonth:dayOfMonth+"";
 
+
                                 String date = dayStrin+"/"+monthStrin+"/"+year;
                                 birthDate.setText(date);
                             }
@@ -210,8 +212,11 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                             try {
                                 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
-                                User user1 = new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate);
-                                presenter.save(user1);
+                                MyAddress myAddress = new MyAddress(lastAddress.getAddressLine(0),
+                                        new LatLng(lastAddress.getLatitude(),lastAddress.getLongitude()));
+                                User user1 = new User(name.getText().toString(), myAddress, email, autoCompleteGender.getText().toString(), parsedDate);
+                                user1.getAddressToString();
+                                presenter.addUser(user1);
                                 showHome();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();

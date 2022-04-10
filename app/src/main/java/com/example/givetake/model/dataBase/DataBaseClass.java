@@ -2,26 +2,21 @@ package com.example.givetake.model.dataBase;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.example.givetake.model.Product;
+import com.example.givetake.model.json.LocalDateAdapter;
 import com.example.givetake.model.singleton.ProductManagerSingleton;
 import com.example.givetake.model.singleton.UserManagerSingleton;
 import com.example.givetake.model.User;
-import com.example.givetake.model.manager.ProductManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class DataBaseClass {
@@ -31,12 +26,11 @@ public class DataBaseClass {
 
     public DataBaseClass() {
         this.db = FirebaseDatabase.getInstance("https://givetake-9f7af-default-rtdb.europe-west1.firebasedatabase.app/");
-        this.gson = new Gson();
+        this.gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         db.goOnline();
     }
 
     public void save(User user){
-
             DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
             userReference.setValue(gson.toJson(user));
     }

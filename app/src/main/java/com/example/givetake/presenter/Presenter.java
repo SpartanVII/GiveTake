@@ -29,7 +29,23 @@ public class Presenter {
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
-    public void save(User user){
+    public void deleteProduct(Product product){
+        productManager.deleteProduct(product);
+        dataBaseClass.save(userManager.getUser(product.getOwner()));
+    }
+
+
+
+    public List<Product> getProductsByTag(String tag){
+        return productManager.getProductsByTag(tag);
+    }
+
+    public Product getProduct(String key){
+        return productManager.getProduct(key);
+    }
+
+
+    public void addUser(User user){
         userManager.putUser(user);
         dataBaseClass.save(user);
     }
@@ -43,19 +59,10 @@ public class Presenter {
         return userManager.getUser(mail);
     }
 
-    public List<Product> getProductsByTag(String tag){
-        return productManager.getProductsByTag(tag);
-    }
 
-    /*public List<Product> getProductsByTagAndExludeMyPorducts(String tag, String userMail){
-        return productManager.getProductsByTag(tag);
-    }
 
-     */
 
-    public Product getProduct(String key){
-        return productManager.getProduct(key);
-    }
+
 
     public void initiality(){
         dataBaseClass.initialy();

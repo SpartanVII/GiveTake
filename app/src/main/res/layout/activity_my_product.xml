@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.activities.InfoProductActivity"
+        >
+
+        <LinearLayout
+            android:id="@+id/toolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/toolbarMyProduct"
+                layout="@layout/toolbar" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/linearLayoutImgMyfoProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+            <ImageView
+                android:id="@+id/imgProductrMyProduct"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:src="@drawable/wii" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutImgMyfoProduct">
+
+            <Button
+                android:id="@+id/swapedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/swaped_button" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/productNameMy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:text="@string/product_name_info"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutButton">
+        </TextView>
+
+
+
+        <View
+            android:id="@+id/dividerMyProduct"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productNameMy" />
+
+
+        <LinearLayout
+            android:id="@+id/layoutDescMyProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerMyProduct">
+
+            <TextView
+                android:id="@+id/productDescMy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_desc_info"
+                android:textColor="@color/black"
+                android:justificationMode="inter_word"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/divider3MyProduct"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutDescMyProduct" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutMap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3MyProduct">
+            <TextView
+                android:id="@+id/addressVendorMyProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addres_product_info"
+                android:textColor="@color/black"
+                android:justificationMode="inter_word"
+                android:textSize="14sp"
+                />
+
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/productMyMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/rounded_layout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutMap"
+            tools:context=".ui.activities.RegisterActivity" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

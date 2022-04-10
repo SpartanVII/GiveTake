@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -29,7 +30,10 @@ public class ProductManager {
         else {
             productMap.get(product.getTag()).put(product.getId(), product);
         }
-        System.out.println(productMap);
+    }
+
+    public void deleteProduct(Product product){
+        Objects.requireNonNull(productMap.get(product.getTag())).remove(product.getId());
     }
 
     public List<Product> getProductsByTag(@Nullable String tag){

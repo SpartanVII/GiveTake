@@ -11,7 +11,7 @@ import java.util.List;
 
 public class User implements Serializable {
     private String name;
-    private Address address;
+    private MyAddress address;
     private double globalScore;
     private String mail;        //Private info
     private Gender gender;      //Private info
@@ -22,7 +22,7 @@ public class User implements Serializable {
     private List<String> favProducts;
     private int nProduct;       //Private info
 
-    public User(String name, Address address, String mail, String gender, LocalDate birth) {
+    public User(String name, MyAddress address, String mail, String gender, LocalDate birth) {
         this.name = name;
         this.address = address;
         this.globalScore = 5.0;
@@ -80,11 +80,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Address getAddress() {
+    public MyAddress getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(MyAddress address) {
         this.address = address;
     }
 
@@ -154,7 +154,7 @@ public class User implements Serializable {
     }
 
     public String getAddressToString(){
-        return address.getAddressLine(0);
+        return address.getAddressLine();
     }
 
     public Product addTradableProduct(Product product){

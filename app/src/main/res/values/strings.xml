@@ -65,5 +65,8 @@
     <string name="text_note_product_info">Valoración:</string>
     <string name="chat_button_product_info">Chat</string>
     <string name="addres_product_info">Calle Francisco Ernando, Castellón</string>
+    <string name="swaped_button">Intercambiado</string>
+    <string name="toolbar_menu_my_product_modify">Modificar producto</string>
+    <string name="toolbar_menu_my_product_delete">Borrar producto</string>
 
 </resources>

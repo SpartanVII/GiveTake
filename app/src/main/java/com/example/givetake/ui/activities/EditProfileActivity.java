@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.givetake.R;
+import com.example.givetake.model.MyAddress;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -84,7 +85,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         name.setText(user.getName());
         gender = user.getGenderToString();
         searchView.setQuery(user.getAddressToString(), false);
-        lastAddress = user.getAddress();
 
 
 
@@ -211,8 +211,10 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         }
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
-        presenter.save(
-                new User(name.getText().toString(), lastAddress, email, autoCompleteGender.getText().toString(), parsedDate));
+        MyAddress myAddress = new MyAddress(lastAddress.getAddressLine(0),
+                new LatLng(lastAddress.getLatitude(),lastAddress.getLongitude()));
+        presenter.addUser(
+                new User(name.getText().toString(), myAddress, email, autoCompleteGender.getText().toString(), parsedDate));
         showHome();
 
     }
@@ -269,7 +271,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         }
 
         if(lastAddress==null){
-            searchView.setQuery("Debe poner su dirección", false);
+            searchView.setQuery("Debe poner su dirección", true);
             valid=false;
         }
 

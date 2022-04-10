@@ -1,226 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.InfoProductActivity">
-
-    <LinearLayout
-        android:id="@+id/toolbarLayout"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/toolbarInfoProduct"
-            layout="@layout/toolbar" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/linearLayoutImgInfoProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
-
-        <ImageView
-            android:id="@+id/imgProductrInfoProduct"
-            android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:src="@drawable/wii" />
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/productNameInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:text="@string/product_name_info"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutImgInfoProduct">
-    </TextView>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayoutInfoProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dividerInfoProduct">
+        tools:context=".ui.activities.InfoProductActivity"
+        >
 
         <LinearLayout
-            android:id="@+id/linearLayoutVendor"
-            android:layout_width="wrap_content"
+            android:id="@+id/toolbarLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginVertical="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/chatButtonProductInfo"
-            android:orientation="horizontal">
+            app:layout_constraintTop_toTopOf="parent">
 
-
-            <ImageView
-                android:id="@+id/imgVendorInfoProduct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_logged" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/vendorNameInfoProduct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre del vendedor"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp">
-
-                    <TextView
-                        android:id="@+id/txtNoteInfoProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/text_note_product_info" />
-
-                    <TextView
-                        android:id="@+id/replaceWithTheVendorNote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_toEndOf="@id/txtNoteInfoProduct"
-                        android:text="5.6"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-                </RelativeLayout>
-
-
-            </LinearLayout>
+            <include
+                android:id="@+id/toolbarInfoProduct"
+                layout="@layout/toolbar" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/chatButtonProductInfo"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/linearLayoutImgInfoProduct"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/chat_button_product_info" />
-
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/dividerInfoProduct"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productNameInfo" />
-
-    <View
-        android:id="@+id/divider2InfoProduct"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutInfoProduct" />
-
-    <LinearLayout
-        android:id="@+id/layoutDescInfoProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2InfoProduct">
-
-    <TextView
-        android:id="@+id/productDescInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/product_desc_info"
-        android:textColor="@color/black"
-        android:justificationMode="inter_word"
-        android:textSize="14sp"
-        android:layout_marginTop="4dp"/>
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imgProductrInfoProduct"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:src="@drawable/wii" />
 
 
-    <View
-        android:id="@+id/divider3InfoProduct"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutDescInfoProduct" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayoutMap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider3InfoProduct">
         <TextView
-            android:id="@+id/addressVendorInfoProduct"
+            android:id="@+id/productNameInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/addres_product_info"
             android:textColor="@color/black"
-            android:justificationMode="inter_word"
-            android:textSize="14sp"
-             />
+            android:textSize="22sp"
+            android:text="@string/product_name_info"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutImgInfoProduct">
+        </TextView>
 
-    </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/relativeLayoutInfoProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerInfoProduct">
 
-    <fragment
-        android:id="@+id/productInforMap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginEnd="7dp"
-        android:background="@drawable/rounded_layout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutMap"
-        tools:context=".ui.activities.RegisterActivity" />
+            <LinearLayout
+                android:id="@+id/linearLayoutVendor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginVertical="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/chatButtonProductInfo"
+                android:orientation="horizontal">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/imgVendorInfoProduct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_logged" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/vendorNameInfoProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre del vendedor"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/txtNoteInfoProduct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/text_note_product_info" />
+
+                        <TextView
+                            android:id="@+id/replaceWithTheVendorNote"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toEndOf="@id/txtNoteInfoProduct"
+                            android:text="5.6"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/chatButtonProductInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/chat_button_product_info" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/dividerInfoProduct"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productNameInfo" />
+
+        <View
+            android:id="@+id/divider2InfoProduct"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayoutInfoProduct" />
+
+        <LinearLayout
+            android:id="@+id/layoutDescInfoProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2InfoProduct">
+
+            <TextView
+                android:id="@+id/productDescInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_desc_info"
+                android:textColor="@color/black"
+                android:justificationMode="inter_word"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/divider3InfoProduct"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutDescInfoProduct" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutMap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3InfoProduct">
+            <TextView
+                android:id="@+id/addressVendorInfoProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addres_product_info"
+                android:textColor="@color/black"
+                android:justificationMode="inter_word"
+                android:textSize="14sp"
+                />
+
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/productInforMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/rounded_layout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutMap"
+            tools:context=".ui.activities.RegisterActivity" />
+
+        <!--
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:text="Chat"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

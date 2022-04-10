@@ -22,13 +22,15 @@ import com.example.givetake.presenter.Presenter;
 import java.util.Objects;
 
 
-public class AddProductActivity extends AppCompatActivity {
+public class  AddProductActivity extends AppCompatActivity {
     private Presenter presenter = new Presenter();
     private String email;
     private EditText name;
     private EditText desc;
     private Spinner spinner;
     private Toolbar toolbar;
+    private Bundle bundle;
+    private Product modifyProduct;
 
     @SuppressLint("ResourceType")
     protected void onCreate(Bundle savedInstnceState){
@@ -65,6 +67,15 @@ public class AddProductActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category_add_product, R.layout.support_simple_spinner_dropdown_item );
         spinner.setAdapter(adapter);
+
+        bundle = getIntent().getExtras();
+        if(bundle != null) {
+            String productKey = bundle.getString("productKey");
+            modifyProduct = presenter.getProduct(productKey);
+            name.setText(modifyProduct.getTitle());
+            desc.setText(modifyProduct.getDescription());
+            spinner.setSelection(adapter.getPosition(modifyProduct.getTag()));
+        }
     }
 
     private void addProduct() {
@@ -76,6 +87,10 @@ public class AddProductActivity extends AppCompatActivity {
         product.setDescription(desc.getText().toString());
         product.setOwner(email.split("@")[0]);
         product.setTag(spinner.getSelectedItem().toString());
+
+        if (bundle!=null && !modifyProduct.getTag().equals(product.getTag())){
+                presenter.deleteProduct(modifyProduct);
+        }
         presenter.addProduct(product);
         showHome();
     }
@@ -103,18 +118,19 @@ public class AddProductActivity extends AppCompatActivity {
             this.desc.setError("Obligatorio");
             valid = false;
         }
-        else if (desc.length()<120) {
-            this.desc.setError("Mínimo 120 carácteres");
+        else if (desc.length()<60) {
+            this.desc.setError("Mínimo 60 carácteres");
             valid = false;
         }
-        else if (desc.length()>300) {
-            this.desc.setError("Máximo 300 carácteres");
+        else if (desc.length()>600) {
+            this.desc.setError("Máximo 600 carácteres");
             valid = false;
-        }
+        }/*
         else if (desc.split(" ").length>7) {
         this.desc.setError("Usa palabras por favor");
         valid = false;
         }
+        */
         else {
             this.desc.setError(null);
         }
