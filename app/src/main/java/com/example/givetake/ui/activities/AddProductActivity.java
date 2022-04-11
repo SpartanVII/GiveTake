@@ -89,10 +89,13 @@ public class  AddProductActivity extends AppCompatActivity {
         product.setOwner(email.split("@")[0]);
         product.setTag(spinner.getSelectedItem().toString());
 
-        if (bundle!=null && !modifyProduct.getTag().equals(product.getTag())){
-                presenter.deleteProduct(modifyProduct);
+        if (bundle!=null){
+            product.setId(modifyProduct.getId());
+            presenter.deleteProduct(modifyProduct);
+            presenter.modifyProduct(product);
+        }else {
+            presenter.addProduct(product);
         }
-        presenter.addProduct(product);
         showHome();
     }
 

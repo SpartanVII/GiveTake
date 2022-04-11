@@ -55,6 +55,18 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutImgInfoProduct">
         </TextView>
 
+
+        <ImageView
+            android:id="@+id/addFav"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/ic_is_not_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutImgInfoProduct"/>
+
         <RelativeLayout
             android:id="@+id/relativeLayoutInfoProduct"
             android:layout_width="match_parent"

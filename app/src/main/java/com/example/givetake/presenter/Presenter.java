@@ -29,12 +29,27 @@ public class Presenter {
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
+    public void modifyProduct(Product product){
+        userManager.modifyProduct(product);
+        productManager.addProduct(product);
+        dataBaseClass.save(userManager.getUser(product.getOwner()));
+    }
+
     public void deleteProduct(Product product){
+        userManager.deleteProduct(product);
         productManager.deleteProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
+    public void addFavoriteProduct(Product product){
+        userManager.addFavoriteProduct(product);
+        dataBaseClass.save(userManager.getUser(product.getOwner()));
+    }
 
+    public void deleteFavoriteProduct(Product product){
+        userManager.deleteFavoriteProduct(product);
+        dataBaseClass.save(userManager.getUser(product.getOwner()));
+    }
 
     public List<Product> getProductsByTag(String tag){
         return productManager.getProductsByTag(tag);

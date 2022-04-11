@@ -1,22 +1,16 @@
 package com.example.givetake.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.givetake.R;
 import com.example.givetake.model.MyAddress;
@@ -30,11 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class InfoProductActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -46,6 +36,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
     private TextView vendorName;
     private TextView vendorNote;
     private TextView vendorAddress;
+    private ImageView favProduct;
     private MyAddress vendorAddres;
     private GoogleMap mMap;
 
@@ -62,19 +53,22 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         vendorName = findViewById(R.id.vendorNameInfoProduct);
         vendorNote = findViewById(R.id.replaceWithTheVendorNote);
         vendorAddress = findViewById(R.id.addressVendorInfoProduct);
+        favProduct = findViewById(R.id.addFav);
         presenter = new Presenter();
         setSupportActionBar(toolbar);
         setTitle("Información del producto");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        String email = prefs.getString("email", null);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             productKey = bundle.getString("productKey");
         }
+
         Product product = presenter.getProduct(productKey);
         User vendor = presenter.getUser(product.getOwner());
-        System.out.println(vendor.getAddressToString());
+        User user = presenter.getUser(email);
 
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
@@ -83,11 +77,28 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         vendorAddress.setText(vendor.getAddressToString());
         vendorAddres = vendor.getAddress();
 
+        if (user.isFavorite(productKey)) favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_favorite));
+        else    favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_not_favorite));
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productInforMap);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
+        favProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user.isFavorite(productKey)){
+                    favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_not_favorite));
+                    presenter.deleteFavoriteProduct(product);
+                }
+                else{
+                    favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_favorite));
+                    presenter.addFavoriteProduct(product);
+                }
 
+            }
+        });
     }
 
     @Override
@@ -107,37 +118,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         mSettings.setZoomControlsEnabled(false);
         mSettings.setRotateGesturesEnabled(false);
         mSettings.setScrollGesturesEnabled(false);
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.myproduct, menu);
-        return true;
-    }
-
-    public void showDialog(MenuItem item){
-        if (item.getTitle().equals("Borrar producto")){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setCancelable(true);
-            builder.setTitle("Borrar producto");
-            builder.setMessage("¿Está seguro de que quieres eliminarlo?");
-            builder.setNegativeButton("Si",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //presenter.deleteProduct()
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-            builder.setPositiveButton("No", null);
-        }
-        else {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        }
-    }
 
 }

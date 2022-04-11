@@ -1,6 +1,7 @@
 package com.example.givetake.ui.profile.listProduct;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +18,8 @@ import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
+import com.example.givetake.ui.activities.InfoProductActivity;
+import com.example.givetake.ui.activities.MyProductActivity;
 
 import java.util.List;
 
@@ -41,6 +45,15 @@ public class ProductsFragment extends Fragment {
         List<Product> productList = user.getTradeProducts();
         listAdapterInfo = new ListAdapterProducts(productList, getContext());
         listView.setAdapter(listAdapterInfo);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), MyProductActivity.class);
+                intent.putExtra("productKey", productList.get(position).getId());
+                startActivity(intent);
+            }
+        });
 
         TextView textVoidProducts = view.findViewById(R.id.textVoidProducts);
         if (productList.size()==0) textVoidProducts.setVisibility(View.VISIBLE);

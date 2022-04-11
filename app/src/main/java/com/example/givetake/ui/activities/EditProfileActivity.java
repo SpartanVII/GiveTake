@@ -52,6 +52,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
     private GoogleMap mMap;
     private MarkerOptions marker;
     private Address lastAddress;
+    private MyAddress myAddress;
     private Toolbar toolbar;
     private User user;
 
@@ -84,6 +85,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         user = presenter.getUser(email.split("@")[0]);
         name.setText(user.getName());
         gender = user.getGenderToString();
+        myAddress = user.getAddress();
         searchView.setQuery(user.getAddressToString(), false);
 
 
@@ -299,7 +301,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
                 mMap.addMarker(new MarkerOptions().position(point));
             }
         });
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lastAddress.getLatitude(), lastAddress.getLatitude())));
+
+        mMap.addMarker(new MarkerOptions().position(myAddress.getLatLng()));
         searchView.setQuery(user.getAddressToString(), true);
 
 

@@ -3,6 +3,7 @@ package com.example.givetake.model.manager;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,29 @@ public class UserManager {
     }
 
     public Product addProduct(Product product){
-        return getUser(product.getOwner()).addTradableProduct(product);
+        User user =  getUser(product.getOwner());
+        product.setId(product.getOwner().split("@")[0]+"#"+user.getAndIncrementNproduct());
+        return user.addTradableProduct(product);
+    }
+
+    public Product modifyProduct(Product product){
+        User user =  getUser(product.getOwner());
+        return user.addTradableProduct(product);
+    }
+
+    public void deleteProduct(Product product){
+        User user =  getUser(product.getOwner());
+        user.deleteTradableProduct(product);
+    }
+
+    public void addFavoriteProduct(Product product){
+        User user =  getUser(product.getOwner());
+        user.addFavoriteProduct(product.getId());
+    }
+
+    public void deleteFavoriteProduct(Product product){
+        User user =  getUser(product.getOwner());
+        user.deleteFavoriteProduct(product.getId());
     }
 
     public void putUser(User user){

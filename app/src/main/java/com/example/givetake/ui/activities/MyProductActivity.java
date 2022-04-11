@@ -1,10 +1,16 @@
 package com.example.givetake.ui.activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -31,9 +37,8 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
     private TextView productDesc;
     private TextView vendorAddress;
     private MyAddress vendorAddres;
+    private Product product;
     private GoogleMap mMap;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +59,8 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
             productKey = bundle.getString("productKey");
         }
 
-        Product product = presenter.getProduct(productKey);
+        product = presenter.getProduct(productKey);
         User vendor = presenter.getUser(product.getOwner());
-        System.out.println(vendor.getAddressToString());
 
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
@@ -88,5 +92,40 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
         mSettings.setRotateGesturesEnabled(false);
         mSettings.setScrollGesturesEnabled(false);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.myproduct, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getTitle().equals("Borrar producto")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(true);
+            builder.setTitle("Borrar producto");
+            builder.setMessage("¿Está seguro de que quieres eliminarlo?");
+            builder.setNegativeButton("Si",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            presenter.deleteProduct(product);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            builder.setPositiveButton("No", null);
+            builder.show();
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), AddProductActivity.class);
+            intent.putExtra("productKey",product.getId());
+            startActivity(intent);
+        }
+        return true;
     }
 }

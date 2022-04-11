@@ -158,10 +158,37 @@ public class User implements Serializable {
     }
 
     public Product addTradableProduct(Product product){
-        String id = product.getOwner().split("@")[0]+"#"+nProduct;
-        product.setId(id);
         tradeProducts.add(product);
-        nProduct += 1;
         return product;
+    }
+    public void deleteTradableProduct(Product product){
+        for (int i = 0 ; i<tradeProducts.size(); i++){
+            if (tradeProducts.get(i).getId().equals(product.getId())){
+                tradeProducts.remove(i);
+                break;
+            }
+        }
+    }
+
+    public boolean isFavorite(String id){
+        for (int i = 0 ; i<favProducts.size(); i++){
+            if (favProducts.get(i).equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addFavoriteProduct(String id){
+        favProducts.add(id);
+    }
+
+    public void deleteFavoriteProduct(String id){
+        favProducts.remove(id);
+    }
+
+    public int getAndIncrementNproduct(){
+        nProduct+=1;
+        return nProduct-1;
     }
 }

@@ -12,6 +12,7 @@
     <!-- left main bar options -->
     <string name="menu_home">Incio</string>
     <string name="menu_profile">Perfil</string>
+    <string name="menu_favs">Favoritos</string>
     <string name="menu_chat">Chats</string>
     <string name="menu_settings">Ajustes</string>
 

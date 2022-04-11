@@ -49,7 +49,6 @@ public class DataBaseClass {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String json = String.valueOf(dataSnapshot.getValue());
-                System.out.println(json);
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
                 ProductManagerSingleton.createProductManagerWithMap(gson.fromJson(json, userType));
                 Log.w("Firebase", "Datos cargados");

@@ -28,6 +28,9 @@ public class ProductManager {
             productMap.get(product.getTag()).put(product.getId(), product);
         }
         else {
+            System.out.println("lala");
+            System.out.println(productMap.get(product.getTag()));
+            System.out.println(product);
             productMap.get(product.getTag()).put(product.getId(), product);
         }
     }
