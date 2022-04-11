@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         if(bundle != null) {
             email = bundle.getString("email");
             isRegistered = Boolean.parseBoolean(bundle.getString("isRegistered"));
-            invalidateOptionsMenu();
             //Guardado de datos de inicio
             SharedPreferences.Editor prefsEditor = prefs.edit();
             prefsEditor.putString("email", email);
@@ -55,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
             prefsEditor.apply();
         }
         else{
-            invalidateOptionsMenu();
             email = prefs.getString("email", null);
             isRegistered =  Boolean.parseBoolean(prefs.getString("isRegistered", null));
         }
+        invalidateOptionsMenu();
 
         try {
             session();
@@ -69,10 +68,8 @@ public class MainActivity extends AppCompatActivity {
         if (isRegistered){
             DrawerLayout drawer = binding.drawerLayout;
             NavigationView navigationView = binding.navView;
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_home, R.id.nav_profile, R.id.nav_settings)
+                    R.id.nav_home, R.id.nav_profile, R.id.nav_favs, R.id.nav_settings)
                     .setOpenableLayout(drawer)
                     .build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

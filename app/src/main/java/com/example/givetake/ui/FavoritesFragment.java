@@ -32,16 +32,18 @@ public class FavoritesFragment extends Fragment {
     private FragmentFavoritesBinding binding;
     ListAdapterProducts listAdapterInfo;
     private Presenter presenter;
+    private Context appContext;
     private ListView listView;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-
-        SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        appContext = getContext();
+        assert appContext != null;
+        SharedPreferences prefs = appContext.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String key = prefs.getString("email", null).split("@")[0];
 
         presenter = new Presenter();
@@ -52,18 +54,21 @@ public class FavoritesFragment extends Fragment {
         listAdapterInfo = new ListAdapterProducts(productList, getContext());
         listView.setAdapter(listAdapterInfo);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), InfoProductActivity.class);
-                intent.putExtra("productKey", productList.get(position).getId());
-                startActivity(intent);
-            }
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            Intent intent = new Intent(appContext, InfoProductActivity.class);
+            intent.putExtra("productKey", productList.get(position).getId());
+            startActivity(intent);
         });
 
         TextView textVoidFavs = view.findViewById(R.id.textVoidFavs);
         if (productList.size()==0) textVoidFavs.setVisibility(View.VISIBLE);
         else textVoidFavs.setVisibility(View.INVISIBLE);
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
