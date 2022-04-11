@@ -116,6 +116,14 @@ public class User implements Serializable {
         this.swapedProducts = swapedProducts;
     }
 
+    public List<String> getFavProducts() {
+        return favProducts;
+    }
+
+    public void setFavProducts(List<String> favProducts) {
+        this.favProducts = favProducts;
+    }
+
     public int getnProduct() {
         return nProduct;
     }

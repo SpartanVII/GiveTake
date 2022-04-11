@@ -8,6 +8,7 @@ import com.example.givetake.model.dataBase.DataBaseClass;
 import com.example.givetake.model.manager.ProductManager;
 import com.example.givetake.model.manager.UserManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +60,14 @@ public class Presenter {
         return productManager.getProduct(key);
     }
 
+    public List<Product> getProductListUsingKeys(List<String> keyList){
+        List<Product> productList = new ArrayList<>();
+        for (String key : keyList){
+            productList.add(productManager.getProduct(key));
+        }
+        return productList;
+    }
+
 
     public void addUser(User user){
         userManager.putUser(user);
@@ -73,11 +82,6 @@ public class Presenter {
     public User getUser(String mail){
         return userManager.getUser(mail);
     }
-
-
-
-
-
 
     public void initiality(){
         dataBaseClass.initialy();

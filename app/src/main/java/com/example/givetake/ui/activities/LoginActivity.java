@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Toolbar toolbar;
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         setTitle("Iniciar sesión");
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
         setup();

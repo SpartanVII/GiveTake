@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GiveTake">
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
@@ -32,15 +31,24 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.GiveTake.NoActionBar" />
+            android:theme="@style/Theme.GiveTake.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
         <activity
             android:name=".ui.activities.RegisterActivity"
             android:exported="true"
-            android:theme="@style/Theme.GiveTake.NoActionBar" />
+            android:theme="@style/Theme.GiveTake.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.LoginActivity" />
+        </activity>
+
         <activity
             android:name=".ui.activities.EditProfileActivity"
             android:exported="true"
-            android:theme="@style/Theme.GiveTake.NoActionBar" >
+            android:theme="@style/Theme.GiveTake.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
@@ -63,6 +71,15 @@
         </activity>
         <activity
             android:name=".ui.activities.MyProductActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GiveTake.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.FavoritesFragment"
             android:exported="false"
             android:theme="@style/Theme.GiveTake.NoActionBar">
             <meta-data
