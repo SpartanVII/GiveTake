@@ -62,8 +62,19 @@ public class Presenter {
 
     public List<Product> getProductListUsingKeys(List<String> keyList){
         List<Product> productList = new ArrayList<>();
+        List<Product> deleteProductList = new ArrayList<>();
         for (String key : keyList){
-            productList.add(productManager.getProduct(key));
+            Product product = productManager.getProduct(key);
+
+            if (product==null){
+                product = new Product(key, key.split("#")[0]);
+                deleteProductList.add(product);
+            }
+            else productList.add(product);
+        }
+
+        for (Product deleteProduct : deleteProductList){
+            userManager.deleteFavoriteProduct(deleteProduct);
         }
         return productList;
     }

@@ -19,6 +19,11 @@ public class Product implements Serializable {
         this.tag = tag;
     }
 
+    public Product(String id, String owner) {
+        this.id = id;
+        this.owner = owner;
+    }
+
     public Product() {
     }
 

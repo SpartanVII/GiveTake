@@ -36,7 +36,7 @@ public class  AddProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
         setContentView(R.layout.activity_new_product);
-
+        toolbar.setScrollBarStyle(R.style.Theme_AppCompat_DayNight);
         toolbar = findViewById(R.id.toolbarAddProduct);
         setSupportActionBar(toolbar);
         setTitle("Añadir producto");
