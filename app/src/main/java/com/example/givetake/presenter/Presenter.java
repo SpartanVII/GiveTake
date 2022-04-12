@@ -1,15 +1,16 @@
 package com.example.givetake.presenter;
 
+import android.net.Uri;
+
 import com.example.givetake.model.Product;
 import com.example.givetake.model.singleton.ProductManagerSingleton;
 import com.example.givetake.model.singleton.UserManagerSingleton;
 import com.example.givetake.model.User;
-import com.example.givetake.model.dataBase.DataBaseClass;
+import com.example.givetake.dataBase.DataBaseClass;
 import com.example.givetake.model.manager.ProductManager;
 import com.example.givetake.model.manager.UserManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Presenter {
@@ -92,6 +93,10 @@ public class Presenter {
 
     public User getUser(String mail){
         return userManager.getUser(mail);
+    }
+
+    public String uploadImage(Uri filePath){
+        return dataBaseClass.uploadImage(filePath);
     }
 
     public void initiality(){

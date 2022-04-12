@@ -1,6 +1,9 @@
-package com.example.givetake.model.dataBase;
+package com.example.givetake.dataBase;
 
+import android.app.ProgressDialog;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.givetake.model.json.LocalDateAdapter;
 import com.example.givetake.model.singleton.ProductManagerSingleton;
@@ -11,6 +14,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -18,14 +23,19 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.UUID;
 
 public class DataBaseClass {
     private final FirebaseDatabase db;
+    private final FirebaseStorage storage;
+    private final StorageReference storageReference;
     Gson gson;
 
 
     public DataBaseClass() {
         this.db = FirebaseDatabase.getInstance("https://givetake-9f7af-default-rtdb.europe-west1.firebasedatabase.app/");
+        this.storage = FirebaseStorage.getInstance();
+        this.storageReference = storage.getReference();
         this.gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         db.goOnline();
     }
@@ -60,7 +70,13 @@ public class DataBaseClass {
                 Log.w("Firebase", "Failed to read value.", error.toException());
             }
         });
+    }
 
+    public String uploadImage(Uri filePath) {
+        String url = "images/"+ UUID.randomUUID().toString();
+        StorageReference ref = storageReference.child(url);
+        ref.putFile(filePath);
+        return storageReference +url;
     }
 
 

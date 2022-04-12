@@ -1,25 +1,41 @@
 package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class  AddProductActivity extends AppCompatActivity {
@@ -31,12 +47,17 @@ public class  AddProductActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Bundle bundle;
     private Product modifyProduct;
+    private Uri filePath;
+    private Button chooseBtn;
+    private ImageView imageView;
+    private final int PICK_IMAGE_REQUEST = 71;
+
 
     @SuppressLint("ResourceType")
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
         setContentView(R.layout.activity_new_product);
-        toolbar.setScrollBarStyle(R.style.Theme_AppCompat_DayNight);
+
         toolbar = findViewById(R.id.toolbarAddProduct);
         setSupportActionBar(toolbar);
         setTitle("Añadir producto");
@@ -50,20 +71,14 @@ public class  AddProductActivity extends AppCompatActivity {
             }
         });
 
-        Button cancelButton = findViewById(R.id.cancelProduct);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showHome();
-            }
-        });
-
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         email = prefs.getString("email", null);
 
         spinner = findViewById(R.id.spinnerProduct);
         name = findViewById(R.id.addProductName);
         desc = findViewById(R.id.addProductDesc);
+        chooseBtn = findViewById(R.id.btnChoose);
+        imageView = findViewById(R.id.imgAddProduct);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category_add_product, R.layout.support_simple_spinner_dropdown_item );
         spinner.setAdapter(adapter);
@@ -77,17 +92,48 @@ public class  AddProductActivity extends AppCompatActivity {
             desc.setText(modifyProduct.getDescription());
             spinner.setSelection(adapter.getPosition(modifyProduct.getTag()));
         }
+
+        chooseBtn.setOnClickListener(v -> chooseImage());
     }
+
+
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private void addProduct() {
         if (!validateForm()) {
             return;
         }
+
         Product product = new Product();
         product.setTitle(name.getText().toString());
         product.setDescription(desc.getText().toString());
         product.setOwner(email.split("@")[0]);
         product.setTag(spinner.getSelectedItem().toString());
+        product.setImg(presenter.uploadImage(filePath));
 
         if (bundle!=null){
             product.setId(modifyProduct.getId());
@@ -137,6 +183,11 @@ public class  AddProductActivity extends AppCompatActivity {
         */
         else {
             this.desc.setError(null);
+        }
+
+        if (filePath==null){
+            //AlertDialog.Builder alertBuil
+            valid = false;
         }
 
         return valid;

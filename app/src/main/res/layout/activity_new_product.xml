@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/new_product"
@@ -83,25 +85,38 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/confirmProduct"
-        android:layout_width="150dp"
+        android:id="@+id/btnChoose"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="20dp"
-        android:layout_toEndOf="@id/cancelProduct"
-        android:text="@string/register_confirm" />
+        android:layout_below="@id/addProductDesc"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="75dp"
+        android:layout_marginEnd="75dp"
+        android:text="Sube la foro del producto" />
 
     <Button
-        android:id="@+id/cancelProduct"
-        android:layout_width="150dp"
+        android:id="@+id/confirmProduct"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/edit_cancel" />
+        android:text="@string/register_confirm" />
+
+    <ImageView
+        android:id="@+id/imgAddProduct"
+        android:layout_width="340dp"
+        android:layout_height="290dp"
+        android:layout_above="@+id/confirmProduct"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="15dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
 
 </RelativeLayout>
