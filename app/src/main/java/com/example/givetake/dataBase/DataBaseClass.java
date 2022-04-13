@@ -76,8 +76,10 @@ public class DataBaseClass {
         String url = "images/"+ UUID.randomUUID().toString();
         StorageReference ref = storageReference.child(url);
         ref.putFile(filePath);
-        return storageReference +url;
+
+        return storageReference + url;
     }
+
 
 
 }

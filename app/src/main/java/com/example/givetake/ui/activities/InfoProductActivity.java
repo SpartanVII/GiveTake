@@ -7,11 +7,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.givetake.R;
 import com.example.givetake.model.MyAddress;
 import com.example.givetake.model.Product;
@@ -24,6 +26,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.internal.StorageReferenceUri;
 
 import java.util.Objects;
 
@@ -36,6 +43,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
     private TextView vendorName;
     private TextView vendorNote;
     private TextView vendorAddress;
+    private ImageView productImg;
     private ImageView favProduct;
     private MyAddress vendorAddres;
     private GoogleMap mMap;
@@ -53,6 +61,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         vendorName = findViewById(R.id.vendorNameInfoProduct);
         vendorNote = findViewById(R.id.replaceWithTheVendorNote);
         vendorAddress = findViewById(R.id.addressVendorInfoProduct);
+        productImg = findViewById(R.id.imgProductrInfoProduct);
         favProduct = findViewById(R.id.addFav);
         presenter = new Presenter();
         setSupportActionBar(toolbar);
@@ -76,6 +85,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         vendorNote.setText(Double.toString(vendor.getGlobalScore()));
         vendorAddress.setText(vendor.getAddressToString());
         vendorAddres = vendor.getAddress();
+        Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
 
         if (user.isFavorite(productKey)) favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_favorite));
         else    favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_not_favorite));
@@ -119,6 +129,4 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         mSettings.setRotateGesturesEnabled(false);
         mSettings.setScrollGesturesEnabled(false);
     }
-
-
-}
+    }

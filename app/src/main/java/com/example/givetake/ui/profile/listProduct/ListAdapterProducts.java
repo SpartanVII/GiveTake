@@ -1,6 +1,7 @@
 package com.example.givetake.ui.profile.listProduct;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 public class ListAdapterProducts extends ArrayAdapter<Product> {
 
     private List<Product> dataSet;
+    private ImageView productImg;
+    private Product product;
     Context mContext;
 
     // View lookup cache
@@ -30,12 +37,14 @@ public class ListAdapterProducts extends ArrayAdapter<Product> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        Product product = (Product) getItem(position);
-
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_product,parent,false);
         }
+
+        product = (Product) getItem(position);
+
+        productImg = convertView.findViewById(R.id.img);
+        Glide.with(getContext()).load(product.getImg()).centerCrop().into(productImg);
 
         TextView productName = convertView.findViewById(R.id.productName);
         productName.setText(product.getTitle());
@@ -43,11 +52,8 @@ public class ListAdapterProducts extends ArrayAdapter<Product> {
         TextView productDesc = convertView.findViewById(R.id.productDesc);
         productDesc.setText(product.getDescription());
 
-        ImageView img = convertView.findViewById(R.id.img);
-        //img.setImageDrawable(product.getImg());
-
-        // Return the completed view to render on screen
         return convertView;
     }
+
 }
 

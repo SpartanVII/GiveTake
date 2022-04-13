@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.givetake.R;
 import com.example.givetake.model.MyAddress;
 import com.example.givetake.model.Product;
@@ -37,6 +39,7 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
     private TextView productDesc;
     private TextView vendorAddress;
     private MyAddress vendorAddres;
+    private ImageView productImg;
     private Product product;
     private GoogleMap mMap;
 
@@ -49,6 +52,7 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
         productName = findViewById(R.id.productNameMy);
         productDesc = findViewById(R.id.productDescMy);
         vendorAddress = findViewById(R.id.addressVendorMyProduct);
+        productImg = findViewById(R.id.imgProductrMyProduct);
         presenter = new Presenter();
         setSupportActionBar(toolbar);
         setTitle("Información del producto");
@@ -62,10 +66,12 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
         product = presenter.getProduct(productKey);
         User vendor = presenter.getUser(product.getOwner());
 
+        Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
         vendorAddress.setText(vendor.getAddressToString());
         vendorAddres = vendor.getAddress();
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productMyMap);
         assert mapFragment != null;

@@ -23,11 +23,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +52,8 @@ public class  AddProductActivity extends AppCompatActivity {
     private Uri filePath;
     private Button chooseBtn;
     private ImageView imageView;
+    private boolean changedImage;
+    private boolean modifying;
     private final int PICK_IMAGE_REQUEST = 71;
 
 
@@ -67,6 +71,7 @@ public class  AddProductActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 addProduct();
             }
         });
@@ -82,7 +87,8 @@ public class  AddProductActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category_add_product, R.layout.support_simple_spinner_dropdown_item );
         spinner.setAdapter(adapter);
-
+        modifying = false;
+        changedImage = false;
         bundle = getIntent().getExtras();
         if(bundle != null) {
             setTitle("Modificar producto");
@@ -91,9 +97,12 @@ public class  AddProductActivity extends AppCompatActivity {
             name.setText(modifyProduct.getTitle());
             desc.setText(modifyProduct.getDescription());
             spinner.setSelection(adapter.getPosition(modifyProduct.getTag()));
+            Glide.with(getApplicationContext()).load(modifyProduct.getImg()).into(imageView);
+            modifying = true;
         }
 
         chooseBtn.setOnClickListener(v -> chooseImage());
+
     }
 
 
@@ -101,19 +110,19 @@ public class  AddProductActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Elija una foto"), PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null )
         {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
+                changedImage = true;
             }
             catch (IOException e)
             {
@@ -133,7 +142,22 @@ public class  AddProductActivity extends AppCompatActivity {
         product.setDescription(desc.getText().toString());
         product.setOwner(email.split("@")[0]);
         product.setTag(spinner.getSelectedItem().toString());
-        product.setImg(presenter.uploadImage(filePath));
+
+        if (changedImage){
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+            String url = "images/"+ UUID.randomUUID().toString();
+            StorageReference ref = storageReference.child(url);
+            try {
+                UploadTask upload = ref.putFile(filePath);
+                while (!upload.isComplete()){}
+                Task<Uri> downloadUrl = upload.getResult().getStorage().getDownloadUrl();
+                while (!downloadUrl.isComplete()){}
+                product.setImg(downloadUrl.getResult().toString());
+            }catch (Exception e){e.printStackTrace();}
+
+
+        }else product.setImg(modifyProduct.getImg());
 
         if (bundle!=null){
             product.setId(modifyProduct.getId());
@@ -185,7 +209,7 @@ public class  AddProductActivity extends AppCompatActivity {
             this.desc.setError(null);
         }
 
-        if (filePath==null){
+        if (filePath==null && !modifying){
             //AlertDialog.Builder alertBuil
             valid = false;
         }
