@@ -52,7 +52,7 @@ public class ProfileFragment extends Fragment {
 
         User user = presenter.getUser(key);
         name.setText(user.getName());
-        address.setText(user.getAddressToString());
+        address.setText(user.obtainAddressLine());
         //profileImg.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_logged));
 
         editProfile.setOnClickListener(new View.OnClickListener() {

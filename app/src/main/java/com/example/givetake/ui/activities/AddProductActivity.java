@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.givetake.R;
@@ -35,7 +37,10 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -51,10 +56,14 @@ public class  AddProductActivity extends AppCompatActivity {
     private Product modifyProduct;
     private Uri filePath;
     private Button chooseBtn;
+    private Button cameraBtn;
     private ImageView imageView;
     private boolean changedImage;
     private boolean modifying;
+
     private final int PICK_IMAGE_REQUEST = 71;
+    private final int REQUEST_TAKE_PHOTO = 1;
+
 
 
     @SuppressLint("ResourceType")
@@ -83,6 +92,7 @@ public class  AddProductActivity extends AppCompatActivity {
         name = findViewById(R.id.addProductName);
         desc = findViewById(R.id.addProductDesc);
         chooseBtn = findViewById(R.id.btnChoose);
+        cameraBtn = findViewById(R.id.btnCamera);
         imageView = findViewById(R.id.imgAddProduct);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.category_add_product, R.layout.support_simple_spinner_dropdown_item );
@@ -102,7 +112,7 @@ public class  AddProductActivity extends AppCompatActivity {
         }
 
         chooseBtn.setOnClickListener(v -> chooseImage());
-
+        cameraBtn.setOnClickListener(v -> dispatchTakePictureIntent());
     }
 
 
@@ -116,19 +126,45 @@ public class  AddProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null )
-        {
-            filePath = data.getData();
+        filePath = data.getData();
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK  && data.getData() != null ) {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
-                changedImage = true;
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
         }
+
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
+        }
+        changedImage = true;
+    }
+
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();  // Create the File where the photo should go
+            } catch (IOException ex) {  // Error occurred while creating the File
+                System.out.println("Error creando ruta");
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "$PACKAGE$.provider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+        System.out.println("Error no hay camara");
     }
 
 
@@ -199,12 +235,7 @@ public class  AddProductActivity extends AppCompatActivity {
         else if (desc.length()>600) {
             this.desc.setError("Máximo 600 carácteres");
             valid = false;
-        }/*
-        else if (desc.split(" ").length>7) {
-        this.desc.setError("Usa palabras por favor");
-        valid = false;
         }
-        */
         else {
             this.desc.setError(null);
         }
@@ -215,5 +246,18 @@ public class  AddProductActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        return image;
     }
 }

@@ -1,11 +1,10 @@
 package com.example.givetake.dataBase;
 
-import android.app.ProgressDialog;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.givetake.model.json.LocalDateAdapter;
+import com.example.givetake.model.manager.UserManager;
 import com.example.givetake.model.singleton.ProductManagerSingleton;
 import com.example.givetake.model.singleton.UserManagerSingleton;
 import com.example.givetake.model.User;
@@ -22,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -43,6 +43,20 @@ public class DataBaseClass {
     public void save(User user){
             DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
             userReference.setValue(gson.toJson(user));
+            /*
+            userReference.child("name").setValue(user.getName());
+            userReference.child("address").setValue(user.getAddress());
+            userReference.child("gloablScore").setValue(user.getGlobalScore());
+            userReference.child("mail").setValue(user.getMail());
+            userReference.child("gender").setValue(user.getGender());
+            userReference.child("birth").setValue(user.getBirth());
+            userReference.child("swaps").setValue(user.getSwaps());
+            userReference.child("tradeProducts").setValue(user.getTradeProducts());
+            userReference.child("swapedProducts").setValue(user.getSwapedProducts());
+            userReference.child("favProducts").setValue(user.getFavProducts());
+            userReference.child("nProduct").setValue(user.getnProduct());
+            */
+             //userReference.setValue(user);
     }
 
 
@@ -55,19 +69,25 @@ public class DataBaseClass {
         Type userType = new TypeToken<Map<String, User>>(){}.getType();
         DatabaseReference userReference = db.getReference("Users");
 
-        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                /*
+                Map<String, User> userMap =(HashMap<String, User>) dataSnapshot.getValue();
+                UserManagerSingleton.setUserManager(userMap);
+                ProductManagerSingleton.createProductManagerWithMap(userMap);
+                */
+
                 String json = String.valueOf(dataSnapshot.getValue());
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
                 ProductManagerSingleton.createProductManagerWithMap(gson.fromJson(json, userType));
-                Log.w("Firebase", "Datos cargados");
+                Log.w("Firebase", "Data loaded");
 
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Log.w("Firebase", "Failed to read value.", error.toException());
+                Log.w("Firebase", "Failed to load the data", error.toException());
             }
         });
     }

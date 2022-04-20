@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
     private Presenter presenter;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    private Boolean isRegistered;
 
     private Spinner spinner;
 
@@ -42,7 +43,9 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        Boolean isRegistered =  Boolean.parseBoolean(prefs.getString("isRegistered", null));
+        String email = prefs.getString("email", null);
+        if (email!=null) isRegistered = true;
+        else isRegistered = false;
 
         ListView listView = binding.listviewHome;
         spinner = binding.spinnerHome;
@@ -67,8 +70,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        if (isRegistered) listView.setClickable(true);
-        else listView.setClickable(false);
+        listView.setClickable(isRegistered);
         final FloatingActionButton floatingButton = binding.floatingButton;
         if (!isRegistered) floatingButton.setVisibility(View.INVISIBLE);
         floatingButton.setOnClickListener(new View.OnClickListener() {

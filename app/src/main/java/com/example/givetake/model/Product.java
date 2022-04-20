@@ -84,4 +84,11 @@ public class Product implements Serializable {
         strBuilder.append("Categoría: ").append(tag);
         return strBuilder.toString();
     }
+
+    public boolean equals(Object obj){
+        Product otherProduct = (Product) obj;
+        if (this.id.equals(otherProduct.getId()))
+            return true;
+        return false;
+    }
 }

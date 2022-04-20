@@ -33,11 +33,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -84,9 +86,9 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
 
         user = presenter.getUser(email.split("@")[0]);
         name.setText(user.getName());
-        gender = user.getGenderToString();
+        gender = user.obtainGenderToString();
         myAddress = user.getAddress();
-        searchView.setQuery(user.getAddressToString(), false);
+        searchView.setQuery(user.obtainAddressLine(), false);
 
 
 
@@ -170,8 +172,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
                 datePickerDialog.show();
             }
         });
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        birthDate.setText(user.getBirth().format(format));
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        birthDate.setText(format.format(user.getBirth()));
     }
 
     @SuppressLint("SetTextI18n")
@@ -211,8 +213,11 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         if (!validateForm()) {
             return;
         }
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date parsedDate =  new Date();
+        try {
+            parsedDate = format.parse(birthDate.getText().toString());
+        }catch (Exception e){}
         MyAddress myAddress = new MyAddress(lastAddress.getAddressLine(0),
                 new LatLng(lastAddress.getLatitude(),lastAddress.getLongitude()));
         presenter.addUser(
@@ -303,7 +308,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         });
 
         mMap.addMarker(new MarkerOptions().position(myAddress.getLatLng()));
-        searchView.setQuery(user.getAddressToString(), true);
+        searchView.setQuery(user.obtainAddressLine(), true);
 
 
         UiSettings mSettings = mMap.getUiSettings();

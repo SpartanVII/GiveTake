@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,11 +25,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.internal.StorageReferenceUri;
 
 import java.util.Objects;
 
@@ -83,7 +77,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         productDesc.setText(product.getDescription());
         vendorName.setText(vendor.getName());
         vendorNote.setText(Double.toString(vendor.getGlobalScore()));
-        vendorAddress.setText(vendor.getAddressToString());
+        vendorAddress.setText(vendor.obtainAddressLine());
         vendorAddres = vendor.getAddress();
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
 

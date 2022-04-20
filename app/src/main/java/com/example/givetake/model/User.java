@@ -7,6 +7,7 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class User implements Serializable {
@@ -15,14 +16,14 @@ public class User implements Serializable {
     private double globalScore;
     private String mail;        //Private info
     private Gender gender;      //Private info
-    private LocalDate birth;    //Private info
+    private Date birth;    //Private info
     private List<Swap> swaps;
     private List<Product> tradeProducts;
     private List<Product> swapedProducts;
     private List<String> favProducts;
     private int nProduct;       //Private info
 
-    public User(String name, MyAddress address, String mail, String gender, LocalDate birth) {
+    public User(String name, MyAddress address, String mail, String gender, Date birth) {
         this.name = name;
         this.address = address;
         this.globalScore = 5.0;
@@ -34,6 +35,20 @@ public class User implements Serializable {
         swapedProducts = new ArrayList<>();
         favProducts = new ArrayList<>();
         this.nProduct = 0;
+    }
+
+    public User(String name, MyAddress address, String mail, String gender, Date birth, int nProduct) {
+        this.name = name;
+        this.address = address;
+        this.globalScore = 5.0;
+        this.mail = mail;
+        this.gender = fromStrToGender(gender);
+        this.birth = birth;
+        swaps = new ArrayList<>();
+        tradeProducts = new ArrayList<>();
+        swapedProducts = new ArrayList<>();
+        favProducts = new ArrayList<>();
+        this.nProduct = nProduct;
     }
 
     public void setGlobalScore(double globalScore) {
@@ -48,19 +63,11 @@ public class User implements Serializable {
         this.mail = mail;
     }
 
-    public Gender getGenre() {
-        return gender;
-    }
-
-    public void setGenre(String genre) {
-        this.gender = gender;
-    }
-
-    public LocalDate getBirth() {
+    public Date getBirth() {
         return birth;
     }
 
-    public void setBirth(LocalDate birth) {
+    public void setBirth(Date birth) {
         this.birth = birth;
     }
 
@@ -139,14 +146,9 @@ public class User implements Serializable {
     }
 
     public Gender fromStrToGender(String gender){
-        switch(gender){
-            case("Hombre"):
-                return Gender.MALE;
-            case("Mujer"):
-                return Gender.FEMALE;
-            default:
-                return Gender.OTHER;
-        }
+        if (gender.equals("Hombre") || gender.equals("MALE")) return Gender.MALE;
+        if (gender.equals("Mujer") || gender.equals("FEMALE")) return Gender.FEMALE;
+        else return Gender.OTHER;
     }
 
     public String fromGenderToString(Gender gender){
@@ -155,13 +157,13 @@ public class User implements Serializable {
         else return "Otro";
     }
 
-    public String getGenderToString(){
+    public String obtainGenderToString(){
         if (gender.name().equals("MALE")) return "Hombre";
         else if (gender.name().equals("FEMALE")) return "Mujer";
         else return "Otro";
     }
 
-    public String getAddressToString(){
+    public String obtainAddressLine(){
         return address.getAddressLine();
     }
 
@@ -171,7 +173,7 @@ public class User implements Serializable {
     }
     public void deleteTradableProduct(Product product){
         for (int i = 0 ; i<tradeProducts.size(); i++){
-            if (tradeProducts.get(i).getId().equals(product.getId())){
+            if (tradeProducts.get(i).equals(product)){
                 tradeProducts.remove(i);
                 break;
             }
@@ -195,7 +197,7 @@ public class User implements Serializable {
         favProducts.remove(id);
     }
 
-    public int getAndIncrementNproduct(){
+    public int obtainAndIncrementNproduct(){
         nProduct+=1;
         return nProduct-1;
     }

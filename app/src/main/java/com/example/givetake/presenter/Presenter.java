@@ -27,19 +27,19 @@ public class Presenter {
 
     public void addProduct(Product product){
         Product productWithKey = userManager.addProduct(product);
-        productManager.addProduct(productWithKey);
+        //productManager.addProduct(productWithKey);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
     public void modifyProduct(Product product){
         userManager.modifyProduct(product);
-        productManager.addProduct(product);
+        //productManager.addProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
     public void deleteProduct(Product product){
         userManager.deleteProduct(product);
-        productManager.deleteProduct(product);
+        //productManager.deleteProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 

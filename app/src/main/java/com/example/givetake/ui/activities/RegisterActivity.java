@@ -2,7 +2,9 @@ package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -38,13 +40,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Presenter presenter = new Presenter();
@@ -78,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
 
         setSupportActionBar(toolbar);
         setTitle("Registro");
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.registerMap);
@@ -181,18 +187,6 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                 signUp();
             }
         });
-
-        Button cancelButton = findViewById(R.id.cancelRegister);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    showHomeCancel();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
 
@@ -210,12 +204,15 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                             FirebaseUser user = mAuth.getCurrentUser();
                             assert user != null;
                             try {
-                                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                                LocalDate parsedDate = LocalDate.parse(birthDate.getText().toString(), format);
+                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                Date parsedDate =  new Date();
+                                try {
+                                    parsedDate = format.parse(birthDate.getText().toString());
+                                }catch (Exception e){}
                                 MyAddress myAddress = new MyAddress(lastAddress.getAddressLine(0),
                                         new LatLng(lastAddress.getLatitude(),lastAddress.getLongitude()));
                                 User user1 = new User(name.getText().toString(), myAddress, email, autoCompleteGender.getText().toString(), parsedDate);
-                                user1.getAddressToString();
+                                user1.obtainAddressLine();
                                 presenter.addUser(user1);
                                 showHome();
                             } catch (InterruptedException e) {
@@ -238,17 +235,20 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     public void showHome() throws InterruptedException {
+        saveSession();
         Intent homeIntent = new Intent(this, MainActivity.class);
         homeIntent.putExtra("email", email);
         homeIntent.putExtra("isRegistered","true");
         startActivity(homeIntent);
     }
 
-    public void showHomeCancel() throws InterruptedException {
-        Intent homeIntent = new Intent(this, MainActivity.class);
-        homeIntent.putExtra("email", email);
-        homeIntent.putExtra("isRegistered","false");
-        startActivity(homeIntent);
+    public void saveSession(){
+        //Saving the session
+        @SuppressLint("CommitPrefEdits")
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("email", email);
+        prefsEditor.apply();
     }
 
     private boolean validateForm() {

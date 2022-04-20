@@ -123,24 +123,14 @@
 
     <Button
         android:id="@+id/confirmRegister"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ubi"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_toEndOf="@id/cancelRegister"
-        android:text="@string/register_confirm" />
-
-    <Button
-        android:id="@+id/cancelRegister"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ubi"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        android:text="@string/edit_cancel" />
+        android:text="@string/register_confirm" />
+
 
 </RelativeLayout>

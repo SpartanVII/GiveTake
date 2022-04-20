@@ -12,5 +12,6 @@
     <color name="warning">#DD7D5E</color>
     <color name="main">#6200ee</color>
     <color name="trilary">#64587F</color>
+    <color name="secondary">#E8DEF8</color>
 
 </resources>

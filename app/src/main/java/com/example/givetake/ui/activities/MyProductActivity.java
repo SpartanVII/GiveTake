@@ -69,15 +69,13 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
-        vendorAddress.setText(vendor.getAddressToString());
+        vendorAddress.setText(vendor.obtainAddressLine());
         vendorAddres = vendor.getAddress();
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productMyMap);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
-
     }
 
     @Override

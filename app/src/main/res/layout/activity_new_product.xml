@@ -90,10 +90,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/addProductDesc"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="65dp"
+        android:text="Subir foto" />
+
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addProductDesc"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="75dp"
-        android:layout_marginEnd="75dp"
-        android:text="Sube la foro del producto" />
+        android:layout_marginEnd="65dp"
+        android:text="Hacer foto" />
 
     <Button
         android:id="@+id/confirmProduct"

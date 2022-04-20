@@ -40,25 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
-        @SuppressLint("CommitPrefEdits")
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            email = bundle.getString("email");
-            isRegistered = Boolean.parseBoolean(bundle.getString("isRegistered"));
-            //Guardado de datos de inicio
-            SharedPreferences.Editor prefsEditor = prefs.edit();
-            prefsEditor.putString("email", email);
-            prefsEditor.putString("isRegistered", isRegistered+"");
-            prefsEditor.apply();
-        }
-        else{
-            email = prefs.getString("email", null);
-            isRegistered =  Boolean.parseBoolean(prefs.getString("isRegistered", null));
-        }
-        invalidateOptionsMenu();
-
         try {
             session();
         } catch (InterruptedException e) {
@@ -84,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         @SuppressLint("CommitPrefEdits")
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
-
         if(email!=null){
             isRegistered=true;
             invalidateOptionsMenu();
