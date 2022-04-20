@@ -1,4 +1,4 @@
-package com.example.givetake.ui.home;
+package com.example.givetake.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.AddProductActivity;
 import com.example.givetake.ui.activities.InfoProductActivity;
-import com.example.givetake.ui.profile.helpers.CardViewAdapter;
+import com.example.givetake.ui.helpers.CardViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -31,14 +31,12 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     private Presenter presenter;
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private Boolean isRegistered;
 
     private Spinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 

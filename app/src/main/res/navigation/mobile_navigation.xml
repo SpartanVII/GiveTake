@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.givetake.ui.home.HomeFragment"
+        android:name="com.example.givetake.ui.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.givetake.ui.profile.ProfileFragment"
+        android:name="com.example.givetake.ui.fragments.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_favs"
-        android:name="com.example.givetake.ui.FavoritesFragment"
+        android:name="com.example.givetake.ui.fragments.FavoritesFragment"
         android:label="@string/menu_favs"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.givetake.ui.settings.SettingsFragment"
+        android:name="com.example.givetake.ui.fragments.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 

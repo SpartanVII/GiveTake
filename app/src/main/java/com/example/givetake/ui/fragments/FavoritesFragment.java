@@ -1,4 +1,4 @@
-package com.example.givetake.ui;
+package com.example.givetake.ui.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,7 +19,7 @@ import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.InfoProductActivity;
-import com.example.givetake.ui.profile.helpers.ListAdapterProducts;
+import com.example.givetake.ui.helpers.ListAdapterProducts;
 
 import java.util.List;
 

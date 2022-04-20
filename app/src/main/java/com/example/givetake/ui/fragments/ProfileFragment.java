@@ -1,4 +1,4 @@
-package com.example.givetake.ui.profile;
+package com.example.givetake.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,21 +22,18 @@ import com.example.givetake.databinding.FragmentProfileBinding;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.EditProfileActivity;
-import com.example.givetake.ui.profile.helpers.ProductsFragment;
-import com.example.givetake.ui.profile.helpers.TabAdapter;
+import com.example.givetake.ui.helpers.ProductsFragment;
+import com.example.givetake.ui.helpers.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class ProfileFragment extends Fragment {
 
-    private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
     private Presenter presenter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 

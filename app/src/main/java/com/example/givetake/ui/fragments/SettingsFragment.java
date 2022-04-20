@@ -1,4 +1,4 @@
-package com.example.givetake.ui.settings;
+package com.example.givetake.ui.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,14 +28,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsFragment extends Fragment {
 
-    private SettingsViewModel settingsViewModel;
     private FragmentSettingsBinding binding;
     private FirebaseAuth mAuth;
     private Presenter presenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 

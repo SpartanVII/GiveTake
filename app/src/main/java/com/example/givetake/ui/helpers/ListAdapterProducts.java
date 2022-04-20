@@ -1,4 +1,4 @@
-package com.example.givetake.ui.profile.helpers;
+package com.example.givetake.ui.helpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
