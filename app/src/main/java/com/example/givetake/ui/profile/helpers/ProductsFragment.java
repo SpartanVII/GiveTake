@@ -1,4 +1,4 @@
-package com.example.givetake.ui.profile.listProduct;
+package com.example.givetake.ui.profile.helpers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
-import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.activities.MyProductActivity;
 
 import java.util.List;

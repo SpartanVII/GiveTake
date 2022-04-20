@@ -1,6 +1,5 @@
 package com.example.givetake.ui.home;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentHomeBinding;
@@ -23,7 +23,7 @@ import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.AddProductActivity;
 import com.example.givetake.ui.activities.InfoProductActivity;
-import com.example.givetake.ui.profile.listProduct.ListAdapterProducts;
+import com.example.givetake.ui.profile.helpers.CardViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -47,7 +47,9 @@ public class HomeFragment extends Fragment {
         if (email!=null) isRegistered = true;
         else isRegistered = false;
 
-        ListView listView = binding.listviewHome;
+        RecyclerView recyclerView = binding.listviewHome;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         spinner = binding.spinnerHome;
         presenter = new Presenter();
 
@@ -60,8 +62,13 @@ public class HomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 productList.clear();
                 productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
-                ListAdapterProducts listAdapterInfo = new ListAdapterProducts(productList, getContext());
-                listView.setAdapter(listAdapterInfo);
+                CardViewAdapter cardViewAdapter = new CardViewAdapter(productList);
+                cardViewAdapter.setOnClickListener(v -> {
+                    Intent intent = new Intent(getContext(), InfoProductActivity.class);
+                    intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
+                    startActivity(intent);
+                });
+                recyclerView.setAdapter(cardViewAdapter);
             }
 
             @Override
@@ -70,23 +77,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        listView.setClickable(isRegistered);
+        recyclerView.setClickable(isRegistered);
         final FloatingActionButton floatingButton = binding.floatingButton;
         if (!isRegistered) floatingButton.setVisibility(View.INVISIBLE);
         floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddProductActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), InfoProductActivity.class);
-                intent.putExtra("productKey", productList.get(position).getId());
                 startActivity(intent);
             }
         });

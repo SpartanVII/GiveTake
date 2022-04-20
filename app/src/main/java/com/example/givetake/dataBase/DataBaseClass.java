@@ -82,7 +82,6 @@ public class DataBaseClass {
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
                 ProductManagerSingleton.createProductManagerWithMap(gson.fromJson(json, userType));
                 Log.w("Firebase", "Data loaded");
-
             }
 
             @Override

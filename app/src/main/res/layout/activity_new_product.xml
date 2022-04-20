@@ -30,6 +30,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="10dp"
+        android:maxLines="1"
         android:layout_toEndOf="@id/textName"
         android:hint="@string/add_product_name_hint"
         android:textSize="20sp" />
@@ -91,6 +92,8 @@
         android:layout_below="@id/addProductDesc"
         android:layout_alignParentStart="true"
         android:layout_marginStart="65dp"
+        android:backgroundTint="@color/secondary"
+        android:textColor="@color/black"
         android:text="Subir foto" />
 
     <Button
@@ -100,6 +103,8 @@
         android:layout_below="@id/addProductDesc"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="65dp"
+        android:backgroundTint="@color/secondary"
+        android:textColor="@color/black"
         android:text="Hacer foto" />
 
     <Button

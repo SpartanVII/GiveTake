@@ -1,8 +1,6 @@
 package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -80,7 +79,6 @@ public class  AddProductActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 addProduct();
             }
         });
@@ -180,27 +178,41 @@ public class  AddProductActivity extends AppCompatActivity {
         product.setTag(spinner.getSelectedItem().toString());
 
         if (changedImage){
-
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+            if (modifying){
+                String deleteImgUrl = "gs://givetake-9f7af.appspot.com/images/" + modifyProduct.getImg().split("images%")[1].split("\\?alt=media")[0];
+                storageReference.child(deleteImgUrl).delete();
+            }
             String url = "images/"+ UUID.randomUUID().toString();
             StorageReference ref = storageReference.child(url);
-            try {
-                UploadTask upload = ref.putFile(filePath);
-                while (!upload.isComplete()){}
-                Task<Uri> downloadUrl = upload.getResult().getStorage().getDownloadUrl();
-                while (!downloadUrl.isComplete()){}
-                product.setImg(downloadUrl.getResult().toString());
-            }catch (Exception e){e.printStackTrace();}
-
-
-        }else product.setImg(modifyProduct.getImg());
-
-        if (bundle!=null){
-            product.setId(modifyProduct.getId());
-            presenter.deleteProduct(modifyProduct);
-            presenter.modifyProduct(product);
-        }else {
-            presenter.addProduct(product);
+            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getTask().getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            product.setImg(task.getResult().toString());
+                            if (bundle!=null){
+                                product.setId(modifyProduct.getId());
+                                presenter.deleteProduct(modifyProduct);
+                                presenter.modifyProduct(product);
+                            }else {
+                                presenter.addProduct(product);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        else{
+            product.setImg(modifyProduct.getImg());
+            if (bundle!=null){
+                product.setId(modifyProduct.getId());
+                presenter.deleteProduct(modifyProduct);
+                presenter.modifyProduct(product);
+            }else {
+                presenter.addProduct(product);
+            }
         }
         showHome();
     }

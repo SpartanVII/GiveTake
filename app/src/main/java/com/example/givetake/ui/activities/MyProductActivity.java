@@ -108,7 +108,8 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //if (item.getItemId()==android.R.id.home) startActivity(new Intent(this, MainActivity.class));
+        if (item.getItemId()==android.R.id.home)
+            startActivity(new Intent(this, MainActivity.class));
         if (item.getTitle().equals("Borrar producto")){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(true);

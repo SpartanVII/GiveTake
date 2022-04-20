@@ -1,4 +1,4 @@
-package com.example.givetake.ui.profile.listProduct;
+package com.example.givetake.ui.profile.helpers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

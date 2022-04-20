@@ -1,8 +1,6 @@
 package com.example.givetake.ui;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
@@ -12,21 +10,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentFavoritesBinding;
-import com.example.givetake.databinding.FragmentHomeBinding;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.InfoProductActivity;
-import com.example.givetake.ui.profile.listProduct.ListAdapterProducts;
+import com.example.givetake.ui.profile.helpers.ListAdapterProducts;
 
 import java.util.List;
-import java.util.Objects;
 
 public class FavoritesFragment extends Fragment {
     private FragmentFavoritesBinding binding;

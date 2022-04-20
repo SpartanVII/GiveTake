@@ -101,6 +101,6 @@ public class Presenter {
 
     public void initiality(){
         dataBaseClass.initialy();
-        ProductManagerSingleton.createProductManager(userManager);
+        //ProductManagerSingleton.createProductManager(userManager);
     }
 }

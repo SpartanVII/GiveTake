@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/homeLayoput"
-    tools:context=".ui.home.HomeFragment">
+    android:background="@color/grey_400"
+    tools:context=".ui.home.HomeFragment"
+    >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButton"
@@ -23,24 +25,28 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/grey_400"
+        >
 
         <Spinner
             android:id="@+id/spinnerHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="10dp" />
+            tools:layout_editor_absoluteX="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            />
 
     </LinearLayout>
 
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listviewHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:listitem="@layout/item_product" />
-    <!--android:background="#BBC1F8"-->
+        tools:listitem="@layout/item_product"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

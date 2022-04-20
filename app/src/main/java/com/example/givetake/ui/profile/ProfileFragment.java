@@ -22,8 +22,8 @@ import com.example.givetake.databinding.FragmentProfileBinding;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.EditProfileActivity;
-import com.example.givetake.ui.profile.listProduct.ProductsFragment;
-import com.example.givetake.ui.profile.listProduct.TabAdapter;
+import com.example.givetake.ui.profile.helpers.ProductsFragment;
+import com.example.givetake.ui.profile.helpers.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class ProfileFragment extends Fragment {
