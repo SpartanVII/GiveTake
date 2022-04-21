@@ -1,4 +1,4 @@
-package com.example.givetake.ui.helpers;
+package com.example.givetake.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +20,17 @@ import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
+import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.activities.MyProductActivity;
+import com.example.givetake.ui.helpers.CardViewAdapter;
+import com.example.givetake.ui.helpers.ListAdapterProducts;
 
 import java.util.List;
 
 
 public class ProductsFragment extends Fragment {
-    ListAdapterProducts listAdapterInfo;
+    private RecyclerView recyclerView;
     private Presenter presenter;
-    private ListView listView;
-
-    public ProductsFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,25 +41,23 @@ public class ProductsFragment extends Fragment {
 
         presenter = new Presenter();
         User user = presenter.getUser(key);
-        listView = view.findViewById(R.id.listviewProduct);
-        List<Product> productList = user.getTradeProducts();
-        listAdapterInfo = new ListAdapterProducts(productList, getContext());
-        listView.setAdapter(listAdapterInfo);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), MyProductActivity.class);
-                intent.putExtra("productKey", productList.get(position).getId());
-                startActivity(intent);
-            }
+        recyclerView = view.findViewById(R.id.recyclerviewProduct);
+        List<Product> productList = user.getTradeProducts();
+        CardViewAdapter cardViewAdapter = new CardViewAdapter(productList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(cardViewAdapter);
+
+        cardViewAdapter.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), MyProductActivity.class);
+            intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
+            startActivity(intent);
         });
 
         TextView textVoidProducts = view.findViewById(R.id.textVoidProducts);
-        if (productList.size()==0) textVoidProducts.setVisibility(View.VISIBLE);
+        if (productList.isEmpty()) textVoidProducts.setVisibility(View.VISIBLE);
         else textVoidProducts.setVisibility(View.INVISIBLE);
 
         return view;
     }
-
 }

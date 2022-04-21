@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.helpers.ProductsFragment">
+    tools:context=".ui.fragments.ProductsFragment"
+    android:background="@color/grey_400">
 
-    <ListView
-        android:id="@+id/listviewProduct"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerviewProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_product" />
+        android:layoutAnimation="@anim/layout_animation"
+        tools:listitem="@layout/item_product"/>
 
     <TextView
         android:id="@+id/textVoidProducts"

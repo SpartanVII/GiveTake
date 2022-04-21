@@ -1,5 +1,6 @@
 package com.example.givetake.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,10 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    private Presenter presenter;
     private FragmentHomeBinding binding;
     private Boolean isRegistered;
-
+    private Presenter presenter;
+    private TextView noProducts;
     private Spinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,27 +48,32 @@ public class HomeFragment extends Fragment {
         else isRegistered = false;
 
         RecyclerView recyclerView = binding.listviewHome;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        noProducts = binding.textVoidProductsHome;
         spinner = binding.spinnerHome;
         presenter = new Presenter();
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.category_home, R.layout.support_simple_spinner_dropdown_item );
-        List<Product> productList = new ArrayList<>();
         spinner.setAdapter(adapter);
+
+        List<Product> productList = new ArrayList<>();
+        CardViewAdapter cardViewAdapter = new CardViewAdapter(productList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(cardViewAdapter);
+        cardViewAdapter.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), InfoProductActivity.class);
+            intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
+            startActivity(intent);
+        });
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 productList.clear();
                 productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
-                CardViewAdapter cardViewAdapter = new CardViewAdapter(productList);
-                cardViewAdapter.setOnClickListener(v -> {
-                    Intent intent = new Intent(getContext(), InfoProductActivity.class);
-                    intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
-                    startActivity(intent);
-                });
-                recyclerView.setAdapter(cardViewAdapter);
+                cardViewAdapter.notifyDataSetChanged();
+                recyclerView.scheduleLayoutAnimation();
+                if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);
+                else noProducts.setVisibility(View.INVISIBLE);
             }
 
             @Override

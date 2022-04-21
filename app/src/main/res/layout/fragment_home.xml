@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/homeLayoput"
     android:background="@color/grey_400"
-    tools:context=".ui.fragments.HomeFragment"
-    >
+    tools:context=".ui.fragments.HomeFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButton"
@@ -26,8 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/grey_400"
-        >
+        android:backgroundTint="@color/grey_400">
 
         <Spinner
             android:id="@+id/spinnerHome"
@@ -36,9 +34,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="10dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            />
-
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 
 
@@ -46,7 +42,22 @@
         android:id="@+id/listviewHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutAnimation="@anim/layout_animation"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         tools:listitem="@layout/item_product"/>
+
+    <TextView
+        android:id="@+id/textVoidProductsHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="250dp"
+        android:text="@string/profile_products_void"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

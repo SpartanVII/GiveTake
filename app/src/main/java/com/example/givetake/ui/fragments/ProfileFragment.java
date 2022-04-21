@@ -14,24 +14,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentProfileBinding;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.EditProfileActivity;
-import com.example.givetake.ui.helpers.ProductsFragment;
 import com.example.givetake.ui.helpers.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private Presenter presenter;
-    private ViewPager viewPager;
+    private ViewPager2 viewPager;
     private TabLayout tabLayout;
+    private TabAdapter tabAdapter;
+    private ProductsFragment productsFragment;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
@@ -43,7 +48,6 @@ public class ProfileFragment extends Fragment {
         final ImageView profileImg = binding.prfileImg;
         presenter = new Presenter();
 
-
         SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String key = prefs.getString("email", null).split("@")[0];
 
@@ -52,25 +56,20 @@ public class ProfileFragment extends Fragment {
         address.setText(user.obtainAddressLine());
         //profileImg.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_logged));
 
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), EditProfileActivity.class);
-                startActivity(intent);
-            }
+        editProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), EditProfileActivity.class);
+            startActivity(intent);
         });
 
         //TabLayer
         tabLayout = binding.tab;
         viewPager = binding.viewPager;
 
-        tabLayout.setupWithViewPager(viewPager);
-        TabAdapter tabAdapter = new TabAdapter(getActivity().getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        tabAdapter.addFragment(new ProductsFragment(),"Productos");
-        //tabAdapter.addFragment(null,"Opiniones");
-        viewPager.setAdapter(tabAdapter);
-
-
+        viewPager.setAdapter(new TabAdapter(getActivity()));
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            if (position==0) tab.setText("Productos");
+            else tab.setText("Opiniones");
+        }).attach();
 
         return root;
     }

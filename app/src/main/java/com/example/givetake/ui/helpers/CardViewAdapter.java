@@ -19,9 +19,13 @@ import java.util.List;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder>
                                                                     implements AdapterView.OnClickListener {
-    private final List<Product> items;
+    private List<Product> items;
     private AdapterView.OnClickListener listener;
     Context mContext;
+
+    public void setItems(List<Product> items) {
+        this.items = items;
+    }
 
     @Override
     public void onClick(View v) {
