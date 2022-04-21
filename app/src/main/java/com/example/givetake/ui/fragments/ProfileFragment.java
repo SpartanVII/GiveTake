@@ -32,10 +32,6 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private Presenter presenter;
-    private ViewPager2 viewPager;
-    private TabLayout tabLayout;
-    private TabAdapter tabAdapter;
-    private ProductsFragment productsFragment;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +42,8 @@ public class ProfileFragment extends Fragment {
         final TextView address = binding.address;
         final Button editProfile = binding.profile;
         final ImageView profileImg = binding.prfileImg;
+        final TabLayout tabLayout = binding.tab;
+        final ViewPager2 viewPager = binding.viewPager;
         presenter = new Presenter();
 
         SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
@@ -60,10 +58,6 @@ public class ProfileFragment extends Fragment {
             Intent intent = new Intent(getContext(), EditProfileActivity.class);
             startActivity(intent);
         });
-
-        //TabLayer
-        tabLayout = binding.tab;
-        viewPager = binding.viewPager;
 
         viewPager.setAdapter(new TabAdapter(getActivity()));
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {

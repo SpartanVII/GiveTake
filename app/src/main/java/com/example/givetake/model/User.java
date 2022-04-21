@@ -1,11 +1,6 @@
 package com.example.givetake.model;
 
-import android.location.Address;
-
-import com.google.android.material.timepicker.TimeFormat;
-
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +12,7 @@ public class User implements Serializable {
     private String mail;        //Private info
     private Gender gender;      //Private info
     private Date birth;    //Private info
-    private List<Swap> swaps;
+    private List<Review> reviews;
     private List<Product> tradeProducts;
     private List<Product> swapedProducts;
     private List<String> favProducts;
@@ -30,7 +25,7 @@ public class User implements Serializable {
         this.mail = mail;
         this.gender = fromStrToGender(gender);
         this.birth = birth;
-        swaps = new ArrayList<>();
+        reviews = new ArrayList<>();
         tradeProducts = new ArrayList<>();
         swapedProducts = new ArrayList<>();
         favProducts = new ArrayList<>();
@@ -44,7 +39,7 @@ public class User implements Serializable {
         this.mail = mail;
         this.gender = fromStrToGender(gender);
         this.birth = birth;
-        swaps = new ArrayList<>();
+        reviews = new ArrayList<>();
         tradeProducts = new ArrayList<>();
         swapedProducts = new ArrayList<>();
         favProducts = new ArrayList<>();
@@ -99,12 +94,12 @@ public class User implements Serializable {
         return globalScore;
     }
 
-    public List<Swap> getSwaps() {
-        return swaps;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setSwaps(List<Swap> swaps) {
-        this.swaps = swaps;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public List<Product> getTradeProducts() {

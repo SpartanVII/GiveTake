@@ -1,5 +1,7 @@
 package com.example.givetake.model;
 
+import java.util.List;
+
 public enum Tags {
     COCHES("Coches"),
     MOTOS("Motos"),

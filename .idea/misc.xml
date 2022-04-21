@@ -66,6 +66,11 @@
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/menu/main.xml" value="0.1" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/menu/selector.xml" value="0.16" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1325" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/drawable/ic_logged.xml" value="0.1245" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/drawable/ic_logout.xml" value="0.1245" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/drawable/long_animation.xml" value="0.1245" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/drawable/splash.xml" value="0.1245" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/activity_info_product.xml" value="0.2" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/activity_main.xml" value="0.14945652173913043" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/activity_my_product.xml" value="0.4" />
@@ -74,7 +79,7 @@
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/app_bar_main.xml" value="0.10410334346504559" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_products.xml" value="0.14945652173913043" />
-        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_sample.xml" value="0.12590579710144928" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_settings.xml" value="0.13722826086956522" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/item_product.xml" value="0.264" />

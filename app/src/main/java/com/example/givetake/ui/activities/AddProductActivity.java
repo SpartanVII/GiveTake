@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +27,9 @@ import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -52,7 +49,7 @@ public class  AddProductActivity extends AppCompatActivity {
     private Spinner spinner;
     private Toolbar toolbar;
     private Bundle bundle;
-    private Product modifyProduct;
+    private Product oldOroduct;
     private Uri filePath;
     private Button chooseBtn;
     private Button cameraBtn;
@@ -101,11 +98,11 @@ public class  AddProductActivity extends AppCompatActivity {
         if(bundle != null) {
             setTitle("Modificar producto");
             String productKey = bundle.getString("productKey");
-            modifyProduct = presenter.getProduct(productKey);
-            name.setText(modifyProduct.getTitle());
-            desc.setText(modifyProduct.getDescription());
-            spinner.setSelection(adapter.getPosition(modifyProduct.getTag()));
-            Glide.with(getApplicationContext()).load(modifyProduct.getImg()).into(imageView);
+            oldOroduct = presenter.getProduct(productKey);
+            name.setText(oldOroduct.getTitle());
+            desc.setText(oldOroduct.getDescription());
+            spinner.setSelection(adapter.getPosition(oldOroduct.getTag()));
+            Glide.with(getApplicationContext()).load(oldOroduct.getImg()).into(imageView);
             modifying = true;
         }
 
@@ -171,16 +168,16 @@ public class  AddProductActivity extends AppCompatActivity {
             return;
         }
 
-        Product product = new Product();
-        product.setTitle(name.getText().toString());
-        product.setDescription(desc.getText().toString());
-        product.setOwner(email.split("@")[0]);
-        product.setTag(spinner.getSelectedItem().toString());
+        Product newproduct = new Product();
+        newproduct.setTitle(name.getText().toString());
+        newproduct.setDescription(desc.getText().toString());
+        newproduct.setOwner(email.split("@")[0]);
+        newproduct.setTag(spinner.getSelectedItem().toString());
 
         if (changedImage){
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
             if (modifying){
-                String deleteImgUrl = "gs://givetake-9f7af.appspot.com/images/" + modifyProduct.getImg().split("images%")[1].split("\\?alt=media")[0];
+                String deleteImgUrl = "gs://givetake-9f7af.appspot.com/images/" + oldOroduct.getImg().split("images%")[1].split("\\?alt=media")[0];
                 storageReference.child(deleteImgUrl).delete();
             }
             String url = "images/"+ UUID.randomUUID().toString();
@@ -191,13 +188,12 @@ public class  AddProductActivity extends AppCompatActivity {
                     taskSnapshot.getTask().getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
-                            product.setImg(task.getResult().toString());
+                            newproduct.setImg(task.getResult().toString());
                             if (bundle!=null){
-                                product.setId(modifyProduct.getId());
-                                presenter.deleteProduct(modifyProduct);
-                                presenter.modifyProduct(product);
+                                newproduct.setId(oldOroduct.getId());
+                                presenter.modifyProduct(oldOroduct, newproduct);
                             }else {
-                                presenter.addProduct(product);
+                                presenter.addProduct(newproduct);
                             }
                         }
                     });
@@ -205,13 +201,12 @@ public class  AddProductActivity extends AppCompatActivity {
             });
         }
         else{
-            product.setImg(modifyProduct.getImg());
+            newproduct.setImg(oldOroduct.getImg());
             if (bundle!=null){
-                product.setId(modifyProduct.getId());
-                presenter.deleteProduct(modifyProduct);
-                presenter.modifyProduct(product);
+                newproduct.setId(oldOroduct.getId());
+                presenter.modifyProduct(oldOroduct, newproduct);
             }else {
-                presenter.addProduct(product);
+                presenter.addProduct(newproduct);
             }
         }
         showHome();

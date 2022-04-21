@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,36 +36,27 @@ import java.util.Objects;
 public class MyProductActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Presenter presenter;
     private String productKey;
-    private Toolbar toolbar;
-    private TextView productName;
-    private TextView productDesc;
-    private TextView vendorAddress;
     private MyAddress vendorAddres;
-    private ImageView productImg;
     private Product product;
-    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_product);
 
-        toolbar = findViewById(R.id.toolbarMyProduct);
-        productName = findViewById(R.id.productNameMy);
-        productDesc = findViewById(R.id.productDescMy);
-        vendorAddress = findViewById(R.id.addressVendorMyProduct);
-        productImg = findViewById(R.id.imgProductrMyProduct);
+        Toolbar toolbar = findViewById(R.id.toolbarMyProduct);
+        TextView productName = findViewById(R.id.productNameMy);
+        TextView productDesc = findViewById(R.id.productDescMy);
+        TextView vendorAddress = findViewById(R.id.addressVendorMyProduct);
+        ImageView productImg = findViewById(R.id.imgProductrMyProduct);
+        Button swapBtn =findViewById(R.id.swapedButton);
         presenter = new Presenter();
+
         setSupportActionBar(toolbar);
         setTitle("Información del producto");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
-            productKey = bundle.getString("productKey");
-        }
-
-        product = presenter.getProduct(productKey);
+        product = presenter.getProduct(getIntent().getExtras().getString("productKey"));
         User vendor = presenter.getUser(product.getOwner());
 
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
@@ -71,6 +64,15 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
         productDesc.setText(product.getDescription());
         vendorAddress.setText(vendor.obtainAddressLine());
         vendorAddres = vendor.getAddress();
+
+        swapBtn.setOnClickListener(v -> {
+            /*
+            Intent intent = new Intent(this, );
+            intent.putExtra("productKey",productKey);
+            startActivity(intent);
+
+             */
+        });
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productMyMap);
@@ -80,22 +82,20 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap =googleMap;
         LatLng latLng = vendorAddres.getLatLng();
-        mMap.addCircle(new CircleOptions()
+        googleMap.addCircle(new CircleOptions()
                 .center(latLng)
                 .radius(200)
                 .strokeWidth(1)
                 .strokeColor(Color.argb(200, 30, 178, 255))
                 .fillColor(Color.argb(120, 102, 178, 255))
                 .clickable(true));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
-        UiSettings mSettings = mMap.getUiSettings();
+        UiSettings mSettings = googleMap.getUiSettings();
         mSettings.setZoomControlsEnabled(false);
         mSettings.setRotateGesturesEnabled(false);
         mSettings.setScrollGesturesEnabled(false);
-
     }
 
     @Override
@@ -116,13 +116,10 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
             builder.setTitle("Borrar producto");
             builder.setMessage("¿Está seguro de que quieres eliminarlo?");
             builder.setNegativeButton("Si",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            presenter.deleteProduct(product);
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
+                    (dialog, which) -> {
+                        presenter.deleteProduct(product);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
                     });
             builder.setPositiveButton("No", null);
             builder.show();

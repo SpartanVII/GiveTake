@@ -26,20 +26,18 @@ public class Presenter {
     }
 
     public void addProduct(Product product){
-        Product productWithKey = userManager.addProduct(product);
-        //productManager.addProduct(productWithKey);
+        userManager.addProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
-    public void modifyProduct(Product product){
-        userManager.modifyProduct(product);
-        //productManager.addProduct(product);
-        dataBaseClass.save(userManager.getUser(product.getOwner()));
+    public void modifyProduct(Product oldProduct, Product newProduct){
+        userManager.deleteProduct(oldProduct);
+        userManager.modifyProduct(newProduct);
+        dataBaseClass.save(userManager.getUser(newProduct.getOwner()));
     }
 
     public void deleteProduct(Product product){
         userManager.deleteProduct(product);
-        //productManager.deleteProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 

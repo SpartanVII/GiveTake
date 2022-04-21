@@ -12,13 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
 
 import java.util.List;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder>
-                                                                    implements AdapterView.OnClickListener {
+                                implements AdapterView.OnClickListener {
     private List<Product> items;
     private AdapterView.OnClickListener listener;
     Context mContext;
@@ -73,7 +74,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
 
     @Override
     public void onBindViewHolder(CardViewHolder viewHolder, int i) {
-        Glide.with(mContext).load(items.get(i).getImg()).centerCrop().into(viewHolder.productImg);
+        Glide.with(mContext).load(items.get(i).getImg()).centerCrop()
+                .apply(RequestOptions.circleCropTransform()).into(viewHolder.productImg);
         viewHolder.productName.setText(items.get(i).getTitle());
         viewHolder.productDesc.setText(items.get(i).getDescription());
     }
