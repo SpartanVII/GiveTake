@@ -55,7 +55,7 @@ public class UserManager {
     }
 
     public void putUser(User user){
-        userMap.put(user.getMail().split("@")[0], user);
+         userMap.put(user.getMail().split("@")[0], user);
     }
 
     public void deleteUser(String userKey){

@@ -29,7 +29,9 @@ import com.example.givetake.ui.helpers.CardViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
@@ -70,6 +72,7 @@ public class HomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 productList.clear();
                 productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
+                Collections.shuffle(productList, new Random());
                 cardViewAdapter.notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
                 if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);

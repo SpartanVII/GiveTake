@@ -15,6 +15,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,7 +55,6 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Presenter presenter = new Presenter();
-    private AutoCompleteTextView autoCompleteGender;
     private MarkerOptions marker;
     private Address lastAddress;
     private EditText birthDate;
@@ -61,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     private GoogleMap mMap;
     private String email;
     private EditText name;
-
+    private String gender;
     private FirebaseAuth mAuth;
     private Toolbar toolbar;
 
@@ -133,7 +134,6 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     private void setup(){
         name = findViewById(R.id.registerName);
         dateSetup();
-        genderSetup();
         buttonsSetup();
     }
 
@@ -166,17 +166,19 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
-    @SuppressLint("SetTextI18n")
-    private void genderSetup(){
-        //Selects
-        String[] selectGender = {"Hombre", "Mujer", "Otro"};
-        ArrayAdapter<String> adapterGender;
 
-        autoCompleteGender = findViewById(R.id.registerGenderSelect);
-        adapterGender = new ArrayAdapter<>(this, R.layout.select_item, selectGender);
-        autoCompleteGender.setAdapter(adapterGender);
-        autoCompleteGender.setText("Otro",false);
 
+    public void onRadioButtonClicked(View view) {
+        switch(view.getId()) {
+            case R.id.maleRegister:
+                gender = "Hombre";
+                break;
+            case R.id.femaleRegister:
+                gender = "Mujer";
+                break;
+            default:
+                gender = "Otro";
+        }
     }
 
     private void buttonsSetup(){
@@ -211,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                                 }catch (Exception e){}
                                 MyAddress myAddress = new MyAddress(lastAddress.getAddressLine(0),
                                         new LatLng(lastAddress.getLatitude(),lastAddress.getLongitude()));
-                                User user1 = new User(name.getText().toString(), myAddress, email, autoCompleteGender.getText().toString(), parsedDate);
+                                User user1 = new User(name.getText().toString(), myAddress, email, gender, parsedDate);
                                 user1.obtainAddressLine();
                                 presenter.addUser(user1);
                                 showHome();
@@ -261,15 +263,6 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         } else {
             this.name.setError(null);
         }
-
-        String gen = autoCompleteGender.getText().toString();
-        if (TextUtils.isEmpty(gen)) {
-            autoCompleteGender.setError("Obligatorio");
-            valid = false;
-        } else {
-            autoCompleteGender.setError(null);
-        }
-
         String date = birthDate.getText().toString();
         if (TextUtils.isEmpty(date)){
             birthDate.setError("Obligatorio");

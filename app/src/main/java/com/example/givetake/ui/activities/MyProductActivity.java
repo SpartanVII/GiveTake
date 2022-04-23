@@ -30,6 +30,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
 
@@ -74,7 +76,6 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
              */
         });
 
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productMyMap);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
@@ -117,6 +118,8 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
             builder.setMessage("¿Está seguro de que quieres eliminarlo?");
             builder.setNegativeButton("Si",
                     (dialog, which) -> {
+                        String deleteImgUrl = "gs://givetake-9f7af.appspot.com/images/" + product.getImg().split("images%")[1].split("\\?alt=media")[0];
+                        FirebaseStorage.getInstance().getReference().child(deleteImgUrl).delete();
                         presenter.deleteProduct(product);
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);

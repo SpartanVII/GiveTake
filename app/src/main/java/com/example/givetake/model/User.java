@@ -67,7 +67,7 @@ public class User implements Serializable {
     }
 
     public String getGender() {
-        return gender.toString();
+        return fromGenderToString(gender);
     }
 
     public void setGender(Gender gender) {

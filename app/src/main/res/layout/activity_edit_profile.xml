@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_400"
     >
 
     <include
@@ -14,20 +15,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="70dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:text="@string/register_name"
+        android:layout_marginTop="85dp"
         android:labelFor="@id/registerName"
-        />
+        android:text="@string/register_name"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="15dp"
         android:layout_toEndOf="@id/editTextName"
         android:textSize="20sp" />
 
@@ -52,99 +52,106 @@
         android:layout_below="@id/editName"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/editTextFechaNac"
-        android:hint="@string/register_date_hint"
-        android:textLocale="es"
-
-        />
-
-    <TextView
-        android:id="@+id/editTextGender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextFechaNac"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/register_genre"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:hint="@string/register_date_hint"/>
 
     <LinearLayout
-        android:id="@+id/editGender"
+        android:id="@+id/layoutGenderEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextFechaNac"
+        android:layout_below="@id/editFechaNac"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@id/editTextGender"
-        android:orientation="vertical">
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:id="@+id/textGender"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="@string/register_genre"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:paddingTop="10dp"/>
 
-            <AutoCompleteTextView
-                android:id="@+id/editGenderSelect"
+        <RadioGroup
+            android:id="@+id/genderRadioBtnEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp">
+
+            <RadioButton
+                android:id="@+id/maleEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
-
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="Hombre"/>
+            <RadioButton
+                android:id="@+id/femaleEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="Mujer" />
+            <RadioButton
+                android:id="@+id/otherEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="Otro"/>
+        </RadioGroup>
     </LinearLayout>
+
     <!--search view to search our location-->
     <RelativeLayout
         android:id="@+id/ubi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editGender">
+        android:layout_below="@id/layoutGenderEdit"
+        android:layout_marginTop="5dp">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/editSearchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-
-            android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#BFBFBF"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/grey_400"
             android:elevation="5dp"
             app:iconifiedByDefault="false"
             app:queryHint="@string/query_map" />
 
-        <!--fragment to display our maps-->
-        <fragment xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/editMap"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/productInforMapLay"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_below="@id/editSearchView"
+            android:layout_height="match_parent"
+            card_view:cardCornerRadius="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            tools:context=".ui.activities.EditProfileActivity" />
+            android:layout_marginBottom="70dp"
+            android:elevation="0dp">
+
+            <fragment xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/editMap"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ui.activities.EditProfileActivity" />
+        </androidx.cardview.widget.CardView>
+
     </RelativeLayout>
 
     <Button
         android:id="@+id/confirmEdit"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/cancelEdit"
-        android:layout_below="@id/ubi"
-        android:layout_marginStart="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:text="@string/register_confirm" />
 
-    <Button
-        android:id="@+id/cancelEdit"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ubi"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:text="@string/edit_cancel" />
+
 
 
 </RelativeLayout>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +49,6 @@ import java.util.Objects;
 public class EditProfileActivity extends AppCompatActivity implements OnMapReadyCallback {
     private EditText name;
     private EditText birthDate;
-    private AutoCompleteTextView autoCompleteGender;
     private String gender;
     private Presenter presenter;
     private String email;
@@ -90,8 +91,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         myAddress = user.getAddress();
         searchView.setQuery(user.obtainAddressLine(), false);
 
-
-
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
         // Obtain the SupportMapFragment and get notified
         // when the map is ready to be used.
@@ -101,8 +100,9 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 String location = searchView.getQuery().toString();
-                if (location != null || location.equals("")) {
+                if (!location.equals("")) {
                     mMap.clear();
                     List<Address> addresses = new ArrayList<>();
                     try {
@@ -111,22 +111,18 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
                         Toast.makeText(EditProfileActivity.this, "No se pudo conectar a internet", Toast.LENGTH_SHORT).show();
                     }
 
-                    if (addresses== null || addresses.isEmpty()){
+                    if (addresses == null || addresses.isEmpty()){
                         return false;
                     }
 
                     lastAddress =addresses.get(0);
-                    // on below line we are creating a variable for our location
-                    // where we will add our locations latitude and longitude.
                     LatLng latLng = new LatLng(lastAddress.getLatitude(), lastAddress.getLongitude());
-                    // on below line we are adding marker to that position.
                     marker = new MarkerOptions().position(latLng).title(location);
                     mMap.addMarker(marker);
-                    // below line is to animate camera to that position.
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
                     }
                 return  true;
-                }
+            }
 
 
             @Override
@@ -143,8 +139,20 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
     private void setup(){
         name = findViewById(R.id.editName);
         dateSetup();
-        genderSetup();
         buttonsSetup();
+        genderSetup();
+    }
+
+    public void genderSetup(){
+        RadioButton male = findViewById(R.id.maleEdit);
+        RadioButton female = findViewById(R.id.femaleEdit);
+        RadioButton other = findViewById(R.id.otherEdit);
+
+        if (user.getGender().equals("Hombre"))
+            male.setChecked(true);
+        else if (user.getGender().equals("Mujer"))
+            female.setChecked(true);
+        else other.setChecked(true);
     }
 
     private void dateSetup(){
@@ -176,34 +184,13 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         birthDate.setText(format.format(user.getBirth()));
     }
 
-    @SuppressLint("SetTextI18n")
-    private void genderSetup(){
-        //Selects
-        String[] selectGender = {"Hombre", "Mujer", "Otro"};
-        ArrayAdapter<String> adapterGender;
-
-        autoCompleteGender = findViewById(R.id.editGenderSelect);
-        adapterGender = new ArrayAdapter<>(this, R.layout.select_item, selectGender);
-        autoCompleteGender.setAdapter(adapterGender);
-        autoCompleteGender.setText(gender,false);
-
-    }
 
     private void buttonsSetup(){
         Button confirmButton = findViewById(R.id.confirmEdit);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //modificar el user en el service manager
                 modifyUser();
-            }
-        });
-
-        Button cancelButton = findViewById(R.id.cancelEdit);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showHome();
             }
         });
     }
@@ -220,10 +207,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         }catch (Exception e){}
         MyAddress myAddress = new MyAddress(lastAddress.getAddressLine(0),
                 new LatLng(lastAddress.getLatitude(),lastAddress.getLongitude()));
-        presenter.addUser(
-                new User(name.getText().toString(), myAddress, email, autoCompleteGender.getText().toString(), parsedDate));
+        user.setAddress(myAddress);
+        user.setName(name.getText().toString());
+        user.setGender(user.fromStrToGender(gender));
+        user.setBirth(parsedDate);
+        presenter.addUser(user);
         showHome();
-
     }
 
 
@@ -232,6 +221,19 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         homeIntent.putExtra("email", email);
         homeIntent.putExtra("isRegistered","true");
         startActivity(homeIntent);
+    }
+
+    public void onRadioButtonClicked(View view) {
+        switch(view.getId()) {
+            case R.id.maleEdit:
+                gender = "Hombre";
+                break;
+            case R.id.femaleEdit:
+                gender = "Mujer";
+                break;
+            default:
+                gender = "Otro";
+        }
     }
 
     private boolean validateForm() {
@@ -243,14 +245,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
             valid = false;
         } else {
             this.name.setError(null);
-        }
-
-        String gen = autoCompleteGender.getText().toString();
-        if (TextUtils.isEmpty(gen)) {
-            autoCompleteGender.setError("Obligatorio");
-            valid = false;
-        } else {
-            autoCompleteGender.setError(null);
         }
 
         String date = birthDate.getText().toString();
@@ -308,12 +302,44 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         });
 
         mMap.addMarker(new MarkerOptions().position(myAddress.getLatLng()));
-        searchView.setQuery(user.obtainAddressLine(), true);
-
 
         UiSettings mSettings = mMap.getUiSettings();
         mSettings.setZoomControlsEnabled(true);
         mSettings.setRotateGesturesEnabled(true);
 
+        searchView.setQuery(user.obtainAddressLine(), true);
+        searchView.setQuery(" ",false);
     }
+
+    /*
+    private class MyTask extends AsyncTask<String, Integer, Address>{
+
+        @Override
+        protected Address doInBackground(String... strings) {
+            List<Address> addresses = new ArrayList<>();
+            try {
+                addresses = geocoder.getFromLocationName(strings[0],1);
+            } catch (IOException e) {
+                Toast.makeText(EditProfileActivity.this, "No se pudo conectar a internet", Toast.LENGTH_SHORT).show();
+            }
+            if(addresses.isEmpty() || addresses==null)  return null;
+            return addresses.get(0);
+        }
+
+        @Override
+        protected void onPostExecute(Address address) {
+            super.onPostExecute(address);
+            if (address == null){
+                return;
+            }
+
+            lastAddress =address;
+            LatLng latLng = new LatLng(lastAddress.getLatitude(), lastAddress.getLongitude());
+            marker = new MarkerOptions().position(latLng);
+            mMap.addMarker(marker);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+        }
+    }
+
+     */
 }

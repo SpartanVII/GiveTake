@@ -48,8 +48,10 @@
     <string name="delete_account">Si deseas eliminar la cuenta actual de forma permanente pulsa el botón</string>
     <string name="delete_account_button">Borrar</string>
 
-    <!-- adapter -->
-    <string name="list_item_name_product">Nombre prodcuto</string>
+    <!-- item_product -->
+    <string name="item_product_name">Nombre prodcuto</string>
+    <string name="item_product_description">Esto es un ejemplo de una descripción de tamaño medio de un producto</string>
+
 
     <!-- add product -->
     <string name="add_product_name_hint">Nombre del producto</string>

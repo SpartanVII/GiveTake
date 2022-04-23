@@ -1,7 +1,9 @@
 package com.example.givetake.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -89,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                             assert user != null;
                             try {
                                 showHome();
+                                saveSession();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -139,6 +142,15 @@ public class LoginActivity extends AppCompatActivity {
         homeIntent.putExtra("email", mail);
         homeIntent.putExtra("password", password);
         startActivity(homeIntent);
+    }
+
+    public void saveSession(){
+        //Saving the session
+        @SuppressLint("CommitPrefEdits")
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("email", mail);
+        prefsEditor.apply();
     }
 
 
