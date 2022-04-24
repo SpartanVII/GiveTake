@@ -82,7 +82,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
 
         if (user.isFavorite(productKey)) favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_favorite));
-        else    favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_not_favorite));
+        else  favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_not_favorite));
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productInforMap);

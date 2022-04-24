@@ -18,7 +18,7 @@ import com.example.givetake.model.Product;
 
 import java.util.List;
 
-public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder>
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.CardViewHolder>
                                 implements AdapterView.OnClickListener {
     private List<Product> items;
     private AdapterView.OnClickListener listener;
@@ -53,7 +53,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         }
     }
 
-    public CardViewAdapter(List<Product> items) {
+    public ProductAdapter(List<Product> items) {
         this.items = items;
     }
 

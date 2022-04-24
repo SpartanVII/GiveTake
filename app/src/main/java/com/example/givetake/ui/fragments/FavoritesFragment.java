@@ -2,6 +2,8 @@ package com.example.givetake.ui.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +12,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.givetake.R;
@@ -19,16 +20,15 @@ import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.InfoProductActivity;
-import com.example.givetake.ui.helpers.ListAdapterProducts;
+import com.example.givetake.ui.helpers.ProductAdapter;
 
 import java.util.List;
 
 public class FavoritesFragment extends Fragment {
     private FragmentFavoritesBinding binding;
-    ListAdapterProducts listAdapterInfo;
+    private RecyclerView recyclerView;
     private Presenter presenter;
     private Context appContext;
-    private ListView listView;
 
 
     @Override
@@ -43,15 +43,16 @@ public class FavoritesFragment extends Fragment {
 
         presenter = new Presenter();
         User user = presenter.getUser(key);
-        listView = view.findViewById(R.id.listviewFavs);
+        recyclerView = view.findViewById(R.id.recyclerviewFavs);
         List<String> keyList = user.getFavProducts();
         List<Product> productList = presenter.getProductListUsingKeys(keyList);
-        listAdapterInfo = new ListAdapterProducts(productList, getContext());
-        listView.setAdapter(listAdapterInfo);
+        ProductAdapter productAdapter = new ProductAdapter(productList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(productAdapter);
 
-        listView.setOnItemClickListener((parent, view1, position, id) -> {
-            Intent intent = new Intent(appContext, InfoProductActivity.class);
-            intent.putExtra("productKey", productList.get(position).getId());
+        productAdapter.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), InfoProductActivity.class);
+            intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
             startActivity(intent);
         });
 

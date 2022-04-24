@@ -12,18 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
-import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.activities.MyProductActivity;
-import com.example.givetake.ui.helpers.CardViewAdapter;
-import com.example.givetake.ui.helpers.ListAdapterProducts;
+import com.example.givetake.ui.helpers.ProductAdapter;
 
 import java.util.List;
 
@@ -44,11 +40,11 @@ public class ProductsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerviewProduct);
         List<Product> productList = user.getTradeProducts();
-        CardViewAdapter cardViewAdapter = new CardViewAdapter(productList);
+        ProductAdapter productAdapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(cardViewAdapter);
+        recyclerView.setAdapter(productAdapter);
 
-        cardViewAdapter.setOnClickListener(v -> {
+        productAdapter.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MyProductActivity.class);
             intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
             startActivity(intent);

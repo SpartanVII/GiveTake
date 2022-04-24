@@ -1,6 +1,5 @@
 package com.example.givetake.ui.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,9 +14,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentHomeBinding;
@@ -25,7 +24,7 @@ import com.example.givetake.model.Product;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.AddProductActivity;
 import com.example.givetake.ui.activities.InfoProductActivity;
-import com.example.givetake.ui.helpers.CardViewAdapter;
+import com.example.givetake.ui.helpers.ProductAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
         SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
         if (email!=null) isRegistered = true;
@@ -58,10 +58,10 @@ public class HomeFragment extends Fragment {
         spinner.setAdapter(adapter);
 
         List<Product> productList = new ArrayList<>();
-        CardViewAdapter cardViewAdapter = new CardViewAdapter(productList);
+        ProductAdapter productAdapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(cardViewAdapter);
-        cardViewAdapter.setOnClickListener(v -> {
+        recyclerView.setAdapter(productAdapter);
+        productAdapter.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), InfoProductActivity.class);
             intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
             startActivity(intent);
@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
                 productList.clear();
                 productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
                 Collections.shuffle(productList, new Random());
-                cardViewAdapter.notifyDataSetChanged();
+                productAdapter.notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
                 if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);
                 else noProducts.setVisibility(View.INVISIBLE);
@@ -88,12 +88,21 @@ public class HomeFragment extends Fragment {
         recyclerView.setClickable(isRegistered);
         final FloatingActionButton floatingButton = binding.floatingButton;
         if (!isRegistered) floatingButton.setVisibility(View.INVISIBLE);
-        floatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AddProductActivity.class);
-                startActivity(intent);
-            }
+        floatingButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AddProductActivity.class);
+            startActivity(intent);
+        });
+
+        SwipeRefreshLayout refresh = root.findViewById(R.id.homeLayout);
+        refresh.setOnRefreshListener(() -> {
+            productList.clear();
+            productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
+            Collections.shuffle(productList, new Random());
+            productAdapter.notifyDataSetChanged();
+            recyclerView.scheduleLayoutAnimation();
+            if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);
+            else noProducts.setVisibility(View.INVISIBLE);
+            refresh.setRefreshing(false);
         });
 
         return root;
