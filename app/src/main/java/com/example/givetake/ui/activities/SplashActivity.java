@@ -6,14 +6,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.givetake.model.MyAddress;
-import com.example.givetake.model.json.LocalDateAdapter;
 import com.example.givetake.presenter.Presenter;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.time.LocalDate;
 import java.util.Timer;
 import java.util.TimerTask;
 

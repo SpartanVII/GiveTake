@@ -47,17 +47,16 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
 
-        SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        SharedPreferences prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
-        if (email!=null) isRegistered = true;
-        else isRegistered = false;
+        isRegistered = email != null;
 
         recyclerView = binding.listviewHome;
         noProducts = binding.textVoidProductsHome;
         spinner = binding.spinnerHome;
         presenter = new Presenter();
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.category_home, R.layout.support_simple_spinner_dropdown_item );
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.category_home, R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
         List<Product> productList = new ArrayList<>();
@@ -107,7 +106,7 @@ public class HomeFragment extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void refreshRecyclerView(List<Product> productList){
+    public void refreshRecyclerView(List<Product> productList) {
         productList.clear();
         productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
         Collections.shuffle(productList, new Random());
