@@ -62,6 +62,10 @@
     <!-- Lis of products - profile -->
     <string name="profile_products_void">Actualmente no tienes productos</string>
 
+    <!-- Lis of products - home -->
+    <string name="home_products_void">Actualmente no hay productos Desliza haia abajo para recargar</string>
+
+
     <!-- product info -->
     <string name="product_name_info">Nombre del producto</string>
     <string name="product_desc_info">Aquí iría toda la descripcion de pinxe producto sería bien larga pero bastante bien hecha no como esta jaja saludos campeon. MAquinaaaaaaa</string>

@@ -1,5 +1,6 @@
 package com.example.givetake.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,8 @@ import java.util.Random;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
+    private ProductAdapter productAdapter;
+    private RecyclerView recyclerView;
     private Boolean isRegistered;
     private Presenter presenter;
     private TextView noProducts;
@@ -49,7 +52,7 @@ public class HomeFragment extends Fragment {
         if (email!=null) isRegistered = true;
         else isRegistered = false;
 
-        RecyclerView recyclerView = binding.listviewHome;
+        recyclerView = binding.listviewHome;
         noProducts = binding.textVoidProductsHome;
         spinner = binding.spinnerHome;
         presenter = new Presenter();
@@ -58,7 +61,7 @@ public class HomeFragment extends Fragment {
         spinner.setAdapter(adapter);
 
         List<Product> productList = new ArrayList<>();
-        ProductAdapter productAdapter = new ProductAdapter(productList);
+        productAdapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(productAdapter);
         productAdapter.setOnClickListener(v -> {
@@ -70,13 +73,7 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                productList.clear();
-                productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
-                Collections.shuffle(productList, new Random());
-                productAdapter.notifyDataSetChanged();
-                recyclerView.scheduleLayoutAnimation();
-                if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);
-                else noProducts.setVisibility(View.INVISIBLE);
+                refreshRecyclerView(productList);
             }
 
             @Override
@@ -95,13 +92,8 @@ public class HomeFragment extends Fragment {
 
         SwipeRefreshLayout refresh = root.findViewById(R.id.homeLayout);
         refresh.setOnRefreshListener(() -> {
-            productList.clear();
-            productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
-            Collections.shuffle(productList, new Random());
-            productAdapter.notifyDataSetChanged();
-            recyclerView.scheduleLayoutAnimation();
-            if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);
-            else noProducts.setVisibility(View.INVISIBLE);
+            presenter = new Presenter();
+            refreshRecyclerView(productList);
             refresh.setRefreshing(false);
         });
 
@@ -112,5 +104,16 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void refreshRecyclerView(List<Product> productList){
+        productList.clear();
+        productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
+        Collections.shuffle(productList, new Random());
+        productAdapter.notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+        if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);
+        else noProducts.setVisibility(View.INVISIBLE);
     }
 }
