@@ -2,13 +2,16 @@ package com.example.givetake.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,11 +29,13 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.MessageFormat;
 import java.util.Objects;
 
 public class InfoProductActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Presenter presenter;
     private String productKey;
+    private String nextDestination;
     private Toolbar toolbar;
     private TextView productName;
     private TextView productDesc;
@@ -67,40 +72,40 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             productKey = bundle.getString("productKey");
+            nextDestination = bundle.getString("nextDestination");
         }
 
         Product product = presenter.getProduct(productKey);
         User vendor = presenter.getUser(product.getOwner());
         User user = presenter.getUser(email);
-
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
         vendorName.setText(vendor.getName());
-        vendorNote.setText(Double.toString(vendor.getGlobalScore()));
+        vendorNote.setText(MessageFormat.format("{0}", vendor.getGlobalScore()));
         vendorAddress.setText(vendor.obtainAddressLine());
         vendorAddres = vendor.getAddress();
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
 
-        if (user.isFavorite(productKey)) favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_favorite));
-        else  favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_not_favorite));
+        AnimatedVectorDrawableCompat toChecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_unchecked_to_cheked);
+        AnimatedVectorDrawableCompat toUnchecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_checked_to_uncheked);
 
+        if (presenter.isFavorite(product)) favProduct.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.heart_filled_vector));
+        else favProduct.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.heart_unfilled_vector));
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productInforMap);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        favProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (user.isFavorite(productKey)){
-                    favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_not_favorite));
-                    presenter.deleteFavoriteProduct(product);
-                }
-                else{
-                    favProduct.setImageDrawable(getDrawable(R.drawable.ic_is_favorite));
-                    presenter.addFavoriteProduct(product);
-                }
-
+        favProduct.setOnClickListener(v -> {
+            if (presenter.isFavorite(product)){
+                favProduct.setImageDrawable(toUnchecked);
+                Objects.requireNonNull(toUnchecked).start();
+                presenter.deleteFavoriteProduct(product);
+            }
+            else{
+                favProduct.setImageDrawable(toChecked);
+                Objects.requireNonNull(toChecked).start();
+                presenter.addFavoriteProduct(product);
             }
         });
     }
@@ -123,4 +128,19 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         mSettings.setRotateGesturesEnabled(false);
         mSettings.setScrollGesturesEnabled(false);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
+        if (nextDestination!=null) {
+            intent.putExtra("nextDestination", "favorites");
+        }
+        startActivity(intent);
+        return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+}

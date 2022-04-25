@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private boolean isRegistered = false;
-    private Presenter presenter = new Presenter();
-    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
+
+            Bundle bundle = getIntent().getExtras();
+            if (bundle!=null){
+                String nextDestination = bundle.getString("nextDestination");
+                if (nextDestination.equals("profile")) navController.navigate(R.id.nav_profile);
+                if (nextDestination.equals("favorites")) navController.navigate(R.id.nav_favs);
+            }
         }
 
     }
@@ -100,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         if (option.equals("Iniciar Sesión")){
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
-
         }
         else {
             SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();

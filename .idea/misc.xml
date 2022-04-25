@@ -3,9 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_checked_to_uncheked.xml" value="0.1585" />
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_filled_vector.xml" value="0.2035" />
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_menu_vector.xml" value="0.1585" />
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_unchecked_to_cheked.xml" value="0.1585" />
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_vector.xml" value="0.1" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2035" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.2605" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_star_outline_24.xml" value="0.2605" />
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_is_favorite.xml" value="0.2625" />
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_is_not_favorite.xml" value="0.2625" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2725" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_logged.xml" value="0.322" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_menu_settings.xml" value="0.2725" />

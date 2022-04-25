@@ -14,7 +14,7 @@
             android:title="@string/menu_profile" />
         <item
             android:id="@+id/nav_favs"
-            android:icon="@drawable/ic_menu_fav"
+            android:icon="@drawable/ic_menu_heart"
             android:title="@string/menu_favs" />
         <item
             android:id="@+id/nav_chats"

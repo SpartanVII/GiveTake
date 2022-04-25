@@ -61,7 +61,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="12dp"
             android:layout_marginTop="6dp"
-            android:src="@drawable/ic_is_not_favorite"
+            android:src="@drawable/heart_unchecked_to_cheked"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutImgInfoProduct"/>
 
@@ -239,7 +239,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:elevation="0dp"
+            card_view:cardElevation="0dp"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutMap">
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/productInforMap"

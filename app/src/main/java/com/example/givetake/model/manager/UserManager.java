@@ -4,6 +4,7 @@ import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserManager {
@@ -40,18 +41,20 @@ public class UserManager {
     }
 
     public void deleteProduct(Product product){
-        User user =  getUser(product.getOwner());
-        user.deleteTradableProduct(product);
+        getUser(product.getOwner()).deleteTradableProduct(product);
     }
 
     public void addFavoriteProduct(Product product){
-        User user =  getUser(product.getOwner());
-        user.addFavoriteProduct(product.getId());
+        getUser(product.getOwner()).addFavoriteProduct(product.getId());
     }
 
     public void deleteFavoriteProduct(Product product){
         User user =  getUser(product.getOwner());
         user.deleteFavoriteProduct(product.getId());
+    }
+
+    public List<String> getFAvoriteProducts(String key){
+        return getUser(key).getFavvoriteProducts();
     }
 
     public void putUser(User user){

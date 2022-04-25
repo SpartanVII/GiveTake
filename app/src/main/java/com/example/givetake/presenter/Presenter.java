@@ -26,17 +26,21 @@ public class Presenter {
     }
 
     public void addProduct(Product product){
-        userManager.addProduct(product);
+        Product productWithKey = userManager.addProduct(product);
+        //productManager.addProduct(productWithKey);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
     public void modifyProduct(Product oldProduct, Product newProduct){
         userManager.deleteProduct(oldProduct);
         userManager.modifyProduct(newProduct);
+        //productManager.deleteProduct(oldProduct);
+        //productManager.addProduct(newProduct);
         dataBaseClass.save(userManager.getUser(newProduct.getOwner()));
     }
 
     public void deleteProduct(Product product){
+        //productManager.deleteProduct(product);
         userManager.deleteProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
@@ -49,6 +53,14 @@ public class Presenter {
     public void deleteFavoriteProduct(Product product){
         userManager.deleteFavoriteProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
+    }
+
+    public boolean isFavorite(Product product){
+        return userManager.getUser(product.getOwner()).isFavorite(product.getId());
+    }
+
+    public List<String> getFavoriteProducts(String key){
+        return getUser(key).getFavvoriteProducts();
     }
 
     public List<Product> getProductsByTag(String tag){

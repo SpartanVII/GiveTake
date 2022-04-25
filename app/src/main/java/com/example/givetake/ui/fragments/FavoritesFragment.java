@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,31 +29,31 @@ public class FavoritesFragment extends Fragment {
     private FragmentFavoritesBinding binding;
     private RecyclerView recyclerView;
     private Presenter presenter;
-    private Context appContext;
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        appContext = getContext();
-        assert appContext != null;
-        SharedPreferences prefs = appContext.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        SharedPreferences prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String key = prefs.getString("email", null).split("@")[0];
 
         presenter = new Presenter();
-        User user = presenter.getUser(key);
         recyclerView = view.findViewById(R.id.recyclerviewFavs);
-        List<String> keyList = user.getFavProducts();
+        List<String> keyList = presenter.getFavoriteProducts(key);
         List<Product> productList = presenter.getProductListUsingKeys(keyList);
+
         ProductAdapter productAdapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        productAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(productAdapter);
 
         productAdapter.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), InfoProductActivity.class);
             intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
+            intent.putExtra("nextDestination","favorites");
             startActivity(intent);
         });
 

@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.givetake.R;
@@ -72,7 +74,6 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
             Intent intent = new Intent(this, );
             intent.putExtra("productKey",productKey);
             startActivity(intent);
-
              */
         });
 
@@ -109,9 +110,12 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
-            startActivity(new Intent(this, MainActivity.class));
-        if (item.getTitle().equals("Borrar producto")){
+        if (item.getTitle() == null){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("nextDestination", "profile");
+            startActivity(intent);
+        }
+        else if (item.getTitle().equals("Borrar producto")){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(true);
             builder.setTitle("Borrar producto");

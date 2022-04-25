@@ -118,7 +118,7 @@ public class User implements Serializable {
         this.swapedProducts = swapedProducts;
     }
 
-    public List<String> getFavProducts() {
+    public List<String> getFavvoriteProducts() {
         return favProducts;
     }
 
@@ -195,5 +195,14 @@ public class User implements Serializable {
     public int obtainAndIncrementNproduct(){
         nProduct+=1;
         return nProduct-1;
+    }
+
+    public String getGlobalScoreToString(){
+        String reputation = "";
+        //If the valoration stays bellow 5 with more than 3 swapped products we ban the user
+        if (globalScore>4.9) reputation = "regular";
+        if (globalScore>7.4) reputation = "de calidad";
+        if (globalScore>8.9) reputation = "excenlente";
+        return reputation;
     }
 }
