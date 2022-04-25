@@ -131,11 +131,13 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        /*
         Intent intent = new Intent(this, MainActivity.class);
-        if (nextDestination!=null) {
+        if (nextDestination!=null || nextDestination.isEmpty()) {
             intent.putExtra("nextDestination", "favorites");
         }
-        startActivity(intent);
+        startActivity(intent);*/
+        onNavigateUp();
         return true;
     }
 

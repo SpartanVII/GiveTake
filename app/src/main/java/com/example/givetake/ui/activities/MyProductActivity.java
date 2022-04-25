@@ -111,9 +111,12 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getTitle() == null){
+            /*
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("nextDestination", "profile");
             startActivity(intent);
+             */
+            onNavigateUp();
         }
         else if (item.getTitle().equals("Borrar producto")){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

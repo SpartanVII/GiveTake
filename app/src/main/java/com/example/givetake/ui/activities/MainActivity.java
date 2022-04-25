@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 String nextDestination = bundle.getString("nextDestination");
                 if (nextDestination.equals("profile")) navController.navigate(R.id.nav_profile);
                 if (nextDestination.equals("favorites")) navController.navigate(R.id.nav_favs);
+                getIntent().removeExtra("nextDestination");
+                bundle.remove("nextDestination");
             }
         }
 
