@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.givetake.R;
@@ -25,8 +23,6 @@ import com.example.givetake.ui.activities.EditProfileActivity;
 import com.example.givetake.ui.helpers.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
@@ -42,6 +38,7 @@ public class ProfileFragment extends Fragment {
         final TextView address = binding.address;
         final Button editProfile = binding.profile;
         final ImageView profileImg = binding.prfileImg;
+        final TextView reputacion = binding.reputacion;
         final TabLayout tabLayout = binding.tab;
         final ViewPager2 viewPager = binding.viewPager;
         presenter = new Presenter();
@@ -50,8 +47,16 @@ public class ProfileFragment extends Fragment {
         String key = prefs.getString("email", null).split("@")[0];
 
         User user = presenter.getUser(key);
+        Bundle bundle = requireActivity().getIntent().getExtras();
+        if (bundle!=null){
+            String vendorKey = bundle.getString("vendorKey", null);
+            user = presenter.getUser(vendorKey);
+            editProfile.setVisibility(View.GONE);
+        }
+
         name.setText(user.getName());
         address.setText(user.obtainAddressLine());
+        reputacion.setText("Reputación "+ user.getGlobalScoreToString());
         //profileImg.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_logged));
 
         editProfile.setOnClickListener(v -> {
@@ -59,9 +64,9 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
-        viewPager.setAdapter(new TabAdapter(getActivity()));
+        viewPager.setAdapter(new TabAdapter(requireActivity()));
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            if (position==0) tab.setText("Productos");
+            if (position == 0) tab.setText("Productos");
             else tab.setText("Opiniones");
         }).attach();
 

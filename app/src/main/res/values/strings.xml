@@ -69,18 +69,31 @@
     <!-- product info -->
     <string name="product_name_info">Nombre del producto</string>
     <string name="product_desc_info">Aquí iría toda la descripcion de pinxe producto sería bien larga pero bastante bien hecha no como esta jaja saludos campeon. MAquinaaaaaaa</string>
-    <string name="text_note_product_info">Valoración:</string>
+    <string name="text_note_product_info">Reputación</string>
     <string name="chat_button_product_info">Chat</string>
     <string name="see_profile_button_product_info">Ver perfil</string>
     <string name="addres_product_info">Calle Francisco Ernando, Castellón</string>
 
     <!-- my product -->
     <string name="swaped_button">Intercambiado</string>
-    <string name="toolbar_menu_my_product_modify">Modificar producto</string>
-    <string name="toolbar_menu_my_product_delete">Borrar producto</string>
+    <string name="toolbar_option__my_product_modify">Modificar producto</string>
+    <string name="toolbar_option_my_product_delete">Borrar producto</string>
+
+    <!-- vendor profile -->
+    <string name="toolbar_option_vendor_complaint">Denunciar</string>
 
     <!-- fav activity -->
     <string name="favorites_void">Actualmente no tienes productos favoritos</string>
+
+    <!-- Alert Dailog Options -->
+    <string name="alert_dialog_positive">Si</string>
+    <string name="alert_dialog_negative">No</string>
+    <string name="alert_dialog_complaint_confirm">Enviar denuncia</string>
+    <string name="alert_dialog_complaint_cancel">Cancelar</string>
+
+    <!-- Toast messages -->
+    <string name="toast_sended_report">Tu denuncia ha sido enviada</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

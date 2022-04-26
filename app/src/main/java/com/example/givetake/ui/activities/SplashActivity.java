@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Presenter presenter = new Presenter();
-        presenter.initiality();
+        presenter.initialize();
         Intent intent = new Intent(this, MainActivity.class);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {

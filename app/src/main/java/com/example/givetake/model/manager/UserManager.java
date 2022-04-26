@@ -44,17 +44,22 @@ public class UserManager {
         getUser(product.getOwner()).deleteTradableProduct(product);
     }
 
-    public void addFavoriteProduct(Product product){
-        getUser(product.getOwner()).addFavoriteProduct(product.getId());
+    public void addFavoriteProduct(Product product, String userKey){
+        getUser(userKey).addFavoriteProduct(product.getId());
     }
 
-    public void deleteFavoriteProduct(Product product){
-        User user =  getUser(product.getOwner());
+    public void deleteFavoriteProduct(Product product, String userKey){
+        User user =  getUser(userKey);
         user.deleteFavoriteProduct(product.getId());
     }
 
-    public List<String> getFAvoriteProducts(String key){
-        return getUser(key).getFavvoriteProducts();
+    public void deleteFavoriteProduct(String productKey, String userKey){
+        User user =  getUser(userKey);
+        user.deleteFavoriteProduct(productKey);
+    }
+
+    public List<String> getFavoriteProductsKey(String userKey){
+        return getUser(userKey).getFavoriteProducts();
     }
 
     public void putUser(User user){

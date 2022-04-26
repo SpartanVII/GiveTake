@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -29,7 +30,10 @@ public class DataBaseClass {
     private final FirebaseDatabase db;
     private final FirebaseStorage storage;
     private final StorageReference storageReference;
-    Gson gson;
+    private final Gson gson;
+
+    private final static String USERS_COLLECTION = "Users";
+    private final static String REPORT_COLLECTION = "Reports";
 
 
     public DataBaseClass() {
@@ -41,7 +45,7 @@ public class DataBaseClass {
     }
 
     public void save(User user){
-            DatabaseReference userReference = db.getReference("Users").child(user.getMail().split("@")[0]);
+            DatabaseReference userReference = db.getReference(USERS_COLLECTION).child(user.getMail().split("@")[0]);
             userReference.setValue(gson.toJson(user));
             /*
             userReference.child("name").setValue(user.getName());
@@ -62,12 +66,12 @@ public class DataBaseClass {
 
 
     public void deleteUser(String userKey){
-        db.getReference("Users").child(userKey).removeValue();
+        db.getReference(USERS_COLLECTION).child(userKey).removeValue();
     }
 
-    public void initialy(){
+    public void initialize(){
         Type userType = new TypeToken<Map<String, User>>(){}.getType();
-        DatabaseReference userReference = db.getReference("Users");
+        DatabaseReference userReference = db.getReference(USERS_COLLECTION);
 
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,7 +81,6 @@ public class DataBaseClass {
                 UserManagerSingleton.setUserManager(userMap);
                 ProductManagerSingleton.createProductManagerWithMap(userMap);
                 */
-
                 String json = String.valueOf(dataSnapshot.getValue());
                 UserManagerSingleton.setUserManager(gson.fromJson(json, userType));
                 ProductManagerSingleton.createProductManagerWithMap(gson.fromJson(json, userType));
@@ -99,6 +102,10 @@ public class DataBaseClass {
         return storageReference + url;
     }
 
+    public void sendComplaintUSer(List<String> reasons,  String reportedUserKey, String reporterUserKey){
+        DatabaseReference userReference = db.getReference().child(REPORT_COLLECTION).child(reportedUserKey.split("@")[0]). child(reporterUserKey.split("@")[0]);
+        userReference.push().setValue(reasons);
+    }
 
 
 }

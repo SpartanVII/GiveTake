@@ -1,13 +1,11 @@
 package com.example.givetake.ui.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.givetake.R;
@@ -33,7 +29,6 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
 
@@ -103,7 +98,7 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.myproduct, menu);
+        inflater.inflate(R.menu.my_product_options, menu);
         return true;
     }
 
@@ -111,11 +106,6 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getTitle() == null){
-            /*
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("nextDestination", "profile");
-            startActivity(intent);
-             */
             onNavigateUp();
         }
         else if (item.getTitle().equals("Borrar producto")){
@@ -123,7 +113,7 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
             builder.setCancelable(true);
             builder.setTitle("Borrar producto");
             builder.setMessage("¿Está seguro de que quieres eliminarlo?");
-            builder.setNegativeButton("Si",
+            builder.setPositiveButton(R.string.alert_dialog_positive,
                     (dialog, which) -> {
                         String deleteImgUrl = "gs://givetake-9f7af.appspot.com/images/" + product.getImg().split("images%")[1].split("\\?alt=media")[0];
                         FirebaseStorage.getInstance().getReference().child(deleteImgUrl).delete();
@@ -131,7 +121,7 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     });
-            builder.setPositiveButton("No", null);
+            builder.setNegativeButton(R.string.alert_dialog_negative, null);
             builder.show();
         }
         else {

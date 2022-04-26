@@ -27,40 +27,36 @@ public class Presenter {
 
     public void addProduct(Product product){
         Product productWithKey = userManager.addProduct(product);
-        //productManager.addProduct(productWithKey);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
     public void modifyProduct(Product oldProduct, Product newProduct){
         userManager.deleteProduct(oldProduct);
         userManager.modifyProduct(newProduct);
-        //productManager.deleteProduct(oldProduct);
-        //productManager.addProduct(newProduct);
         dataBaseClass.save(userManager.getUser(newProduct.getOwner()));
     }
 
     public void deleteProduct(Product product){
-        //productManager.deleteProduct(product);
         userManager.deleteProduct(product);
         dataBaseClass.save(userManager.getUser(product.getOwner()));
     }
 
-    public void addFavoriteProduct(Product product){
-        userManager.addFavoriteProduct(product);
-        dataBaseClass.save(userManager.getUser(product.getOwner()));
+    public void addFavoriteProduct(Product product, String userKey){
+        userManager.addFavoriteProduct(product, userKey);
+        dataBaseClass.save(userManager.getUser(userKey));
     }
 
-    public void deleteFavoriteProduct(Product product){
-        userManager.deleteFavoriteProduct(product);
-        dataBaseClass.save(userManager.getUser(product.getOwner()));
+    public void deleteFavoriteProduct(Product product, String userKey){
+        userManager.deleteFavoriteProduct(product, userKey);
+        dataBaseClass.save(userManager.getUser(userKey));
     }
 
-    public boolean isFavorite(Product product){
-        return userManager.getUser(product.getOwner()).isFavorite(product.getId());
+    public boolean isFavorite(Product product, String userKey){
+        return userManager.getUser(userKey).isFavorite(product.getId());
     }
 
-    public List<String> getFavoriteProducts(String key){
-        return getUser(key).getFavvoriteProducts();
+    public List<String> getFavoriteProductsKey(String userKey){
+        return userManager.getFavoriteProductsKey(userKey);
     }
 
     public List<Product> getProductsByTag(String tag){
@@ -71,26 +67,26 @@ public class Presenter {
         return productManager.getProduct(key);
     }
 
-    public List<Product> getProductListUsingKeys(List<String> keyList){
+    public List<Product> getFavoriteProducts(String userKey){
+        List<String> favList = userManager.getFavoriteProductsKey(userKey);
         List<Product> productList = new ArrayList<>();
-        List<Product> deleteProductList = new ArrayList<>();
-        for (String key : keyList){
-            Product product = productManager.getProduct(key);
+        List<String> deleteProductList = new ArrayList<>();
+        for (String favKey : favList){
+            Product product = productManager.getProduct(favKey);
 
-            if (product==null){
-                product = new Product(key, key.split("#")[0]);
-                deleteProductList.add(product);
-            }
+            if (product==null) deleteProductList.add(favKey);
             else productList.add(product);
         }
 
-        for (Product deleteProduct : deleteProductList){
-            userManager.deleteFavoriteProduct(deleteProduct);
+        for (String deleteProduct : deleteProductList){
+            userManager.deleteFavoriteProduct(deleteProduct, userKey);
         }
         return productList;
     }
 
-
+    public void sendReport(List<String> reasons, String reportedUserKey, String reporterUSerKey){
+        dataBaseClass.sendComplaintUSer(reasons, reportedUserKey, reporterUSerKey);
+    }
     public void addUser(User user){
         userManager.putUser(user);
         dataBaseClass.save(user);
@@ -109,8 +105,7 @@ public class Presenter {
         return dataBaseClass.uploadImage(filePath);
     }
 
-    public void initiality(){
-        dataBaseClass.initialy();
-        //ProductManagerSingleton.createProductManager(userManager);
+    public void initialize(){
+        dataBaseClass.initialize();
     }
 }

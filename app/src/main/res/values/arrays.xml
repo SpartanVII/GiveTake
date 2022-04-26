@@ -55,4 +55,11 @@
         <item>Servicios</item>
         <item>Otros</item>
     </string-array>
+
+
+    <string-array name="report_options">
+        <item>Uso indebido del chat</item>
+        <item>Productos no permitidos</item>
+        <item>Foto, nombre o descripción ofensiva</item>
+    </string-array>
 </resources>

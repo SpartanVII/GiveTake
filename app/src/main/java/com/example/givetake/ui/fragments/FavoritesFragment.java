@@ -18,11 +18,11 @@ import android.widget.TextView;
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentFavoritesBinding;
 import com.example.givetake.model.Product;
-import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.helpers.ProductAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesFragment extends Fragment {
@@ -38,12 +38,12 @@ public class FavoritesFragment extends Fragment {
         View view = binding.getRoot();
 
         SharedPreferences prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String key = prefs.getString("email", null).split("@")[0];
+        String userKey = prefs.getString("email", null).split("@")[0];
 
         presenter = new Presenter();
         recyclerView = view.findViewById(R.id.recyclerviewFavs);
-        List<String> keyList = presenter.getFavoriteProducts(key);
-        List<Product> productList = presenter.getProductListUsingKeys(keyList);
+        List<Product> productList = new ArrayList<>();
+        if (userKey != null) productList.addAll(presenter.getFavoriteProducts(userKey));
 
         ProductAdapter productAdapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -53,7 +53,6 @@ public class FavoritesFragment extends Fragment {
         productAdapter.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), InfoProductActivity.class);
             intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
-            intent.putExtra("nextDestination","favorites");
             startActivity(intent);
         });
 

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.givetake">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.givetake">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/our_icon"
@@ -11,12 +16,11 @@
         android:roundIcon="@drawable/our_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar">
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="$PACKAGE$.provider"
-            android:exported="false"
             android:enabled="true"
+            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
@@ -33,6 +37,7 @@
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,28 +47,30 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
-            android:parentActivityName=".ui.activities.MainActivity"/>
+            android:parentActivityName=".ui.activities.MainActivity" />
         <activity
             android:name=".ui.activities.RegisterActivity"
             android:exported="true"
-            android:parentActivityName=".ui.activities.LoginActivity"/>
-
+            android:parentActivityName=".ui.activities.LoginActivity" />
         <activity
             android:name=".ui.activities.EditProfileActivity"
             android:exported="true"
-            android:parentActivityName=".ui.activities.MainActivity"/>
+            android:parentActivityName=".ui.activities.MainActivity" />
         <activity
             android:name=".ui.activities.AddProductActivity"
             android:exported="true"
-            android:parentActivityName=".ui.activities.MainActivity"/>
+            android:parentActivityName=".ui.activities.MainActivity" />
         <activity
             android:name=".ui.activities.InfoProductActivity"
             android:exported="true"
-            android:parentActivityName=".ui.activities.MainActivity"/>
+            android:parentActivityName=".ui.activities.MainActivity" />
         <activity
             android:name=".ui.activities.MyProductActivity"
             android:exported="false"
+            android:parentActivityName=".ui.activities.MainActivity" />
+        <activity
+            android:name=".ui.activities.FragmentActivity"
+            android:exported="false"
             android:parentActivityName=".ui.activities.MainActivity"/>
-
     </application>
 </manifest>

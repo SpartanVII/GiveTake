@@ -54,15 +54,6 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
-
-            Bundle bundle = getIntent().getExtras();
-            if (bundle!=null){
-                String nextDestination = bundle.getString("nextDestination");
-                if (nextDestination.equals("profile")) navController.navigate(R.id.nav_profile);
-                if (nextDestination.equals("favorites")) navController.navigate(R.id.nav_favs);
-                getIntent().removeExtra("nextDestination");
-                bundle.remove("nextDestination");
-            }
         }
 
     }

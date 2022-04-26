@@ -41,6 +41,8 @@ public class HomeFragment extends Fragment {
     private Presenter presenter;
     private TextView noProducts;
     private Spinner spinner;
+    private String email;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -48,7 +50,7 @@ public class HomeFragment extends Fragment {
 
 
         SharedPreferences prefs = requireActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String email = prefs.getString("email", null);
+        email = prefs.getString("email", null);
         isRegistered = email != null;
 
         recyclerView = binding.listviewHome;
@@ -109,6 +111,8 @@ public class HomeFragment extends Fragment {
     public void refreshRecyclerView(List<Product> productList) {
         productList.clear();
         productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
+        if (email!=null && presenter.getUser(email)!= null)
+            productList.removeAll((presenter.getUser(email).getTradeProducts()));
         Collections.shuffle(productList, new Random());
         productAdapter.notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();

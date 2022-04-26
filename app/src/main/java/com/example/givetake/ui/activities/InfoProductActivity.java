@@ -12,7 +12,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,23 +31,29 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.MessageFormat;
 import java.util.Objects;
 
 public class InfoProductActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private Presenter presenter;
-    private String productKey;
-    private String nextDestination;
-    private Toolbar toolbar;
+    private ExtendedFloatingActionButton chatButton;
+    private LinearLayout extraSpace;
     private TextView productName;
     private TextView productDesc;
+    private Button vendorProfile;
     private TextView vendorName;
     private TextView vendorNote;
     private TextView vendorAddress;
     private ImageView productImg;
     private ImageView favProduct;
+    private Toolbar toolbar;
+
+    private String productKey;
+    private User vendor;
     private MyAddress vendorAddres;
+    private Presenter presenter;
     private GoogleMap mMap;
 
 
@@ -58,9 +67,12 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         productName = findViewById(R.id.productNameInfo);
         productDesc = findViewById(R.id.productDescInfo);
         vendorName = findViewById(R.id.vendorNameInfoProduct);
-        vendorNote = findViewById(R.id.replaceWithTheVendorNote);
+        vendorNote = findViewById(R.id.txtNoteInfoProduct);
         vendorAddress = findViewById(R.id.addressVendorInfoProduct);
         productImg = findViewById(R.id.imgProductrInfoProduct);
+        vendorProfile = findViewById(R.id.showVendorProfile);
+        extraSpace = findViewById(R.id.extraSpace);
+        chatButton = findViewById(R.id.chatButton);
         favProduct = findViewById(R.id.addFav);
         presenter = new Presenter();
         setSupportActionBar(toolbar);
@@ -68,46 +80,59 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String email = prefs.getString("email", null);
+        String userKey = prefs.getString("email", null);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
-            productKey = bundle.getString("productKey");
-            nextDestination = bundle.getString("nextDestination");
-        }
+        if(bundle!=null) productKey = bundle.getString("productKey");
+        if (userKey == null) chatButton.setVisibility(View.INVISIBLE);
 
         Product product = presenter.getProduct(productKey);
-        User vendor = presenter.getUser(product.getOwner());
-        User user = presenter.getUser(email);
+        vendor = presenter.getUser(product.getOwner());
+
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
         vendorName.setText(vendor.getName());
-        vendorNote.setText(MessageFormat.format("{0}", vendor.getGlobalScore()));
+        vendorNote.setText("Reputación "+vendor.getGlobalScoreToString());
         vendorAddress.setText(vendor.obtainAddressLine());
         vendorAddres = vendor.getAddress();
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
 
-        AnimatedVectorDrawableCompat toChecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_unchecked_to_cheked);
-        AnimatedVectorDrawableCompat toUnchecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_checked_to_uncheked);
+        if (userKey != null) {
+            AnimatedVectorDrawableCompat toChecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_unchecked_to_cheked);
+            AnimatedVectorDrawableCompat toUnchecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_checked_to_uncheked);
+            //editara como funciona el metodo isFavorite para ke compruebe el user no el usuario padre
+            if (presenter.isFavorite(product, userKey))
+                favProduct.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.heart_filled_vector));
+            else
+                favProduct.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.heart_unfilled_vector));
 
-        if (presenter.isFavorite(product)) favProduct.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.heart_filled_vector));
-        else favProduct.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.heart_unfilled_vector));
+            favProduct.setOnClickListener(v -> {
+                if (presenter.isFavorite(product, userKey)) {
+                    favProduct.setImageDrawable(toUnchecked);
+                    Objects.requireNonNull(toUnchecked).start();
+                    presenter.deleteFavoriteProduct(product, userKey);
+                } else {
+                    favProduct.setImageDrawable(toChecked);
+                    Objects.requireNonNull(toChecked).start();
+                    presenter.addFavoriteProduct(product, userKey);
+                }
+            });
+        }else{
+            favProduct.setVisibility(View.INVISIBLE);
+            extraSpace.getLayoutParams().height = 30;
+            extraSpace.requestLayout();
+        }
+
+        chatButton.setOnClickListener(v -> {
+
+        });
+
+        vendorProfile.setOnClickListener(v -> {
+            showVendorProfile();
+        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productInforMap);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
-        favProduct.setOnClickListener(v -> {
-            if (presenter.isFavorite(product)){
-                favProduct.setImageDrawable(toUnchecked);
-                Objects.requireNonNull(toUnchecked).start();
-                presenter.deleteFavoriteProduct(product);
-            }
-            else{
-                favProduct.setImageDrawable(toChecked);
-                Objects.requireNonNull(toChecked).start();
-                presenter.addFavoriteProduct(product);
-            }
-        });
     }
 
     @Override
@@ -137,12 +162,20 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
             intent.putExtra("nextDestination", "favorites");
         }
         startActivity(intent);*/
-        onNavigateUp();
+        String parent = getIntent().getExtras().getString("parent", null);
+        if (parent!=null){
+             showVendorProfile();
+        }else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void showVendorProfile(){
+        Intent intent = new Intent(this, FragmentActivity.class);
+        intent.putExtra("vendorKey", vendor.getMail());
+        startActivity(intent);
     }
+
 }

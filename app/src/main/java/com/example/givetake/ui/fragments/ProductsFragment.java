@@ -18,6 +18,7 @@ import com.example.givetake.R;
 import com.example.givetake.model.Product;
 import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
+import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.activities.MyProductActivity;
 import com.example.givetake.ui.helpers.ProductAdapter;
 
@@ -37,6 +38,11 @@ public class ProductsFragment extends Fragment {
 
         presenter = new Presenter();
         User user = presenter.getUser(key);
+        Bundle bundle = requireActivity().getIntent().getExtras();
+        if (bundle!=null){
+            String vendorKey = bundle.getString("vendorKey", null);
+            user = presenter.getUser(vendorKey);
+        }
 
         recyclerView = view.findViewById(R.id.recyclerviewProduct);
         List<Product> productList = user.getTradeProducts();
@@ -45,7 +51,12 @@ public class ProductsFragment extends Fragment {
         recyclerView.setAdapter(productAdapter);
 
         productAdapter.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), MyProductActivity.class);
+            Intent intent;
+            if (bundle!= null){
+                intent = new Intent(getContext(), InfoProductActivity.class);
+                intent.putExtra("parent","");
+            }
+            else intent = new Intent(getContext(), MyProductActivity.class);
             intent.putExtra("productKey", productList.get(recyclerView.getChildAdapterPosition(v)).getId());
             startActivity(intent);
         });
