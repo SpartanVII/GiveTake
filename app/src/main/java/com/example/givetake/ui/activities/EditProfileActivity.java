@@ -92,11 +92,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
         searchView.setQuery(user.obtainAddressLine(), false);
 
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));
-        // Obtain the SupportMapFragment and get notified
-        // when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.editMap);
 
-        // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -108,7 +105,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
                     try {
                         addresses = geocoder.getFromLocationName(location,1);
                     } catch (IOException e) {
-                        Toast.makeText(EditProfileActivity.this, "No se pudo conectar a internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, R.string.toast_internet_conection, Toast.LENGTH_SHORT).show();
                     }
 
                     if (addresses == null || addresses.isEmpty()){
@@ -187,12 +184,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
 
     private void buttonsSetup(){
         Button confirmButton = findViewById(R.id.confirmEdit);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modifyUser();
-            }
-        });
+        confirmButton.setOnClickListener(v -> modifyUser());
     }
 
 

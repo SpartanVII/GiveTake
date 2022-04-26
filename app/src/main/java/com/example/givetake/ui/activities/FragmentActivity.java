@@ -33,7 +33,7 @@ public class FragmentActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarVendorProfile);
         setSupportActionBar(toolbar);
-        setTitle("Perfil del vendedor");
+        setTitle(R.string.toolbar_title_vendor_profile);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         presenter = new Presenter();
@@ -56,12 +56,12 @@ public class FragmentActivity extends AppCompatActivity {
             Arrays.fill(checkedOptions, false);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(true);
-            builder.setTitle("Motivos de la denuncia");
+            builder.setTitle(R.string.alert_dialog_title_report);
             builder.setMultiChoiceItems(reportOptions, checkedOptions, (dialog, which, isChecked) -> {
                 checkedOptions[which] = isChecked;
             });
 
-            builder.setPositiveButton(R.string.alert_dialog_complaint_confirm, (dialog, which) -> {
+            builder.setPositiveButton(R.string.alert_dialog_report_confirm, (dialog, which) -> {
                     List<String> reportReasons = new ArrayList<>();
                     for (int i = 0; i < reportOptions.length  ; i++) {
                         if (checkedOptions[i]) reportReasons.add(reportOptions[i]);
@@ -71,7 +71,7 @@ public class FragmentActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.toast_sended_report, Toast.LENGTH_LONG).show();
                     }
             });
-            builder.setNegativeButton(R.string.alert_dialog_complaint_cancel, null);
+            builder.setNegativeButton(R.string.alert_dialog_report_cancel, null);
             builder.show();
         }
         else onNavigateUp();

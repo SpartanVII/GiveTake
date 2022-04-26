@@ -18,8 +18,7 @@ import com.example.givetake.model.Product;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.CardViewHolder>
-                                implements AdapterView.OnClickListener {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> implements AdapterView.OnClickListener {
     private List<Product> items;
     private AdapterView.OnClickListener listener;
     Context mContext;
@@ -40,12 +39,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.CardView
     }
 
 
-    public static class CardViewHolder extends RecyclerView.ViewHolder {
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
         private final ImageView productImg;
         private final TextView productName;
         private final TextView productDesc;
 
-        public CardViewHolder(View v) {
+        public ProductViewHolder(View v) {
             super(v);
             productImg = v.findViewById(R.id.img);
             productName = v.findViewById(R.id.productName);
@@ -64,16 +63,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.CardView
 
     @NonNull
     @Override
-    public CardViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ProductViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_product, viewGroup, false);
         mContext = v.getContext();
         v.setOnClickListener(this);
-        return new CardViewHolder(v);
+        return new ProductViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ProductViewHolder viewHolder, int i) {
         Glide.with(mContext).load(items.get(i).getImg()).centerCrop()
                 .apply(RequestOptions.circleCropTransform()).into(viewHolder.productImg);
         viewHolder.productName.setText(items.get(i).getTitle());

@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         mAuth = FirebaseAuth.getInstance();
 
         setSupportActionBar(toolbar);
-        setTitle("Registro");
+        setTitle(R.string.toolbar_title_register);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         geocoder  = new Geocoder(getApplicationContext(), new Locale("es"));

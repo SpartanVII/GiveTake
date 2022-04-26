@@ -69,16 +69,11 @@ public class  AddProductActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarAddProduct);
         setSupportActionBar(toolbar);
-        setTitle("Añadir producto");
+        setTitle(R.string.toolbar_title_add_product);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Button confirmButton = findViewById(R.id.confirmProduct);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addProduct();
-            }
-        });
+        confirmButton.setOnClickListener(v -> addProduct());
 
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         email = prefs.getString("email", null);
@@ -121,6 +116,7 @@ public class  AddProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) return;
         filePath = data.getData();
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK  && data.getData() != null ) {
             try {

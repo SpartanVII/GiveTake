@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarLogin);
 
         setSupportActionBar(toolbar);
-        setTitle("Iniciar sesión");
+        setTitle(R.string.toolbar_title_login);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();

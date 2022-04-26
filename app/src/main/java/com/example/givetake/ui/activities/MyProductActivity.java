@@ -52,7 +52,7 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
         presenter = new Presenter();
 
         setSupportActionBar(toolbar);
-        setTitle("Información del producto");
+        setTitle(R.string.toolbar_title_info_product);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         product = presenter.getProduct(getIntent().getExtras().getString("productKey"));
@@ -115,9 +115,8 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
             builder.setMessage("¿Está seguro de que quieres eliminarlo?");
             builder.setPositiveButton(R.string.alert_dialog_positive,
                     (dialog, which) -> {
-                        String deleteImgUrl = "gs://givetake-9f7af.appspot.com/images/" + product.getImg().split("images%")[1].split("\\?alt=media")[0];
-                        FirebaseStorage.getInstance().getReference().child(deleteImgUrl).delete();
                         presenter.deleteProduct(product);
+                        presenter.deleteImage(product.getImg());
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     });

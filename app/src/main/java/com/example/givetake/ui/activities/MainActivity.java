@@ -7,8 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.givetake.R;
+import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -28,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private boolean isRegistered = false;
+    private Presenter presenter;
+    private  String email;
+    private User user;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +46,28 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
+        presenter = new Presenter();
         try {
             session();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+
         if (isRegistered){
+            user = presenter.getUser(email);
             DrawerLayout drawer = binding.drawerLayout;
             NavigationView navigationView = binding.navView;
+            View headerView = navigationView.getHeaderView(0);
+            TextView name = headerView.findViewById(R.id.profileNameDrawer);
+            TextView mail = headerView.findViewById(R.id.profileMailDrawer);
+            if (user ==  null) {
+                name.setText("Inica sesión o Registrate");
+                mail.setText("Revisa tu conexión a internet");
+            }else {
+                name.setText(user.getName());
+                mail.setText(user.getMail());
+            }
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_profile, R.id.nav_favs, R.id.nav_settings)
                     .setOpenableLayout(drawer)
@@ -62,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void session() throws InterruptedException {
         @SuppressLint("CommitPrefEdits")
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String email = prefs.getString("email", null);
+        email = prefs.getString("email", null);
         if(email!=null){
             isRegistered=true;
             invalidateOptionsMenu();

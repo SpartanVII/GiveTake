@@ -102,6 +102,14 @@ public class DataBaseClass {
         return storageReference + url;
     }
 
+    public void deleteImage(String imageUrlWithoutProcessing){
+        String deleteImgUrl = "gs://givetake-9f7af.appspot.com/images/" + imageUrlWithoutProcessing.split("images%")[1];
+        deleteImgUrl = deleteImgUrl.split("\\?alt=media")[0];
+        System.out.println(imageUrlWithoutProcessing);
+        System.out.println(deleteImgUrl);
+        FirebaseStorage.getInstance().getReference().child(deleteImgUrl).delete();
+    }
+
     public void sendComplaintUSer(List<String> reasons,  String reportedUserKey, String reporterUserKey){
         DatabaseReference userReference = db.getReference().child(REPORT_COLLECTION).child(reportedUserKey.split("@")[0]). child(reporterUserKey.split("@")[0]);
         userReference.push().setValue(reasons);

@@ -105,6 +105,10 @@ public class Presenter {
         return dataBaseClass.uploadImage(filePath);
     }
 
+    public void deleteImage(String imageUrlWithoutProcessing){
+        dataBaseClass.deleteImage(imageUrlWithoutProcessing);
+    }
+
     public void initialize(){
         dataBaseClass.initialize();
     }

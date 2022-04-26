@@ -57,7 +57,6 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
     private GoogleMap mMap;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,15 +73,16 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         extraSpace = findViewById(R.id.extraSpace);
         chatButton = findViewById(R.id.chatButton);
         favProduct = findViewById(R.id.addFav);
+
         presenter = new Presenter();
         setSupportActionBar(toolbar);
-        setTitle("Información del producto");
+        setTitle(R.string.toolbar_title_info_product);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String userKey = prefs.getString("email", null);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null) productKey = bundle.getString("productKey");
+        if (bundle != null) productKey = bundle.getString("productKey");
         if (userKey == null) chatButton.setVisibility(View.INVISIBLE);
 
         Product product = presenter.getProduct(productKey);
@@ -91,7 +91,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
         vendorName.setText(vendor.getName());
-        vendorNote.setText("Reputación "+vendor.getGlobalScoreToString());
+        vendorNote.setText("Reputación " + vendor.getGlobalScoreToString());
         vendorAddress.setText(vendor.obtainAddressLine());
         vendorAddres = vendor.getAddress();
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);
@@ -99,7 +99,6 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         if (userKey != null) {
             AnimatedVectorDrawableCompat toChecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_unchecked_to_cheked);
             AnimatedVectorDrawableCompat toUnchecked = AnimatedVectorDrawableCompat.create(this, R.drawable.heart_checked_to_uncheked);
-            //editara como funciona el metodo isFavorite para ke compruebe el user no el usuario padre
             if (presenter.isFavorite(product, userKey))
                 favProduct.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.heart_filled_vector));
             else
@@ -116,16 +115,14 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
                     presenter.addFavoriteProduct(product, userKey);
                 }
             });
-        }else{
+        }else {
             favProduct.setVisibility(View.INVISIBLE);
             extraSpace.getLayoutParams().height = 30;
             extraSpace.requestLayout();
         }
 
         chatButton.setOnClickListener(v -> {
-
         });
-
         vendorProfile.setOnClickListener(v -> {
             showVendorProfile();
         });
@@ -137,7 +134,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap =googleMap;
+        mMap = googleMap;
         LatLng latLng = vendorAddres.getLatLng();
         mMap.addCircle(new CircleOptions()
                 .center(latLng)
@@ -156,23 +153,17 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        /*
-        Intent intent = new Intent(this, MainActivity.class);
-        if (nextDestination!=null || nextDestination.isEmpty()) {
-            intent.putExtra("nextDestination", "favorites");
-        }
-        startActivity(intent);*/
         String parent = getIntent().getExtras().getString("parent", null);
-        if (parent!=null){
-             showVendorProfile();
-        }else {
+        if (parent != null) {
+            showVendorProfile();
+        } else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
         return true;
     }
 
-    public void showVendorProfile(){
+    public void showVendorProfile() {
         Intent intent = new Intent(this, FragmentActivity.class);
         intent.putExtra("vendorKey", vendor.getMail());
         startActivity(intent);
