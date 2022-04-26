@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.givetake.databinding.ActivityMainBinding;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private boolean isRegistered = false;
     private Presenter presenter;
-    private  String email;
+    private String email;
     private User user;
-
+    private String name;
 
 
     @Override
@@ -59,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
             DrawerLayout drawer = binding.drawerLayout;
             NavigationView navigationView = binding.navView;
             View headerView = navigationView.getHeaderView(0);
-            TextView name = headerView.findViewById(R.id.profileNameDrawer);
+            TextView nameTextView = headerView.findViewById(R.id.profileNameDrawer);
             TextView mail = headerView.findViewById(R.id.profileMailDrawer);
-            if (user ==  null) {
-                name.setText("Inica sesión o Registrate");
+            if (name != null ) {
+                nameTextView.setText(name);
+                mail.setText(email);
+            } else {
+                nameTextView.setText("Inica sesión o Registrate");
                 mail.setText("Revisa tu conexión a internet");
-            }else {
-                name.setText(user.getName());
-                mail.setText(user.getMail());
             }
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_profile, R.id.nav_favs, R.id.nav_settings)
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     public void session() throws InterruptedException {
         @SuppressLint("CommitPrefEdits")
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        name = prefs.getString("name",null);
         email = prefs.getString("email", null);
         if(email!=null){
             isRegistered=true;
@@ -122,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
-            prefs.clear();
-            prefs.apply();
+            prefs.clear().apply();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

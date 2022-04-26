@@ -33,6 +33,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -209,9 +210,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnMapReady
 
 
     public void showHome() {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("name", user.getName()).apply();
         Intent homeIntent = new Intent(this, MainActivity.class);
-        homeIntent.putExtra("email", email);
         homeIntent.putExtra("isRegistered","true");
+        homeIntent.putExtra("email", email);
         startActivity(homeIntent);
     }
 

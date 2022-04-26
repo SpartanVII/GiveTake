@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -65,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
     private String gender;
     private FirebaseAuth mAuth;
     private Toolbar toolbar;
+    private User user;
 
     Geocoder geocoder;
     androidx.appcompat.widget.SearchView searchView;
@@ -203,8 +205,8 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            assert user != null;
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                            assert firebaseUser != null;
                             try {
                                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                                 Date parsedDate =  new Date();
@@ -213,9 +215,8 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
                                 }catch (Exception e){}
                                 MyAddress myAddress = new MyAddress(lastAddress.getAddressLine(0),
                                         new LatLng(lastAddress.getLatitude(),lastAddress.getLongitude()));
-                                User user1 = new User(name.getText().toString(), myAddress, email, gender, parsedDate);
-                                user1.obtainAddressLine();
-                                presenter.addUser(user1);
+                                user = new User(name.getText().toString(), myAddress, email, gender, parsedDate);
+                                presenter.addUser(user);
                                 showHome();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -249,6 +250,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         @SuppressLint("CommitPrefEdits")
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("name", user.getName());
         prefsEditor.putString("email", email);
         prefsEditor.apply();
     }

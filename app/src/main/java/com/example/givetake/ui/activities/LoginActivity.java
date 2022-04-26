@@ -17,23 +17,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.givetake.R;
+import com.example.givetake.model.User;
+import com.example.givetake.presenter.Presenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 
+import java.lang.ref.PhantomReference;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Toolbar toolbar;
-    Button signInButton;
-    Button signUpButton;
-    String password;
-    EditText email;
-    EditText pass;
-    String mail;
+    private Presenter presenter;
+    private Button signInButton;
+    private Button signUpButton;
+    private String password;
+    private EditText email;
+    private EditText pass;
+    private String mail;
 
     protected void onCreate(Bundle savedInstnceState){
         super.onCreate(savedInstnceState);
@@ -50,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
+        presenter = new Presenter();
         setup();
     }
 
@@ -90,8 +96,8 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             assert user != null;
                             try {
-                                showHome();
                                 saveSession();
+                                showHome();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -137,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void showRegister() throws InterruptedException {
-        //Ir a otro layout y que te pida fechade nacimiento, direccion, genero...
         Intent homeIntent = new Intent(this, RegisterActivity.class);
         homeIntent.putExtra("email", mail);
         homeIntent.putExtra("password", password);
@@ -149,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         @SuppressLint("CommitPrefEdits")
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("name", presenter.getUser(mail).getName());
         prefsEditor.putString("email", mail);
         prefsEditor.apply();
     }
