@@ -16,6 +16,9 @@
         android:roundIcon="@drawable/our_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+        <activity
+            android:name=".ui.activities.CompleteReviewActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -70,8 +73,9 @@
             android:exported="false"
             android:parentActivityName=".ui.activities.MainActivity" />
         <activity
-            android:name=".ui.activities.FragmentActivity"
+            android:name=".ui.activities.VendorActivity"
             android:exported="false"
             android:parentActivityName=".ui.activities.MainActivity" />
     </application>
+
 </manifest>

@@ -1,6 +1,7 @@
 package com.example.givetake.model.manager;
 
 import com.example.givetake.model.Product;
+import com.example.givetake.model.Review;
 import com.example.givetake.model.User;
 
 import java.util.HashMap;
@@ -60,6 +61,30 @@ public class UserManager {
 
     public List<String> getFavoriteProductsKey(String userKey){
         return getUser(userKey).getFavoriteProducts();
+    }
+
+    public List<Review> getUncompletedReviews(String userkey){
+        return getUser(userkey).getUncompletedReviews();
+    }
+
+    public void decrementDaysToCompleteReview(Review review, String userKey){
+        getUser(userKey).decrementDaysToCompleteReview(review);
+    }
+
+    public void addReviewToMe(Review review, String userKey){
+        getUser(userKey).addReviewWrittenByMe(review);
+    }
+
+    public void addReviewToTheOther(Review review, String userKey){
+        getUser(userKey).addReviewForMe(review);
+        Review inverseReview = new Review(review);
+        inverseReview.reverseAuthorAndReviewed();
+        inverseReview.reverseProducts();
+        getUser(userKey).addReviewWrittenByMe(review);
+    }
+
+    public void swapProduct(Product product){
+        getUser(product.getOwner()).swapProduct(product);
     }
 
     public void putUser(User user){

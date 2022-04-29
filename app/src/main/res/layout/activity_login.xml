@@ -31,8 +31,6 @@
             android:layout_marginBottom="@dimen/icon_bottom_margin"
             android:contentDescription="@string/desc_firebase_lockup"
             android:src="@drawable/firebase_lockup_400" />
-
-
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

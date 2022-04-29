@@ -31,7 +31,6 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private Toolbar toolbar;
     private Presenter presenter;
     private Button signInButton;
     private Button signUpButton;
@@ -48,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         signUpButton = findViewById(R.id.emailSignUpButton);
         email = findViewById(R.id.fieldEmail);
         pass = findViewById(R.id.fieldPassword);
-        toolbar = findViewById(R.id.toolbarLogin);
+        Toolbar toolbar = findViewById(R.id.toolbarLogin);
 
         setSupportActionBar(toolbar);
         setTitle(R.string.toolbar_title_login);

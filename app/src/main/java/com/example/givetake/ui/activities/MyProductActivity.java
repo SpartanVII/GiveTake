@@ -65,11 +65,10 @@ public class MyProductActivity extends AppCompatActivity implements OnMapReadyCa
         vendorAddres = vendor.getAddress();
 
         swapBtn.setOnClickListener(v -> {
-            /*
-            Intent intent = new Intent(this, );
-            intent.putExtra("productKey",productKey);
+
+            Intent intent = new Intent(this, CompleteReviewActivity.class );
+            intent.putExtra("product",product);
             startActivity(intent);
-             */
         });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.productMyMap);

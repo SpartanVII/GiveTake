@@ -32,9 +32,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.MessageFormat;
 import java.util.Objects;
 
 public class InfoProductActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -164,7 +162,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
     }
 
     public void showVendorProfile() {
-        Intent intent = new Intent(this, FragmentActivity.class);
+        Intent intent = new Intent(this, VendorActivity.class);
         intent.putExtra("vendorKey", vendor.getMail());
         startActivity(intent);
     }

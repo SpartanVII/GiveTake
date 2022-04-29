@@ -2,6 +2,7 @@ package com.example.givetake.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -11,12 +12,13 @@ public class User implements Serializable {
     private double globalScore;
     private String mail;        //Private info
     private Gender gender;      //Private info
-    private Date birth;    //Private info
-    private List<Review> reviews;
+    private Date birth;         //Private info
+    private int nProduct;       //Private info
+    private List<Review> reviewsForMe;
+    private List<Review> reviewsWrittenByMe;
     private List<Product> tradeProducts;
     private List<Product> swapedProducts;
-    private List<String> favProducts;
-    private int nProduct;       //Private info
+    private List<String> favoriteProductsKeys;
 
     public User(String name, MyAddress address, String mail, String gender, Date birth) {
         this.name = name;
@@ -25,10 +27,11 @@ public class User implements Serializable {
         this.mail = mail;
         this.gender = fromStrToGender(gender);
         this.birth = birth;
-        reviews = new ArrayList<>();
+        reviewsForMe = new ArrayList<>();
+        reviewsWrittenByMe = new ArrayList<>();
         tradeProducts = new ArrayList<>();
         swapedProducts = new ArrayList<>();
-        favProducts = new ArrayList<>();
+        favoriteProductsKeys = new ArrayList<>();
         this.nProduct = 0;
     }
 
@@ -39,10 +42,11 @@ public class User implements Serializable {
         this.mail = mail;
         this.gender = fromStrToGender(gender);
         this.birth = birth;
-        reviews = new ArrayList<>();
+        reviewsForMe = new ArrayList<>();
+        reviewsWrittenByMe = new ArrayList<>();
         tradeProducts = new ArrayList<>();
         swapedProducts = new ArrayList<>();
-        favProducts = new ArrayList<>();
+        favoriteProductsKeys = new ArrayList<>();
         this.nProduct = nProduct;
     }
 
@@ -94,12 +98,20 @@ public class User implements Serializable {
         return globalScore;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
+    public List<Review> getReviewsForMe() {
+        return reviewsForMe;
     }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
+    public void setReviewsForMe(List<Review> reviewsForMe) {
+        this.reviewsForMe = reviewsForMe;
+    }
+
+    public List<Review> getReviewsWrittenByMe() {
+        return reviewsWrittenByMe;
+    }
+
+    public void setReviewsWrittenByMe(List<Review> reviewsWrittenByMe) {
+        this.reviewsWrittenByMe = reviewsWrittenByMe;
     }
 
     public List<Product> getTradeProducts() {
@@ -119,11 +131,11 @@ public class User implements Serializable {
     }
 
     public List<String> getFavoriteProducts() {
-        return favProducts;
+        return favoriteProductsKeys;
     }
 
-    public void setFavProducts(List<String> favProducts) {
-        this.favProducts = favProducts;
+    public void setFavoriteProductsKeys(List<String> favoriteProductsKeys) {
+        this.favoriteProductsKeys = favoriteProductsKeys;
     }
 
     public int getnProduct() {
@@ -162,6 +174,15 @@ public class User implements Serializable {
         return address.getAddressLine();
     }
 
+    public String getGlobalScoreToString(){
+        String reputation = "";
+        //If the valoration stays bellow 5 with more than 3 swapped products we ban the user
+        if (globalScore>4.9) reputation = "estandar";
+        if (globalScore>7.4) reputation = "buena";
+        if (globalScore>8.9) reputation = "excenlente";
+        return reputation;
+    }
+
     public Product addTradableProduct(Product product){
         tradeProducts.add(product);
         return product;
@@ -176,8 +197,8 @@ public class User implements Serializable {
     }
 
     public boolean isFavorite(String id){
-        for (int i = 0 ; i<favProducts.size(); i++){
-            if (favProducts.get(i).equals(id)){
+        for (int i = 0; i< favoriteProductsKeys.size(); i++){
+            if (favoriteProductsKeys.get(i).equals(id)){
                 return true;
             }
         }
@@ -185,11 +206,11 @@ public class User implements Serializable {
     }
 
     public void addFavoriteProduct(String id){
-        favProducts.add(id);
+        favoriteProductsKeys.add(id);
     }
 
     public void deleteFavoriteProduct(String id){
-        favProducts.remove(id);
+        favoriteProductsKeys.remove(id);
     }
 
     public int obtainAndIncrementNproduct(){
@@ -197,12 +218,38 @@ public class User implements Serializable {
         return nProduct-1;
     }
 
-    public String getGlobalScoreToString(){
-        String reputation = "";
-        //If the valoration stays bellow 5 with more than 3 swapped products we ban the user
-        if (globalScore>4.9) reputation = "estandar";
-        if (globalScore>7.4) reputation = "buena";
-        if (globalScore>8.9) reputation = "excenlente";
-        return reputation;
+    public List<Review> getUncompletedReviews(){
+        List<Review> copyReviews = new ArrayList<>(reviewsWrittenByMe);
+        copyReviews.sort(Review::compareTo);
+        List<Review> reviewList = new ArrayList<>();
+        for (int i = 0; i < copyReviews.size(); i++) {
+            Review review = copyReviews.get(i);
+            if (review.isCompleted()) break;
+            reviewList.add(review);
+        }
+        return reviewList;
     }
+
+    public void decrementDaysToCompleteReview(Review review){
+        int i = reviewsWrittenByMe.indexOf(review);
+        Review decrementReview = reviewsWrittenByMe.get(i);
+        decrementReview.decrementDaysToComplete();
+        if (decrementReview.getDaysShowedToComplete()==0) reviewsWrittenByMe.remove(review);
+    }
+
+    public void addReviewWrittenByMe(Review review){
+        reviewsWrittenByMe.remove(review);
+        reviewsWrittenByMe.add(review);
+    }
+
+    public void addReviewForMe(Review review){
+        reviewsForMe.add(review);
+    }
+
+    public void swapProduct(Product product){
+        tradeProducts.remove(product);
+        swapedProducts.add(product);
+    }
+
+
 }

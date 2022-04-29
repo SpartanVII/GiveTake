@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import com.example.givetake.R;
 
 
-public class ReviewFragment extends Fragment {
+public class ReviewsFragment extends Fragment {
 
 
 
-    public ReviewFragment() {
+    public ReviewsFragment() {
     }
 
 

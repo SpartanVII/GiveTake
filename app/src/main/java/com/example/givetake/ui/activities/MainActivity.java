@@ -16,6 +16,7 @@ import com.example.givetake.presenter.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private boolean isRegistered = false;
-    private Presenter presenter;
     private String email;
-    private User user;
     private String name;
 
 
@@ -47,16 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
-        presenter = new Presenter();
         try {
             session();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-
         if (isRegistered){
-            user = presenter.getUser(email);
             DrawerLayout drawer = binding.drawerLayout;
             NavigationView navigationView = binding.navView;
             View headerView = navigationView.getHeaderView(0);
@@ -66,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 nameTextView.setText(name);
                 mail.setText(email);
             } else {
-                nameTextView.setText("Inica sesión o Registrate");
-                mail.setText("Revisa tu conexión a internet");
+                nameTextView.setText(R.string.textview_login_register);
+                mail.setText(R.string.textview_conection_error);
             }
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_profile, R.id.nav_favs, R.id.nav_settings)
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             onSupportNavigateUp();
             return true;
         }
-        if (option.equals("Iniciar Sesión")){
+        if (option.equals(getString(R.string.toolbar_title_login))){
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
@@ -135,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 }

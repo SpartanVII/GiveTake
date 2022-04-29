@@ -22,6 +22,7 @@ import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.activities.MyProductActivity;
 import com.example.givetake.ui.helpers.ProductAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,11 +42,12 @@ public class ProductsFragment extends Fragment {
         Bundle bundle = requireActivity().getIntent().getExtras();
         if (bundle!=null){
             String vendorKey = bundle.getString("vendorKey", null);
-            user = presenter.getUser(vendorKey);
+            if (vendorKey != null) user = presenter.getUser(vendorKey);
         }
 
         recyclerView = view.findViewById(R.id.recyclerviewProduct);
-        List<Product> productList = user.getTradeProducts();
+        List<Product> productList = new ArrayList<>();
+        if (user != null) productList.addAll(user.getTradeProducts());
         ProductAdapter productAdapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(productAdapter);

@@ -3,6 +3,7 @@ package com.example.givetake.presenter;
 import android.net.Uri;
 
 import com.example.givetake.model.Product;
+import com.example.givetake.model.Review;
 import com.example.givetake.model.singleton.ProductManagerSingleton;
 import com.example.givetake.model.singleton.UserManagerSingleton;
 import com.example.givetake.model.User;
@@ -84,8 +85,29 @@ public class Presenter {
         return productList;
     }
 
-    public void sendReport(List<String> reasons, String reportedUserKey, String reporterUSerKey){
-        dataBaseClass.sendComplaintUSer(reasons, reportedUserKey, reporterUSerKey);
+    public List<Review> getUncompleteReviews(String userKey){
+        List<Review> reviewList = new ArrayList<>();
+        reviewList.addAll(userManager.getUncompletedReviews(userKey));
+        return reviewList;
+    }
+
+    public void decrementDaysToCompleteReview(Review review, String userKey){
+        userManager.decrementDaysToCompleteReview(review, userKey);
+        dataBaseClass.save(getUser(userKey));
+    }
+
+    public void addReviewToMe(Review review, String userKey){
+        userManager.addReviewToMe(review, userKey);
+        dataBaseClass.save(getUser(userKey));
+    }
+    public void addReviewToTheOther(Review review, String userKey){
+        userManager.addReviewToTheOther(review, userKey);
+        dataBaseClass.save(getUser(userKey));
+    }
+
+    public void swapProduct(Product product){
+        userManager.swapProduct(product);
+        dataBaseClass.save(getUser(product.getOwner()));
     }
     public void addUser(User user){
         userManager.putUser(user);
@@ -107,6 +129,10 @@ public class Presenter {
 
     public void deleteImage(String imageUrlWithoutProcessing){
         dataBaseClass.deleteImage(imageUrlWithoutProcessing);
+    }
+
+    public void sendReport(List<String> reasons, String reportedUserKey, String reporterUSerKey){
+        dataBaseClass.sendComplaintUSer(reasons, reportedUserKey, reporterUSerKey);
     }
 
     public void initialize(){

@@ -22,14 +22,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class FragmentActivity extends AppCompatActivity {
+public class VendorActivity extends AppCompatActivity {
     private Presenter presenter;
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
+        setContentView(R.layout.activity_vendor);
 
         toolbar = findViewById(R.id.toolbarVendorProfile);
         setSupportActionBar(toolbar);

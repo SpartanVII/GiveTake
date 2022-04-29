@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentFavoritesBinding;
 import com.example.givetake.model.Product;
+import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.helpers.ProductAdapter;
@@ -43,7 +44,8 @@ public class FavoritesFragment extends Fragment {
         presenter = new Presenter();
         recyclerView = view.findViewById(R.id.recyclerviewFavs);
         List<Product> productList = new ArrayList<>();
-        if (userKey != null) productList.addAll(presenter.getFavoriteProducts(userKey));
+        User user = presenter.getUser(userKey);
+        if (user != null) productList.addAll(presenter.getFavoriteProducts(userKey));
 
         ProductAdapter productAdapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

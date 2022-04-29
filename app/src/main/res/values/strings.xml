@@ -13,9 +13,11 @@
     <!-- Toolbar titles-->
     <string name="toolbar_title_add_product">Añadir producto</string>
     <string name="toolbar_title_info_product">Información del producto</string>
-    <string name="toolbar_title_login">Iniciar sesión</string>
+    <string name="toolbar_title_login">Iniciar Sesión</string>
     <string name="toolbar_title_register">Register</string>
     <string name="toolbar_title_vendor_profile">"Perfil del vendedor"</string>
+    <string name="toolbar_title_review">"Reseña"</string>
+
 
 
     <!-- left main bar options -->
@@ -97,13 +99,27 @@
     <!-- Alert Dailog Options -->
     <string name="alert_dialog_positive">Si</string>
     <string name="alert_dialog_negative">No</string>
+    <string name="alert_dialog_negative_review">Cancelar</string>
+    <string name="alert_dialog_positive_review">Confirmar</string>
     <string name="alert_dialog_report_confirm">Enviar denuncia</string>
     <string name="alert_dialog_report_cancel">Cancelar</string>
     <string name="alert_dialog_title_report">Motivos de la denuncia</string>
+    <string name="alert_dialog_complete_review">Tienes una reseña pendiente</string>
+    <string name="alert_dialog_not_last_try_to_complete_review">¿Deseas rellenar la reseña?</string>
+    <string name="alert_dialog_last_try_to_complete_review">Es la última oportunidad que tendrás</string>
+    <string name="alert_dialog_complete_review_positive">Responder ahora</string>
+    <string name="alert_dialog_complete_review_negative_last">Definitivamente no</string>
+    <string name="alert_dialog_complete_review_negative_not_last">Más tarde</string>
+
 
     <!-- Toast messages -->
     <string name="toast_sended_report">Tu denuncia ha sido enviada</string>
     <string name="toast_internet_conection">No se pudo conectar a internet</string>
+
+    <!-- TextView messages -->
+    <string name="textview_conection_error">Revisa tu conexión a internet</string>
+    <string name="textview_login_register">Inica sesión o Registrate</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
