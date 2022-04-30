@@ -1,7 +1,10 @@
 package com.example.givetake.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Review implements Serializable, Comparable {
@@ -175,4 +178,43 @@ public class Review implements Serializable, Comparable {
     public int hashCode() {
         return Objects.hash(reviwedName, authorName, comentary, productName);
     }
+
+    public double getScoreFromExperience(String reputation){
+        if (reputation.equals("Horrible")) return 0;
+        if (reputation.equals("Mala")) return 2.5;
+        if (reputation.equals("Regular")) return 5;
+        if (reputation.equals("Buena")) return 7.5;
+        if (reputation.equals("Excelente")) return 10;
+        return 5;
+    }
+
+    public String getExperienceFromScore(double score){
+        if (score == 0) return "Horrible";
+        if (score == 2.5) return "Mala";
+        if (score == 5) return "Regular";
+        if (score == 7.5) return "Buena";
+        if (score == 10) return "Excelente";
+        return "";
+    }
+
+    public String getExperienceFromScore(){
+        if (score == 0) return "horrible";
+        if (score == 2.5) return "mala";
+        if (score == 5) return "regular";
+        if (score == 7.5) return "buena";
+        if (score == 10) return "excelente";
+        return "";
+    }
+
+    public String getShortName() {
+        String[] nameSplit = authorName.split(" ");
+        if (nameSplit.length == 1) return nameSplit[0];
+        return nameSplit[0] + " " + nameSplit[1].charAt(0)+".";
+    }
+
+    public String getFormatReviewDate() {
+
+        return new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es")).format(reviewDate);
+    }
+
 }

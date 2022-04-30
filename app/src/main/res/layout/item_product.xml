@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="10dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:foreground="?android:attr/selectableItemBackground">
 
         <RelativeLayout
@@ -27,13 +27,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/img"
+                <androidx.cardview.widget.CardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginStart="12dp"
-                    android:src="@drawable/wii" />
+                    card_view:cardCornerRadius="15dp"
+                    card_view:cardElevation="0dp"
+                    android:layout_marginStart="8dp">
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/wii" />
+                </androidx.cardview.widget.CardView>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"

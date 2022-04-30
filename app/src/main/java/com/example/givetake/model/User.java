@@ -82,6 +82,12 @@ public class User implements Serializable {
         return name;
     }
 
+    public String getShortName() {
+        String[] nameSplit = name.split(" ");
+        if (nameSplit.length == 1) return nameSplit[0];
+        return nameSplit[0] + " " + nameSplit[1].charAt(0);
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -174,9 +180,10 @@ public class User implements Serializable {
         return address.getAddressLine();
     }
 
-    public String getGlobalScoreToString(){
+    public String getGlobalReputation(){
         String reputation = "";
         //If the valoration stays bellow 5 with more than 3 swapped products we ban the user
+        if (globalScore>2.4) reputation = "mala";
         if (globalScore>4.9) reputation = "estandar";
         if (globalScore>7.4) reputation = "buena";
         if (globalScore>8.9) reputation = "excenlente";

@@ -63,6 +63,12 @@
     <string name="item_product_name">Nombre prodcuto</string>
     <string name="item_product_description">Esto es un ejemplo de una descripción de tamaño medio de un producto</string>
 
+    <!-- item_review -->
+    <string name="item_review_swap">Intercambió:</string>
+    <string name="item_review_experience">Experiencia %1$s</string>
+
+    <string name="item_review_date">Por shortName el dateWithLongMonth</string>
+
 
     <!-- add product -->
     <string name="add_product_name_hint">Nombre del producto</string>
@@ -72,6 +78,9 @@
 
     <!-- Lis of products - profile -->
     <string name="profile_products_void">Actualmente no tienes productos</string>
+
+    <!-- Lis of products - profile -->
+    <string name="profile_reviews_void">Actualmente no tienes reseñas</string>
 
     <!-- Lis of products - home -->
     <string name="home_products_void">Actualmente no hay productos Desliza haia abajo para recargar</string>

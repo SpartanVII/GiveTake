@@ -2,7 +2,6 @@ package com.example.givetake.ui.fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,10 +27,7 @@ import com.example.givetake.ui.helpers.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
@@ -71,7 +67,7 @@ public class ProfileFragment extends Fragment {
         if (user != null) {
             name.setText(user.getName());
             address.setText(user.obtainAddressLine());
-            reputation.setText("Reputación " + user.getGlobalScoreToString());
+            reputation.setText("Reputación " + user.getGlobalReputation());
             //profileImg.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_logged));
         }
         else {

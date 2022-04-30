@@ -10,6 +10,8 @@
     <color name="grey_400">#F1F1F1</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_200">#A8A1A1</color>
+    <color name="grey_100">#888484</color>
+
     <color name="warning">#DD7D5E</color>
     <color name="main">#6200ee</color>
     <color name="trilary">#64587F</color>

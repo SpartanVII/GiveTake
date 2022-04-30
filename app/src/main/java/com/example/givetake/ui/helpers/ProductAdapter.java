@@ -73,8 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(ProductViewHolder viewHolder, int i) {
-        Glide.with(mContext).load(items.get(i).getImg()).centerCrop()
-                .apply(RequestOptions.circleCropTransform()).into(viewHolder.productImg);
+        Glide.with(mContext).load(items.get(i).getImg()).centerCrop().into(viewHolder.productImg);
         viewHolder.productName.setText(items.get(i).getTitle());
         viewHolder.productDesc.setText(items.get(i).getDescription());
     }

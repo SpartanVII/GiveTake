@@ -89,7 +89,7 @@ public class InfoProductActivity extends AppCompatActivity implements OnMapReady
         productName.setText(product.getTitle());
         productDesc.setText(product.getDescription());
         vendorName.setText(vendor.getName());
-        vendorNote.setText("Reputación " + vendor.getGlobalScoreToString());
+        vendorNote.setText("Reputación " + vendor.getGlobalReputation());
         vendorAddress.setText(vendor.obtainAddressLine());
         vendorAddres = vendor.getAddress();
         Glide.with(getApplicationContext()).load(product.getImg()).centerCrop().into(productImg);

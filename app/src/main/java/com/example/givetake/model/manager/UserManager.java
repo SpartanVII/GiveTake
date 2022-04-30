@@ -67,6 +67,10 @@ public class UserManager {
         return getUser(userkey).getUncompletedReviews();
     }
 
+    public List<Review> getReviewsForMe(String userkey){
+        return getUser(userkey).getReviewsForMe();
+    }
+
     public void decrementDaysToCompleteReview(Review review, String userKey){
         getUser(userKey).decrementDaysToCompleteReview(review);
     }

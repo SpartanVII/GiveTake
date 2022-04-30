@@ -86,9 +86,11 @@ public class Presenter {
     }
 
     public List<Review> getUncompleteReviews(String userKey){
-        List<Review> reviewList = new ArrayList<>();
-        reviewList.addAll(userManager.getUncompletedReviews(userKey));
-        return reviewList;
+        return new ArrayList<>(userManager.getUncompletedReviews(userKey));
+    }
+
+    public List<Review> getReviewsForMe(String userKey){
+        return new ArrayList<>(userManager.getReviewsForMe(userKey));
     }
 
     public void decrementDaysToCompleteReview(Review review, String userKey){

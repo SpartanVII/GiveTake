@@ -3,75 +3,51 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1585" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_checked_to_uncheked.xml" value="0.1585" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_filled_vector.xml" value="0.2035" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_menu_vector.xml" value="0.1585" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_unchecked_to_cheked.xml" value="0.1585" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/heart_vector.xml" value="0.1" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2035" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.3" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.2605" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_baseline_star_outline_24.xml" value="0.2605" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_complaint.xml" value="0.3" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_is_favorite.xml" value="0.2625" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_is_not_favorite.xml" value="0.2625" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2725" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_logged.xml" value="0.322" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_menu_settings.xml" value="0.2725" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2725" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_nav_fav.xml" value="0.2035" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/long_animation.xml" value="0.1585" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/rounded_layout.xml" value="0.3475" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/side_nav_bar.xml" value="0.2725" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/splash.xml" value="0.2035" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout-v31/activity_info_product.xml" value="0.3125" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_add_producr.xml" value="0.4" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_complete_review.xml" value="0.4" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_edit_profile.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_favorites.xml" value="0.38645833333333335" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_fragment.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_info_product.xml" value="0.4" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_login.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_main2.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_my_product.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_new_product.xml" value="0.1879432624113475" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_profil_alternative.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_register.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/activity_splash.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/app_bar_main.xml" value="0.4" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/app_bar_main2.xml" value="0.264" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/content_main.xml" value="0.16458333333333333" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/content_main2.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_favorites.xml" value="0.1879432624113475" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_gallery.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_home.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_list_product.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_products.xml" value="0.19583333333333333" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
+        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_profile.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_profile_product.xml" value="0.1879432624113475" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_settings.xml" value="0.4" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/fragment_slideshow.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/item_product.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/item_profile_product.xml" value="0.3254385964912281" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/item_review.xml" value="0.26856884057971014" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/nav_header_main.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/rounded_layout.xml" value="0.3125" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/row_item.xml" value="0.4" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/select_item.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/settings_activity.xml" value="0.3197463768115942" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/tool_bar.xml" value="0.27943840579710144" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/toolbar.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/layout/toolvar.xml" value="0.27943840579710144" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/activity_main_drawer.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/icon_menu.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/logged_menu.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/main.xml" value="0.38645833333333335" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/main_activity2.xml" value="0.38645833333333335" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/my_product_options.xml" value="0.3072916666666667" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/myproduct.xml" value="0.3768518518518518" />
-        <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/menu/vendor_profile_options.xml" value="0.362962962962963" />
         <entry key="..\:/Users/Jon/AndroidStudioProjects/GiveTake/app/src/main/res/xml/root_preferences.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2703125" />
         <entry key="..\:/Users/Jonpi/AndroidStudioProjects/GiveTake/app/src/main/res/drawable/side_nav_bar.xml" value="0.2703125" />
@@ -108,9 +84,12 @@
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_products.xml" value="0.2" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_review.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_reviews.xml" value="0.11499493414387031" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_sample.xml" value="0.12590579710144928" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/fragment_settings.xml" value="0.13722826086956522" />
-        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/item_product.xml" value="0.4" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/item_product.xml" value="0.32524271844660196" />
+        <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/item_review.xml" value="0.1479028697571744" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/layout/toolbar.xml" value="0.11499493414387031" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Jonpi/StudioProjects/GiveTake/app/src/main/res/menu/main.xml" value="0.25416666666666665" />
