@@ -32,7 +32,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     card_view:cardCornerRadius="15dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="10dp"
                     card_view:cardElevation="0dp">
                     <ImageView
                         android:id="@+id/img"
