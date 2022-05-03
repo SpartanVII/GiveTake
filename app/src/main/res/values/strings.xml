@@ -115,8 +115,8 @@
     <string name="alert_dialog_title_report">Motivos de la denuncia</string>
     <string name="alert_dialog_complete_review">Tienes una reseña pendiente</string>
     <string name="alert_dialog_not_last_try_to_complete_review">¿Deseas rellenar la reseña?</string>
-    <string name="alert_dialog_last_try_to_complete_review">Es la última oportunidad que tendrás</string>
-    <string name="alert_dialog_complete_review_positive">Responder ahora</string>
+    <string name="alert_dialog_last_try_to_complete_review">¿Deseas rellenar la reseña? Es la última oportunidad que tendrás</string>
+    <string name="alert_dialog_complete_review_positive">Rellenar</string>
     <string name="alert_dialog_complete_review_negative_last">Definitivamente no</string>
     <string name="alert_dialog_complete_review_negative_not_last">Más tarde</string>
 

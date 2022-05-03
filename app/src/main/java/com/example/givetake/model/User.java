@@ -250,6 +250,8 @@ public class User implements Serializable {
     }
 
     public void addReviewForMe(Review review){
+        if (reviewsForMe.size() == 0)  globalScore = review.getScore();
+        else globalScore = (globalScore * reviewsForMe.size() + review.getScore())/reviewsForMe.size()+1;
         reviewsForMe.add(review);
     }
 

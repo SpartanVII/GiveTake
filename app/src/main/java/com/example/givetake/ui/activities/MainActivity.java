@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceType")
     public void session() throws InterruptedException {
-        @SuppressLint("CommitPrefEdits")
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         name = prefs.getString("name",null);
         email = prefs.getString("email", null);

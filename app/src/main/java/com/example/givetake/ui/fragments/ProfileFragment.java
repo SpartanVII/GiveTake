@@ -36,7 +36,6 @@ public class ProfileFragment extends Fragment {
     private Presenter presenter;
     private Bundle bundle;
     private User user;
-    private int i = 0;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,16 +97,20 @@ public class ProfileFragment extends Fragment {
     }
 
     public void pendentReview(){
-        if (bundle==null && i == 0){
+        SharedPreferences prefs = requireContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        int init = prefs.getInt("init",0);
+        if (bundle==null && init == 0){
             List<Review> reviewList = new ArrayList<>();
             if(user != null) reviewList.addAll(user.getUncompletedReviews());
             if (!reviewList.isEmpty()){
-                i++;
+                SharedPreferences.Editor prefsEditor = prefs.edit();
+                prefsEditor.putInt("init", 1).apply();
+
                 Review review = reviewList.get(0);
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                 builder.setTitle(R.string.alert_dialog_complete_review);
                 builder.setCancelable(false);
-                builder.setPositiveButton("Completar ahora", (dialog, which) -> {
+                builder.setPositiveButton(R.string.alert_dialog_complete_review_positive, (dialog, which) -> {
                     Intent intent = new Intent(requireContext(), CompleteReviewActivity.class);
                     intent.putExtra("review", review);
                     startActivity(intent);

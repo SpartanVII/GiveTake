@@ -155,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor prefsEditor = prefs.edit();
         prefsEditor.putString("name", presenter.getUser(mail).getName());
         prefsEditor.putString("email", mail);
+        prefsEditor.putInt("init", 0);
         prefsEditor.apply();
     }
 

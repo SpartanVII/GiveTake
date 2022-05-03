@@ -25,6 +25,8 @@ import com.example.givetake.ui.helpers.ProductAdapter;
 import com.example.givetake.ui.helpers.ReviewAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -50,14 +52,16 @@ public class ReviewsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerviewReview);
         List<Review> reviewList = new ArrayList<>();
-        if (user != null) reviewList.addAll(user.getReviewsForMe());
+        if (user != null){
+            reviewList.addAll(user.getReviewsForMe());
+            reviewList.sort((a,b) ->  b.getReviewDate().compareTo(a.getReviewDate()));
+        }
         ReviewAdapter reviewAdapter = new ReviewAdapter(reviewList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(reviewAdapter);
 
         TextView textVoidReviews = view.findViewById(R.id.textVoidReviews);
         if (reviewList.isEmpty()) textVoidReviews.setVisibility(View.VISIBLE);
-        else textVoidReviews.setVisibility(View.INVISIBLE);
 
         return view;
     }

@@ -252,6 +252,7 @@ public class RegisterActivity extends AppCompatActivity implements OnMapReadyCal
         SharedPreferences.Editor prefsEditor = prefs.edit();
         prefsEditor.putString("name", user.getName());
         prefsEditor.putString("email", email);
+        prefsEditor.putInt("init", 0);
         prefsEditor.apply();
     }
 

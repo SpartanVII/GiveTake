@@ -10,8 +10,7 @@
         android:id="@+id/recyclerviewReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layoutAnimation="@anim/layout_animation"
-        tools:listitem="@layout/item_review"/>
+        android:layoutAnimation="@anim/layout_animation_fall_of"/>
 
     <TextView
         android:id="@+id/textVoidReviews"
@@ -23,6 +22,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:textColor="@color/black"
+        android:visibility="gone"
         android:text="@string/profile_reviews_void"/>
 
 </FrameLayout>

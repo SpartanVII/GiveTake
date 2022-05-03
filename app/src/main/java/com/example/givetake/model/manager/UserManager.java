@@ -81,10 +81,8 @@ public class UserManager {
 
     public void addReviewToTheOther(Review review, String userKey){
         getUser(userKey).addReviewForMe(review);
-        Review inverseReview = new Review(review);
-        inverseReview.reverseAuthorAndReviewed();
-        inverseReview.reverseProducts();
-        getUser(userKey).addReviewWrittenByMe(review);
+        Review inverseReview = createInvertedReview(review);
+        getUser(userKey).addReviewWrittenByMe(inverseReview);
     }
 
     public void swapProduct(Product product){
@@ -101,6 +99,13 @@ public class UserManager {
 
     public void modifyUser(User user){
         userMap.replace(user.getMail().split("@")[0], user);
+    }
+
+    private Review createInvertedReview(Review review){
+        //Inverted Author-ReviwedName and Product-OtherProductNAme
+        return new Review(review.getReviwedName(), review.getAuthorName(), review.getComentary(), review.getOtherProductName(),
+                review.getProductName(), review.getProductImg(), review.getReviewDate(), review.getScore(),
+                review.getExtraPrice(), false);
     }
 
 

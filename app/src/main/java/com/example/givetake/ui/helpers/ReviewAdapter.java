@@ -74,7 +74,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     @Override
     public ReviewViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_review, viewGroup, false);
+                .inflate(R.layout.item_review2, viewGroup, false);
         mContext = v.getContext();
         v.setOnClickListener(this);
         return new ReviewViewHolder(v);

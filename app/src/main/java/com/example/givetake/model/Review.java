@@ -16,7 +16,7 @@ public class Review implements Serializable, Comparable {
     private String productImg;
     private Date reviewDate;
     private int daysShowedToComplete;
-    private int score;
+    private double score;
     private int extraPrice;
     private boolean isCompleted;
 
@@ -25,7 +25,7 @@ public class Review implements Serializable, Comparable {
         this.extraPrice = 0;
     }
 
-    public Review(String authorName, String reviwedName, String comentary, String productName, String otherProductName, String productImg, Date reviewDate, int score, int extraPrice, boolean isCompleted) {
+    public Review(String authorName, String reviwedName, String comentary, String productName, String otherProductName, String productImg, Date reviewDate, double score, int extraPrice, boolean isCompleted) {
         this.authorName = authorName;
         this.reviwedName = reviwedName;
         this.comentary = comentary;
@@ -37,20 +37,6 @@ public class Review implements Serializable, Comparable {
         this.score = score;
         this.extraPrice = extraPrice;
         this.isCompleted = isCompleted;
-    }
-
-    public Review(Review review) {
-        this.authorName = review.getAuthorName();
-        this.reviwedName = review.getReviwedName();
-        this.comentary = review.getComentary();
-        this.productName = review.getProductName();
-        this.otherProductName = review.getOtherProductName();
-        this.productImg = review.getProductImg();
-        this.reviewDate = review.getReviewDate();
-        this.daysShowedToComplete = 8;
-        this.score = review.getScore();
-        this.extraPrice = review.getExtraPrice();
-        this.isCompleted = review.isCompleted();
     }
 
     public String getReviwedName() {
@@ -117,11 +103,11 @@ public class Review implements Serializable, Comparable {
         this.daysShowedToComplete = daysShowedToComplete;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
@@ -153,19 +139,6 @@ public class Review implements Serializable, Comparable {
         daysShowedToComplete-=1;
     }
 
-    public void reverseAuthorAndReviewed(){
-        String author = authorName;
-        authorName = reviwedName;
-        reviwedName = author;
-    }
-
-    public void reverseProducts(){
-        String product= productName;
-        productName = otherProductName;
-        otherProductName = product;
-        isCompleted = false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -177,6 +150,14 @@ public class Review implements Serializable, Comparable {
     @Override
     public int hashCode() {
         return Objects.hash(reviwedName, authorName, comentary, productName);
+    }
+
+    public void setScoreFromExperience(String reputation){
+        if (reputation.equals("horrible")) score = 0;
+        if (reputation.equals("mala")) score = 2.5;
+        if (reputation.equals("regular")) score = 5;
+        if (reputation.equals("buena")) score = 7.5;
+        if (reputation.equals("excelente")) score = 10;
     }
 
     public double getScoreFromExperience(String reputation){

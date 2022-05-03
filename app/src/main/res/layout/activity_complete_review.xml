@@ -53,11 +53,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="Producto obtenido: " />
 
             <TextView
@@ -77,15 +79,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+
                 android:text="Producto ofrecido: " />
 
             <EditText
                 android:id="@+id/otherProductName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:backgroundTint="@color/grey_200"
                 android:hint="Nombre del producto"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/otherProductNameFixed"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:backgroundTint="@color/grey_200"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -98,16 +112,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="Intercambiado con: " />
 
             <EditText
                 android:id="@+id/otherPersonReview"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/grey_200"
+                android:hint="Mail de la persona     "
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/otherPersonReviewFixed"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/grey_200"
-                android:hint="Introduce el mail de la persona"
                 android:textSize="14sp"
-                android:maxLines="1"/>
+                android:maxLines="1" />
 
         </LinearLayout>
 
@@ -119,37 +143,44 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+
                 android:text="Sobrecoste: " />
 
             <EditText
                 android:id="@+id/extraCostReview"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/grey_200"
+                android:hint="Euros"
+                android:inputType="number"
+                android:textSize="14sp"
+                android:maxEms="3"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/extraCostReviewFixed"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="46dp"
                 android:backgroundTint="@color/grey_200"
-                android:hint="Euros extra pagados"
-                android:inputType="number"
                 android:textSize="14sp"
-                android:maxLines="1"/>
+                android:visibility="gone"
+                android:maxLines="1" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="Valoración: " />
+                android:layout_marginEnd="10dp"
+                android:text="Expriencia: " />
 
             <Spinner
                 android:id="@+id/scoreOptionsReview"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="46dp"
                 android:backgroundTint="@color/grey_200"
                 android:hint="Euros extra pagados"
                 android:inputType="number"
@@ -163,12 +194,20 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Opinion: ">
+
+            </TextView>
+
             <EditText
                 android:id="@+id/comentaryReview"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/grey_200"
-                android:hint="Escriba si lo desea una breve opinión sobre el vendedor"
+                android:hint="Una breve opinion sobre la persona"
+                android:inputType="text"
                 android:maxLines="1"
                 android:textSize="14sp" />
 

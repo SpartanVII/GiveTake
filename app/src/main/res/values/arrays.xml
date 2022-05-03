@@ -10,6 +10,15 @@
         <item>reply_all</item>
     </string-array>
 
+    <!-- spinner values for experience review-->
+    <string-array name="spinner_review_values">
+        <item>horrible</item>
+        <item>mala</item>
+        <item>regular</item>
+        <item>buena</item>
+        <item>excelente</item>
+    </string-array>
+
     <!-- add product category-->
     <string-array name="category_add_product">
         <item>Coches</item>
