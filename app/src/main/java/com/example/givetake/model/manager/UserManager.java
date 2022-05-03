@@ -75,11 +75,15 @@ public class UserManager {
         getUser(userKey).decrementDaysToCompleteReview(review);
     }
 
-    public void addReviewToMe(Review review, String userKey){
+    public void addReviewWrittenByMe(Review review, String userKey){
         getUser(userKey).addReviewWrittenByMe(review);
     }
 
-    public void addReviewToTheOther(Review review, String userKey){
+    public void addReviewForTheOther(Review review, String userKey){
+        getUser(userKey).addReviewForMe(review);
+    }
+
+    public void addReviewForTheOtherToComplete(Review review, String userKey){
         getUser(userKey).addReviewForMe(review);
         Review inverseReview = createInvertedReview(review);
         getUser(userKey).addReviewWrittenByMe(inverseReview);
@@ -105,7 +109,7 @@ public class UserManager {
         //Inverted Author-ReviwedName and Product-OtherProductNAme
         return new Review(review.getReviwedName(), review.getAuthorName(), review.getComentary(), review.getOtherProductName(),
                 review.getProductName(), review.getProductImg(), review.getReviewDate(), review.getScore(),
-                review.getExtraPrice(), false);
+                review.getExtraPrice(), false, review.getReviwedEmail(), review.getAuthorEmail());
     }
 
 

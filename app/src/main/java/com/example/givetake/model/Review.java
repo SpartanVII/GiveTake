@@ -15,6 +15,8 @@ public class Review implements Serializable, Comparable {
     private String otherProductName;
     private String productImg;
     private Date reviewDate;
+    private String authorEmail;
+    private String reviwedEmail;
     private int daysShowedToComplete;
     private double score;
     private int extraPrice;
@@ -25,7 +27,9 @@ public class Review implements Serializable, Comparable {
         this.extraPrice = 0;
     }
 
-    public Review(String authorName, String reviwedName, String comentary, String productName, String otherProductName, String productImg, Date reviewDate, double score, int extraPrice, boolean isCompleted) {
+    public Review(String authorName, String reviwedName, String comentary, String productName,
+                  String otherProductName, String productImg, Date reviewDate, double score,
+                  int extraPrice, boolean isCompleted, String authorEmail, String reviwedEmail) {
         this.authorName = authorName;
         this.reviwedName = reviwedName;
         this.comentary = comentary;
@@ -37,6 +41,8 @@ public class Review implements Serializable, Comparable {
         this.score = score;
         this.extraPrice = extraPrice;
         this.isCompleted = isCompleted;
+        this.authorEmail = authorEmail;
+        this.reviwedEmail = reviwedEmail;
     }
 
     public String getReviwedName() {
@@ -125,6 +131,22 @@ public class Review implements Serializable, Comparable {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public void setAuthorEmail(String authorEmail) {
+        this.authorEmail = authorEmail;
+    }
+
+    public String getReviwedEmail() {
+        return reviwedEmail;
+    }
+
+    public void setReviwedEmail(String reviwedEmail) {
+        this.reviwedEmail = reviwedEmail;
     }
 
     @Override

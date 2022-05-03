@@ -98,12 +98,18 @@ public class Presenter {
         dataBaseClass.save(getUser(userKey));
     }
 
-    public void addReviewToMe(Review review, String userKey){
-        userManager.addReviewToMe(review, userKey);
+    public void addReviewWrittenByMe(Review review, String userKey){
+        userManager.addReviewWrittenByMe(review, userKey);
         dataBaseClass.save(getUser(userKey));
     }
-    public void addReviewToTheOther(Review review, String userKey){
-        userManager.addReviewToTheOther(review, userKey);
+
+    public void addReviewForTheOtherToComplete(Review review, String userKey){
+        userManager.addReviewForTheOtherToComplete(review, userKey);
+        dataBaseClass.save(getUser(userKey));
+    }
+
+    public void addReviewForTheOther(Review review, String userKey){
+        userManager.addReviewForTheOther(review, userKey);
         dataBaseClass.save(getUser(userKey));
     }
 

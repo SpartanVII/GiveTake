@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,8 +95,8 @@ public class CompleteReviewActivity extends AppCompatActivity {
                 Review review = createFirstReview();
                 if (review == null) return;
                 builder.setPositiveButton(R.string.alert_dialog_positive_review, (dialog, which) -> {
-                    presenter.addReviewToMe(review, mail);
-                    presenter.addReviewToTheOther(review, user.getMail());
+                    presenter.addReviewWrittenByMe(review, mail);
+                    presenter.addReviewForTheOtherToComplete(review, user.getMail());
                     presenter.swapProduct(product);
                     showHome();
                 });
@@ -112,7 +110,8 @@ public class CompleteReviewActivity extends AppCompatActivity {
                 uncompleteReview.setComentary(comentary.getText().toString());
 
                 builder.setPositiveButton(R.string.alert_dialog_positive_review, (dialog, which) -> {
-                    presenter.addReviewToMe(uncompleteReview, mail);
+                    presenter.addReviewWrittenByMe(uncompleteReview, mail);
+                    presenter.addReviewForTheOther(uncompleteReview, uncompleteReview.getReviwedEmail());
                     showHome();
                 });
                 builder.show();
@@ -164,6 +163,8 @@ public class CompleteReviewActivity extends AppCompatActivity {
         review.setExtraPrice(Integer.parseInt(extraCosto));
         review.setCompleted(true);
         review.setScoreFromExperience(spinner.getSelectedItem().toString());
+        review.setReviwedEmail(user.getMail());
+        review.setAuthorEmail(mail);
         return review;
     }
 
