@@ -52,7 +52,7 @@ public class ProfileFragment extends Fragment {
         presenter = new Presenter();
 
         SharedPreferences prefs = requireContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String key = prefs.getString("email", null).split("@")[0];
+        String key = prefs.getString("email", "");
 
         user = presenter.getUser(key);
         bundle = requireActivity().getIntent().getExtras();

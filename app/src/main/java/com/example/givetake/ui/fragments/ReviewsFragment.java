@@ -40,7 +40,7 @@ public class ReviewsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_reviews, container, false);
 
         SharedPreferences prefs = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String key = prefs.getString("email", null).split("@")[0];
+        String key = prefs.getString("email", "");
 
         presenter = new Presenter();
         User user = presenter.getUser(key);
