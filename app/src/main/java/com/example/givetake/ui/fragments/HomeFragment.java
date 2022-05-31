@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +23,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.givetake.R;
 import com.example.givetake.databinding.FragmentHomeBinding;
 import com.example.givetake.model.Product;
+import com.example.givetake.model.User;
 import com.example.givetake.presenter.Presenter;
 import com.example.givetake.ui.activities.AddProductActivity;
 import com.example.givetake.ui.activities.InfoProductActivity;
 import com.example.givetake.ui.helpers.ProductAdapter;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -111,9 +115,23 @@ public class HomeFragment extends Fragment {
     public void refreshRecyclerView(List<Product> productList) {
         productList.clear();
         productList.addAll(presenter.getProductsByTag(spinner.getSelectedItem().toString()));
-        if (email!=null && presenter.getUser(email)!= null)
+        if (email!=null && presenter.getUser(email)!= null) {
             productList.removeAll((presenter.getUser(email).getTradeProducts()));
-        Collections.shuffle(productList, new Random());
+            //Collections.shuffle(productList, new Random());
+            User user = presenter.getUser(email);
+            productList.sort((o1, o2) -> {
+                User owner1 = presenter.getUser(o1.getOwner());
+                User owner2 = presenter.getUser(o2.getOwner());
+                float[] results1 = new float[1];
+                float[] results2 = new float[1];
+                Location.distanceBetween(user.getAddress().getLatLng().latitude, user.getAddress().getLatLng().longitude, owner1.getAddress().getLatLng().latitude, owner1.getAddress().getLatLng().longitude, results1 );
+                Location.distanceBetween(user.getAddress().getLatLng().latitude, user.getAddress().getLatLng().longitude, owner2.getAddress().getLatLng().latitude, owner2.getAddress().getLatLng().longitude, results2 );
+                if (results1[0] > results2[0]) return 1;
+                else if (results1[0] < results2[0]) return -1;
+                return 0;
+            });
+        }
+
         productAdapter.notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();
         if (productList.isEmpty()) noProducts.setVisibility(View.VISIBLE);

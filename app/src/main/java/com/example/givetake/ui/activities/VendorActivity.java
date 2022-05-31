@@ -25,6 +25,7 @@ import java.util.Objects;
 public class VendorActivity extends AppCompatActivity {
     private Presenter presenter;
     private Toolbar toolbar;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +37,22 @@ public class VendorActivity extends AppCompatActivity {
         setTitle(R.string.toolbar_title_vendor_profile);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        email = prefs.getString("email", null);
         presenter = new Presenter();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.vendor_profile_options, menu);
+        if (email != null){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.vendor_profile_options, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String email = prefs.getString("email", null);
         if (item.getTitle() != null){
             final String[] reportOptions =  getResources().getStringArray(R.array.report_options);
             final boolean[] checkedOptions = new boolean[reportOptions.length];

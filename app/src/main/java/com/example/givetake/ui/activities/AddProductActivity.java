@@ -103,6 +103,7 @@ public class  AddProductActivity extends AppCompatActivity {
 
         chooseBtn.setOnClickListener(v -> chooseImage());
         cameraBtn.setOnClickListener(v -> dispatchTakePictureIntent());
+        cameraBtn.setEnabled(false);
     }
 
 
